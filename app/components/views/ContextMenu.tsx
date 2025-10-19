@@ -6,11 +6,13 @@ import React, { useCallback, useEffect, useRef, useState } from 'react'
 import {
     BackHandler,
     Dimensions,
+    GestureResponderEvent,
     LayoutRectangle,
     Pressable,
     StyleSheet,
     Text,
     TextStyle,
+    TouchableOpacity,
     View,
     ViewProps,
 } from 'react-native'
@@ -20,7 +22,7 @@ import { scheduleOnRN } from 'react-native-worklets'
 import { create } from 'zustand'
 import Portal from './Portal'
 
-export type Placement = 'top' | 'bottom' | 'left' | 'right' | 'auto'
+export type Placement = 'top' | 'bottom' | 'left' | 'right' | 'auto' | 'center'
 
 export type ContextMenuButtonProps = {
     key?: string
@@ -41,6 +43,10 @@ export interface ContextMenuProps extends ViewProps {
     buttons: ContextMenuButtonProps[]
     placement?: Placement
     disabled?: boolean
+    onPress?: () => void
+    onLongPress?: () => void
+    delayLongPress?: number
+    longPress?: boolean
 }
 
 export type MenuState = {
@@ -97,6 +103,10 @@ const ContextMenu: React.FC<ContextMenuProps> = ({
     triggerIconSize = 26,
     triggerStyle,
     disabled,
+    onPress,
+    onLongPress,
+    delayLongPress,
+    longPress,
 }) => {
     const idRef = useRef<string>(genId())
     const triggerRef = useRef<View>(null)
@@ -122,10 +132,15 @@ const ContextMenu: React.FC<ContextMenuProps> = ({
         initialRender.current = true
     }, [openMenuId])
 
-    const handleOpen = () => {
+    const handleOpen = (event: GestureResponderEvent) => {
         if (!triggerRef.current) return
         triggerRef.current.measure((x, y, width, height, pageX, pageY) => {
-            const anchor: LayoutRectangle = { x: pageX, y: pageY, width, height }
+            const anchor: LayoutRectangle = {
+                x: event.nativeEvent.pageX,
+                y: event.nativeEvent.pageY,
+                width,
+                height,
+            }
             openMenu(idRef.current, anchor, buttons, placement)
         })
     }
@@ -188,8 +203,8 @@ const ContextMenu: React.FC<ContextMenuProps> = ({
             height: 0,
             width: 0,
             opacity: 0,
-            top: anchor.y + anchor.height / 2,
-            left: anchor.x + anchor.width / 2,
+            top: anchor.y,
+            left: anchor.x,
         }
     }
 
@@ -242,11 +257,24 @@ const ContextMenu: React.FC<ContextMenuProps> = ({
 
     return (
         <>
-            <Pressable
+            <TouchableOpacity
+                activeOpacity={0.5}
                 //@TODO: Better 'isOpen' styling for anchor
                 style={{ opacity: isOpen ? 0.5 : 1 }}
                 ref={triggerRef}
-                onPressIn={handleOpen}
+                onPressIn={(event) => {
+                    if (longPress) return
+                    handleOpen(event)
+                }}
+                onPress={() => {
+                    onPress?.()
+                }}
+                delayLongPress={delayLongPress ?? 300}
+                onLongPress={(event) => {
+                    onLongPress?.()
+                    if (!longPress) return
+                    handleOpen(event)
+                }}
                 key={idRef.current}
                 disabled={disabled}>
                 {children}
@@ -257,7 +285,7 @@ const ContextMenu: React.FC<ContextMenuProps> = ({
                         name={triggerIcon}
                     />
                 )}
-            </Pressable>
+            </TouchableOpacity>
 
             {isOpen && anchor && (
                 <Portal name={idRef.current}>
@@ -444,6 +472,10 @@ const useMenuPosition = () => {
                 left = anchor.x - actualWidth
                 top = currentTop !== 0 && !wasOvershot ? currentTop : anchor.y - actualHeight / 2
                 break
+            case 'center':
+                left = anchor.x
+                top = currentTop !== 0 && !wasOvershot ? currentTop : anchor.y
+                break
             case 'auto':
             default:
                 break
@@ -460,7 +492,6 @@ const useMenuPosition = () => {
 
         // Clamp values to keep menu on screen
         if (top < insets.top) {
-            console.log(`top overshot`)
             top = insets.top
             overshot = true
         } else if (top + actualHeight > screenHeight) {
