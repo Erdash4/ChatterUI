@@ -28,7 +28,7 @@ const BottomSheet: React.FC<BottomSheetProps> = ({
         return {
             paddingBottom: -height.value - insets.bottom,
             flex: 1,
-            alignItems: 'flex-end',
+            justifyContent: 'flex-end',
         }
     })
     return (
@@ -40,13 +40,14 @@ const BottomSheet: React.FC<BottomSheetProps> = ({
                 setVisible(false)
                 onClose?.()
             }}
-            style={{ flex: 1 }}
+            style={{
+                flex: 1,
+            }}
             visible={visible}
             animationType="fade">
             <Animated.View style={[animatedStyle]}>
-                <FadeBackrop handleOverlayClick={() => setVisible(false)} />
-                <View style={{ flex: 1 }} />
-                <Animated.View
+                <FadeBackrop handleOverlayClick={() => setVisible(false)}></FadeBackrop>
+                <View
                     style={[
                         {
                             paddingTop: spacing.xl2,
@@ -61,7 +62,7 @@ const BottomSheet: React.FC<BottomSheetProps> = ({
                         sheetStyle,
                     ]}>
                     {children}
-                </Animated.View>
+                </View>
             </Animated.View>
         </Modal>
     )

@@ -25,7 +25,7 @@ export default FadeBackrop
 const styles = StyleSheet.create({
     absolute: {
         position: 'absolute',
-        height: '100%',
+        height: '200%', // this is needed due to negative padding on some screens
         width: '100%',
         backgroundColor: 'rgba(0, 0, 0, 0.5)',
     },

@@ -4,15 +4,13 @@ import DropdownSheet from '@components/input/DropdownSheet'
 import MultiDropdownSheet from '@components/input/MultiDropdownSheet'
 import ThemedTextInput from '@components/input/ThemedTextInput'
 import BottomSheet from '@components/views/BottomSheet'
-import FadeBackrop from '@components/views/FadeBackdrop'
 import { CLAUDE_VERSION } from '@lib/constants/GlobalValues'
 import { APIConfiguration } from '@lib/engine/API/APIBuilder.types'
-import { APIManagerValue, APIManager } from '@lib/engine/API/APIManagerState'
+import { APIManager, APIManagerValue } from '@lib/engine/API/APIManagerState'
 import { Logger } from '@lib/state/Logger'
 import { Theme } from '@lib/theme/ThemeManager'
 import { useEffect, useState } from 'react'
-import { Modal, ScrollView, StyleSheet, Text, View } from 'react-native'
-import Animated, { FadeIn, SlideOutDown } from 'react-native-reanimated'
+import { ScrollView, StyleSheet, Text, View } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { useShallow } from 'zustand/react/shallow'
 
@@ -85,27 +83,28 @@ const ConnectionEditor: React.FC<ConnectionEditorProps> = ({
 
     return (
         <BottomSheet
-            sheetStyle={{ maxHeight: '90%' }}
+            sheetStyle={{ flex: 2 }}
             visible={show}
             onClose={close}
             setVisible={(v) => {
                 if (v) return
                 close()
             }}>
-            <View>
+            <View style={styles.mainContainer}>
                 <Text
                     style={{
                         color: color.text._100,
                         fontSize: fontSize.xl2,
                         fontWeight: '500',
-                        paddingBottom: spacing.xl2,
+                        paddingBottom: 16,
                     }}>
                     Edit Connection
                 </Text>
 
                 <ScrollView
+                    style={{ flex: 1 }}
                     showsVerticalScrollIndicator={false}
-                    contentContainerStyle={{ rowGap: 16, paddingBottom: spacing.xl2 }}>
+                    contentContainerStyle={{ rowGap: 12, paddingBottom: 32 }}>
                     <ThemedTextInput
                         label="Friendly Name"
                         value={values.friendlyName}
@@ -242,7 +241,6 @@ const ConnectionEditor: React.FC<ConnectionEditorProps> = ({
                     )}
                 </ScrollView>
                 <ThemedButton
-                    buttonStyle={{ marginTop: 8 }}
                     label="Save Changes"
                     onPress={() => {
                         editValue(values, index)
@@ -258,14 +256,18 @@ export default ConnectionEditor
 
 const useStyles = () => {
     const insets = useSafeAreaInsets()
-    const { color, spacing, borderRadius } = Theme.useTheme()
+    const { color, spacing } = Theme.useTheme()
     return StyleSheet.create({
+        mainContainer: {
+            flex: 1,
+        },
+
         title: {
             color: color.text._100,
         },
 
         hintText: {
-            marginTop: spacing.s,
+            paddingTop: spacing.s,
             color: color.text._400,
         },
     })
