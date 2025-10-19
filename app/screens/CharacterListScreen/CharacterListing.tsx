@@ -95,8 +95,7 @@ const useStyles = () => {
 
         longButtonContainer: {
             flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'center',
+            backgroundColor: color.neutral._100,
             borderRadius: borderRadius.m,
             flex: 1,
             paddingVertical: spacing.l,
