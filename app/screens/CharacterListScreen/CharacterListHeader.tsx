@@ -13,10 +13,10 @@ import { useFocusEffect } from 'expo-router'
 import { useCallback } from 'react'
 import { BackHandler, Text, View } from 'react-native'
 import { useMMKVBoolean } from 'react-native-mmkv'
-import Animated, { FadeInUp, FadeOutUp, LinearTransition } from 'react-native-reanimated'
+import Animated, { FadeIn, FadeOut, LinearTransition } from 'react-native-reanimated'
 
-import SortButton from './SortButton'
 import { Logger } from '@lib/state/Logger'
+import SortButton from './SortButton'
 
 type CharacterListHeaderProps = {
     resultLength: number
@@ -119,8 +119,8 @@ const CharacterListHeader: React.FC<CharacterListHeaderProps> = ({ resultLength 
             <Animated.View layout={LinearTransition}>
                 {showSearch && (
                     <Animated.View
-                        entering={FadeInUp}
-                        exiting={FadeOutUp}
+                        entering={FadeIn.delay(100)}
+                        exiting={FadeOut}
                         style={{ paddingHorizontal: 12, paddingBottom: 8, rowGap: 8 }}>
                         {showTags && data.length > 0 && (
                             <StringArrayEditor
@@ -128,7 +128,7 @@ const CharacterListHeader: React.FC<CharacterListHeaderProps> = ({ resultLength 
                                 suggestions={data
                                     .sort((a, b) => b.tagCount - a.tagCount)
                                     .map((item) => item.tag)}
-                                label="Tags"
+                                label="Search By Tags"
                                 value={tagFilter}
                                 setValue={setTagFilter}
                                 placeholder="Filter Tags..."
@@ -137,13 +137,14 @@ const CharacterListHeader: React.FC<CharacterListHeaderProps> = ({ resultLength 
                             />
                         )}
                         <ThemedTextInput
+                            label="Search By Name"
                             containerStyle={{ flex: 0 }}
                             value={textFilter}
                             onChangeText={setTextFilter}
                             style={{
                                 color: resultLength === 0 ? color.text._700 : color.text._100,
                             }}
-                            placeholder="Search Name..."
+                            placeholder="Name..."
                         />
                         {(textFilter || tagFilter.length > 0) && (
                             <Text

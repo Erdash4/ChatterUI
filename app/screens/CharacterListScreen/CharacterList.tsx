@@ -62,9 +62,10 @@ const CharacterList: React.FC = () => {
                 )}
 
                 <Animated.FlatList
+                    layout={LinearTransition}
                     itemLayoutAnimation={LinearTransition}
                     showsVerticalScrollIndicator={false}
-                    contentContainerStyle={{ rowGap: 8 }}
+                    contentContainerStyle={{ rowGap: 16 }}
                     data={characterList}
                     keyExtractor={(item) => item.id.toString()}
                     renderItem={({ item }) => (

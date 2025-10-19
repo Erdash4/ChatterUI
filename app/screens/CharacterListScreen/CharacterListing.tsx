@@ -8,6 +8,7 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { useMMKVBoolean } from 'react-native-mmkv'
 
 import CharacterEditPopup from './CharacterEditPopup'
+import CharacterListingTags from './CharacterListingTags'
 
 type CharacterListingProps = {
     character: CharInfo
@@ -25,60 +26,49 @@ const CharacterListing: React.FC<CharacterListingProps> = ({
     const styles = useStyles()
 
     const getPreviewText = () => {
-        if (!character.latestSwipe || !character.latestName) return '(No Chat Data)'
+        if (character.latestSwipe === undefined || !character.latestName) return 'No Messages'
         return character.latestName + ':  ' + character.latestSwipe.trim()
     }
 
     return (
-        <CharacterEditPopup
-            character={character}
-            setNowLoading={setNowLoading}
-            nowLoading={nowLoading}>
-            <View style={styles.longButtonContainer}>
-                <Avatar
-                    targetImage={Characters.getImageDir(character.image_id)}
-                    style={styles.avatar}
-                />
+        <View>
+            <CharacterEditPopup
+                character={character}
+                setNowLoading={setNowLoading}
+                nowLoading={nowLoading}>
+                <View style={styles.longButtonContainer}>
+                    <Avatar
+                        targetImage={Characters.getImageDir(character.image_id)}
+                        style={styles.avatar}
+                    />
 
-                <View style={{ flex: 1, paddingLeft: 12 }}>
-                    <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                        <Text style={styles.nametag} numberOfLines={2}>
-                            {character.name}
-                        </Text>
-                        <Text style={styles.timestamp}>
-                            {getFriendlyTimeStamp(character.last_modified)}
-                        </Text>
-                    </View>
-                    {character.latestSwipe && (
-                        <Text numberOfLines={2} ellipsizeMode="tail" style={styles.previewText}>
-                            {getPreviewText()}
-                        </Text>
-                    )}
-                    <View
-                        style={{
-                            marginTop: 8,
-                            flex: 1,
-                            flexDirection: 'row',
-                            flexWrap: 'wrap',
-                            columnGap: 4,
-                            rowGap: 4,
-                        }}>
-                        {showTags &&
-                            character.tags.map((item, index) => (
-                                <TouchableOpacity
-                                    key={index}
-                                    onPress={() => {
-                                        setShowSearch(true)
-                                        if (tagFilter.includes(item)) return
-                                        setTagFilter([...tagFilter, item])
-                                    }}>
-                                    <Text style={styles.tag}>{item}</Text>
-                                </TouchableOpacity>
-                            ))}
+                    <View style={{ flex: 1, paddingLeft: 12 }}>
+                        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                            <Text style={styles.nametag} numberOfLines={2}>
+                                {character.name}
+                            </Text>
+                            <Text style={styles.timestamp}>
+                                {getFriendlyTimeStamp(character.last_modified)}
+                            </Text>
+                        </View>
+                        {
+                            <Text numberOfLines={1} ellipsizeMode="tail" style={styles.previewText}>
+                                {getPreviewText()}
+                            </Text>
+                        }
                     </View>
                 </View>
-            </View>
-        </CharacterEditPopup>
+            </CharacterEditPopup>
+            <CharacterListingTags
+                tags={character.tags}
+                showTags={showTags!}
+                onPress={(tag: string) => {
+                    setShowSearch(true)
+                    if (tagFilter.includes(tag)) return
+                    setTagFilter([...tagFilter, tag])
+                }}
+            />
+        </View>
     )
 }
 
@@ -88,11 +78,6 @@ const useStyles = () => {
     const { color, spacing, borderRadius, fontSize } = Theme.useTheme()
 
     return StyleSheet.create({
-        longButton: {
-            flexDirection: 'row',
-            flex: 1,
-        },
-
         longButtonContainer: {
             flexDirection: 'row',
             backgroundColor: color.neutral._100,
@@ -106,7 +91,6 @@ const useStyles = () => {
             width: 48,
             height: 48,
             borderRadius: borderRadius.l,
-            marginVertical: spacing.sm,
             backgroundColor: color.neutral._200,
             borderColor: color.neutral._200,
             borderWidth: 1,
@@ -127,17 +111,6 @@ const useStyles = () => {
         previewText: {
             marginTop: spacing.s,
             color: color.text._500,
-        },
-
-        tag: {
-            color: color.text._200,
-            fontSize: fontSize.m,
-            borderWidth: 1,
-            borderColor: color.primary._200,
-            backgroundColor: color.primary._100,
-            paddingHorizontal: spacing.l,
-            paddingVertical: spacing.s,
-            borderRadius: borderRadius.xl,
         },
     })
 }

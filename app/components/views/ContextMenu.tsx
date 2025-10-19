@@ -134,10 +134,12 @@ const ContextMenu: React.FC<ContextMenuProps> = ({
 
     const handleOpen = (event: GestureResponderEvent) => {
         if (!triggerRef.current) return
+        const isCentered = placement === 'center'
+        const ne = event.nativeEvent
         triggerRef.current.measure((x, y, width, height, pageX, pageY) => {
             const anchor: LayoutRectangle = {
-                x: event.nativeEvent.pageX,
-                y: event.nativeEvent.pageY,
+                x: isCentered ? ne.pageX : pageX,
+                y: isCentered ? ne.pageY : pageY,
                 width,
                 height,
             }
