@@ -1,19 +1,8 @@
 import BottomSheet from '@components/views/BottomSheet'
-import FadeBackrop from '@components/views/FadeBackdrop'
 import { Entypo } from '@expo/vector-icons'
 import { Theme } from '@lib/theme/ThemeManager'
 import { useState } from 'react'
-import {
-    Modal,
-    Pressable,
-    StyleSheet,
-    Text,
-    View,
-    FlatList,
-    ViewStyle,
-    TextInput,
-} from 'react-native'
-import { KeyboardAvoidingView } from 'react-native-keyboard-controller'
+import { FlatList, Pressable, StyleSheet, Text, TextInput, View, ViewStyle } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 type DropdownItemProps = {

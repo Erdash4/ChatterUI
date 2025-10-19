@@ -1,13 +1,10 @@
 import { Entypo } from '@expo/vector-icons'
 import { Theme } from '@lib/theme/ThemeManager'
 import { useState } from 'react'
-import { FlatList, Modal, Pressable, Text, View, ViewStyle, TextInput } from 'react-native'
+import { FlatList, Pressable, Text, TextInput, View, ViewStyle } from 'react-native'
 
-import { useDropdownStyles } from './MultiDropdownSheet'
-import FadeBackrop from '../views/FadeBackdrop'
-import { KeyboardAvoidingView } from 'react-native-keyboard-controller'
-import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import BottomSheet from '@components/views/BottomSheet'
+import { useDropdownStyles } from './MultiDropdownSheet'
 
 type DropdownSheetProps<T> = {
     containerStyle?: ViewStyle

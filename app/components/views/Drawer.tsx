@@ -112,14 +112,13 @@ namespace Drawer {
 
         return (
             <View style={styles.absolute}>
-                <FadeBackrop handleOverlayClick={handleOverlayClick}>
-                    <Animated.View
-                        style={{ ...styles.drawer, ...drawerStyle }}
-                        entering={animationIn[direction]}
-                        exiting={animationOut[direction]}>
-                        {children}
-                    </Animated.View>
-                </FadeBackrop>
+                <FadeBackrop handleOverlayClick={handleOverlayClick} />
+                <Animated.View
+                    style={{ ...styles.drawer, ...drawerStyle }}
+                    entering={animationIn[direction]}
+                    exiting={animationOut[direction]}>
+                    {children}
+                </Animated.View>
             </View>
         )
     }
