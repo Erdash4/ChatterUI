@@ -1,9 +1,8 @@
-import ThemedButton from '@components/buttons/ThemedButton'
 import Avatar from '@components/views/Avatar'
 import { Characters } from '@lib/state/Characters'
 import { Theme } from '@lib/theme/ThemeManager'
 import { useRouter } from 'expo-router'
-import { View, Text } from 'react-native'
+import { Text, TouchableOpacity } from 'react-native'
 import { useShallow } from 'zustand/react/shallow'
 
 const UserInfo = () => {
@@ -16,7 +15,10 @@ const UserInfo = () => {
         }))
     )
     return (
-        <View
+        <TouchableOpacity
+            onPress={() => {
+                router.push('/screens/UserManagerScreen')
+            }}
             style={{
                 alignItems: 'center',
                 columnGap: spacing.l,
@@ -36,15 +38,8 @@ const UserInfo = () => {
                 }}
             />
 
-            <ThemedButton
-                onPress={() => router.push('/screens/UserManagerScreen')}
-                label={userName}
-                labelStyle={{ fontSize: fontSize.xl }}
-                iconName="edit"
-                variant="tertiary"
-                iconSize={20}
-            />
-        </View>
+            <Text style={{ fontSize: fontSize.xl, color: color.text._100 }}>{userName}</Text>
+        </TouchableOpacity>
     )
 }
 
