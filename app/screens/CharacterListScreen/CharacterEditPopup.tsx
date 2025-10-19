@@ -102,6 +102,7 @@ const CharacterEditPopup: React.FC<CharacterEditPopupProps> = ({
 
     return (
         <ContextMenu
+            disabled={nowLoading || path !== '/'}
             onPress={setCurrentCharacter}
             longPress
             delayLongPress={300}
