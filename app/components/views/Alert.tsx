@@ -86,8 +86,10 @@ export const AlertBox = () => {
         if (dismiss) {
             dismiss()
         }
+        hide()
     }
     const hide = useAlertStore((state) => state.hide)
+
     return (
         <Modal
             visible={visible}
@@ -96,27 +98,19 @@ export const AlertBox = () => {
             animationType="fade"
             statusBarTranslucent
             navigationBarTranslucent
-            onRequestClose={() => {
-                handleDismiss()
-                hide()
-            }}>
-            <FadeBackrop
-                handleOverlayClick={() => {
-                    handleDismiss()
-                    hide()
-                }}>
-                <Animated.View style={styles.textBoxContainer} entering={FadeInDown.duration(150)}>
-                    <View style={styles.textBox}>
-                        <Text style={styles.title}>{props.title}</Text>
-                        <Text style={styles.description}>{props.description}</Text>
-                        <View style={styles.buttonContainer}>
-                            {props.buttons.map((item, index) => (
-                                <AlertButton {...item} key={index} />
-                            ))}
-                        </View>
+            onRequestClose={handleDismiss}>
+            <FadeBackrop handleOverlayClick={handleDismiss} />
+            <Animated.View style={styles.textBoxContainer} entering={FadeInDown.duration(150)}>
+                <View style={styles.textBox}>
+                    <Text style={styles.title}>{props.title}</Text>
+                    <Text style={styles.description}>{props.description}</Text>
+                    <View style={styles.buttonContainer}>
+                        {props.buttons.map((item, index) => (
+                            <AlertButton {...item} key={index} />
+                        ))}
                     </View>
-                </Animated.View>
-            </FadeBackrop>
+                </View>
+            </Animated.View>
         </Modal>
     )
 }
@@ -145,7 +139,7 @@ const useStyles = () => {
 
         textBox: {
             backgroundColor: color.neutral._200,
-            paddingHorizontal: spacing.xl3,
+            paddingHorizontal: spacing.xl2,
             paddingBottom: spacing.xl,
             paddingTop: spacing.xl2,
             borderRadius: borderRadius.xl,
