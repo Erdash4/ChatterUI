@@ -1,10 +1,10 @@
 import ThemedButton from '@components/buttons/ThemedButton'
+import ThemedTextInput from '@components/input/ThemedTextInput'
 import BottomSheet from '@components/views/BottomSheet'
 import { Chats } from '@lib/state/Chat'
 import { Theme } from '@lib/theme/ThemeManager'
 import React, { useEffect, useState } from 'react'
-import { StyleSheet, Text, TextInput, View } from 'react-native'
-import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { StyleSheet, Text, View } from 'react-native'
 import { create } from 'zustand'
 import { useShallow } from 'zustand/react/shallow'
 
@@ -64,51 +64,49 @@ const ChatEditor = () => {
 
     return (
         <BottomSheet
+            sheetStyle={{ rowGap: 12 }}
             visible={editMode}
             setVisible={(visible) => {
                 if (!visible) handleClose()
             }}
             onClose={handleClose}>
-            <View style={styles.editorContainer}>
-                <View style={styles.topText}>
-                    <Text numberOfLines={1} style={styles.nameText} ellipsizeMode="tail">
-                        {entry?.name}
-                    </Text>
-                    <Text style={styles.timeText}>{swipe?.send_date.toLocaleTimeString()}</Text>
-                </View>
+            <View style={styles.topText}>
+                <Text numberOfLines={1} style={styles.nameText} ellipsizeMode="tail">
+                    {entry?.name}
+                </Text>
+                <Text style={styles.timeText}>{swipe?.send_date.toLocaleTimeString()}</Text>
+            </View>
 
-                <TextInput
-                    style={styles.messageInput}
-                    value={placeholderText}
-                    onChangeText={setPlaceholderText}
-                    textBreakStrategy="simple"
-                    multiline
+            <ThemedTextInput
+                containerStyle={{ flex: 0, flexShrink: 1 }}
+                value={placeholderText}
+                onChangeText={setPlaceholderText}
+                multiline
+            />
+
+            <View
+                style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                }}>
+                <ThemedButton
+                    label="Delete"
+                    iconName="delete"
+                    onPress={handleDeleteMessage}
+                    variant="critical"
                 />
-
-                <View
-                    style={{
-                        flexDirection: 'row',
-                        justifyContent: 'space-between',
-                    }}>
-                    <ThemedButton
-                        label="Delete"
-                        iconName="delete"
-                        onPress={handleDeleteMessage}
-                        variant="critical"
-                    />
-                    <ThemedButton
-                        iconName="reload1"
-                        variant="tertiary"
-                        label="Reset"
-                        onPress={() => swipeText && setPlaceholderText(swipeText)}
-                    />
-                    <ThemedButton
-                        label="Confirm"
-                        iconName="check"
-                        onPress={handleEditMessage}
-                        variant="secondary"
-                    />
-                </View>
+                <ThemedButton
+                    iconName="reload1"
+                    variant="tertiary"
+                    label="Reset"
+                    onPress={() => swipeText && setPlaceholderText(swipeText)}
+                />
+                <ThemedButton
+                    label="Confirm"
+                    iconName="check"
+                    onPress={handleEditMessage}
+                    variant="secondary"
+                />
             </View>
         </BottomSheet>
     )
@@ -118,12 +116,7 @@ export default ChatEditor
 
 const useStyles = () => {
     const { color, spacing, borderRadius, fontSize } = Theme.useTheme()
-    const insets = useSafeAreaInsets()
     return StyleSheet.create({
-        editorContainer: {
-            rowGap: 12,
-        },
-
         topText: {
             flexDirection: 'row',
             alignItems: 'flex-end',

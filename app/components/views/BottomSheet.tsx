@@ -46,7 +46,8 @@ const BottomSheet: React.FC<BottomSheetProps> = ({
             visible={visible}
             animationType="fade">
             <Animated.View style={[animatedStyle]}>
-                <FadeBackrop handleOverlayClick={() => setVisible(false)}></FadeBackrop>
+                <FadeBackrop handleOverlayClick={() => setVisible(false)} />
+
                 <View
                     style={[
                         {
