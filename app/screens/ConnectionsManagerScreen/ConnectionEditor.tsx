@@ -3,6 +3,7 @@ import ThemedButton from '@components/buttons/ThemedButton'
 import DropdownSheet from '@components/input/DropdownSheet'
 import MultiDropdownSheet from '@components/input/MultiDropdownSheet'
 import ThemedTextInput from '@components/input/ThemedTextInput'
+import BottomSheet from '@components/views/BottomSheet'
 import FadeBackrop from '@components/views/FadeBackdrop'
 import { CLAUDE_VERSION } from '@lib/constants/GlobalValues'
 import { APIConfiguration } from '@lib/engine/API/APIBuilder.types'
@@ -83,24 +84,15 @@ const ConnectionEditor: React.FC<ConnectionEditorProps> = ({
     }, [])
 
     return (
-        <Modal
-            transparent
-            statusBarTranslucent
-            navigationBarTranslucent
-            onRequestClose={close}
+        <BottomSheet
+            sheetStyle={{ maxHeight: '90%' }}
             visible={show}
-            animationType="fade">
-            <FadeBackrop
-                handleOverlayClick={() => {
-                    close()
-                }}
-            />
-
-            <View style={{ flex: 1 }} />
-            <Animated.View
-                style={styles.mainContainer}
-                entering={FadeIn.duration(100)}
-                exiting={SlideOutDown.duration(300)}>
+            onClose={close}
+            setVisible={(v) => {
+                if (v) return
+                close()
+            }}>
+            <View>
                 <Text
                     style={{
                         color: color.text._100,
@@ -112,7 +104,6 @@ const ConnectionEditor: React.FC<ConnectionEditorProps> = ({
                 </Text>
 
                 <ScrollView
-                    style={{ flex: 1 }}
                     showsVerticalScrollIndicator={false}
                     contentContainerStyle={{ rowGap: 16, paddingBottom: spacing.xl2 }}>
                     <ThemedTextInput
@@ -258,8 +249,8 @@ const ConnectionEditor: React.FC<ConnectionEditorProps> = ({
                         close()
                     }}
                 />
-            </Animated.View>
-        </Modal>
+            </View>
+        </BottomSheet>
     )
 }
 
@@ -269,17 +260,6 @@ const useStyles = () => {
     const insets = useSafeAreaInsets()
     const { color, spacing, borderRadius } = Theme.useTheme()
     return StyleSheet.create({
-        mainContainer: {
-            marginVertical: spacing.xl,
-            paddingTop: spacing.xl2,
-            paddingBottom: insets.bottom,
-            paddingHorizontal: spacing.xl,
-            borderTopLeftRadius: borderRadius.xl,
-            borderTopRightRadius: borderRadius.xl,
-            minHeight: '70%',
-            backgroundColor: color.neutral._100,
-        },
-
         title: {
             color: color.text._100,
         },

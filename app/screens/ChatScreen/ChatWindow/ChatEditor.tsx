@@ -4,7 +4,6 @@ import { Chats } from '@lib/state/Chat'
 import { Theme } from '@lib/theme/ThemeManager'
 import React, { useEffect, useState } from 'react'
 import { StyleSheet, Text, TextInput, View } from 'react-native'
-import Animated, { SlideOutDown } from 'react-native-reanimated'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { create } from 'zustand'
 import { useShallow } from 'zustand/react/shallow'
@@ -70,7 +69,7 @@ const ChatEditor = () => {
                 if (!visible) handleClose()
             }}
             onClose={handleClose}>
-            <Animated.View exiting={SlideOutDown.duration(100)} style={styles.editorContainer}>
+            <View style={styles.editorContainer}>
                 <View style={styles.topText}>
                     <Text numberOfLines={1} style={styles.nameText} ellipsizeMode="tail">
                         {entry?.name}
@@ -110,7 +109,7 @@ const ChatEditor = () => {
                         variant="secondary"
                     />
                 </View>
-            </Animated.View>
+            </View>
         </BottomSheet>
     )
 }
