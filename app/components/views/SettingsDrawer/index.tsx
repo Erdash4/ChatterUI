@@ -9,11 +9,9 @@ import { useMMKVBoolean } from 'react-native-mmkv'
 import AppModeToggle from './AppModeToggle'
 import RouteList from './RouteList'
 import UserInfo from './UserInfo'
-import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
-const SettingsDrawer: React.FC<{ useInset?: boolean }> = ({ useInset = false }) => {
+const SettingsDrawer = () => {
     const { color, spacing } = Theme.useTheme()
-    const insets = useSafeAreaInsets()
     const [devMode, _] = useMMKVBoolean(AppSettings.DevMode)
 
     return (
@@ -21,7 +19,7 @@ const SettingsDrawer: React.FC<{ useInset?: boolean }> = ({ useInset = false }) 
             drawerID={Drawer.ID.SETTINGS}
             drawerStyle={{
                 width: '60%',
-                paddingBottom: spacing.xl + (useInset ? insets.bottom : 0),
+                paddingBottom: spacing.xl,
             }}>
             <UserInfo />
             <AppModeToggle />

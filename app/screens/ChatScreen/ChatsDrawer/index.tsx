@@ -149,20 +149,20 @@ export default ChatsDrawer
 
 const useStyles = () => {
     const { color, spacing, fontSize } = Theme.useTheme()
-    const insets = useSafeAreaInsets()
 
     return StyleSheet.create({
         drawer: {
             backgroundColor: color.neutral._100,
-            width: '100%',
+            width: '90%',
             shadowColor: color.shadow,
             borderTopWidth: 3,
             elevation: 20,
+            right: 0,
             position: 'absolute',
             height: '100%',
             paddingHorizontal: spacing.xl,
             paddingTop: spacing.xl,
-            paddingBottom: spacing.xl2 + insets.bottom,
+            paddingBottom: spacing.xl2,
         },
 
         drawerTitle: {

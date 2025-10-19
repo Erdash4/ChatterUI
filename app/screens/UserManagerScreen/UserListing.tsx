@@ -4,22 +4,14 @@ import ContextMenu from '@components/views/ContextMenu'
 import Drawer from '@components/views/Drawer'
 import { Characters } from '@lib/state/Characters'
 import { Theme } from '@lib/theme/ThemeManager'
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { getFriendlyTimeStamp } from '@lib/utils/Time'
+import { StyleSheet, Text, View } from 'react-native'
 import { useShallow } from 'zustand/react/shallow'
 
 type CharacterData = Awaited<ReturnType<typeof Characters.db.query.cardListQuery>>[0]
 
 type CharacterListingProps = {
     user: CharacterData
-}
-
-const day_ms = 86400000
-const getTimeStamp = (oldtime: number) => {
-    const now = Date.now()
-    const delta = now - oldtime
-    if (delta < now % day_ms) return new Date(oldtime).toLocaleTimeString()
-    if (delta < (now % day_ms) + day_ms) return 'Yesterday'
-    return new Date(oldtime).toLocaleDateString()
 }
 
 const UserListing: React.FC<CharacterListingProps> = ({ user }) => {
@@ -87,56 +79,54 @@ const UserListing: React.FC<CharacterListingProps> = ({ user }) => {
     }
 
     return (
-        <View
-            style={
-                user.id === userId ? styles.longButtonSelectedContainer : styles.longButtonContainer
-            }>
-            <TouchableOpacity
-                style={styles.longButton}
-                onPress={async () => {
-                    await setCard(user.id)
-                    setShowDrawer(false)
-                }}>
-                <View
-                    style={{
-                        flexDirection: 'row',
-                        flex: 1,
-                    }}>
-                    <Avatar
-                        targetImage={Characters.getImageDir(user.image_id)}
-                        style={styles.avatar}
-                    />
-                    <View style={{ flex: 1, paddingLeft: 12 }}>
-                        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                            <Text style={styles.nametag}>{user.name}</Text>
-                            <Text style={styles.timestamp}>
-                                {user.last_modified && getTimeStamp(user.last_modified)}
-                            </Text>
+        <ContextMenu
+            longPress
+            onPress={async () => {
+                await setCard(user.id)
+                setShowDrawer(false)
+            }}
+            placement="center"
+            buttons={[
+                {
+                    label: 'Clone',
+                    icon: 'copy1',
+                    onPress: handleCloneCard,
+                },
+                {
+                    label: 'Delete',
+                    icon: 'delete',
+                    variant: 'warning',
+                    onPress: handleDeleteCard,
+                },
+            ]}>
+            <View
+                style={
+                    user.id === userId
+                        ? styles.longButtonSelectedContainer
+                        : styles.longButtonContainer
+                }>
+                <View style={styles.longButton}>
+                    <View
+                        style={{
+                            flexDirection: 'row',
+                            flex: 1,
+                        }}>
+                        <Avatar
+                            targetImage={Characters.getImageDir(user.image_id)}
+                            style={styles.avatar}
+                        />
+                        <View style={{ flex: 1, paddingLeft: 12 }}>
+                            <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                                <Text style={styles.nametag}>{user.name}</Text>
+                                <Text style={styles.timestamp}>
+                                    {user.last_modified && getFriendlyTimeStamp(user.last_modified)}
+                                </Text>
+                            </View>
                         </View>
                     </View>
                 </View>
-
-                <ContextMenu
-                    triggerStyle={{ paddingHorizontal: spacing.m }}
-                    disabled={false}
-                    placement="left"
-                    triggerIcon="edit"
-                    buttons={[
-                        {
-                            label: 'Clone',
-                            icon: 'copy1',
-                            onPress: handleCloneCard,
-                        },
-                        {
-                            label: 'Delete',
-                            icon: 'delete',
-                            variant: 'warning',
-                            onPress: handleDeleteCard,
-                        },
-                    ]}
-                />
-            </TouchableOpacity>
-        </View>
+            </View>
+        </ContextMenu>
     )
 }
 
@@ -150,7 +140,7 @@ const useStyles = () => {
             flexDirection: 'row',
             alignItems: 'center',
             flex: 1,
-            padding: spacing.m,
+            padding: spacing.l,
         },
 
         longButtonContainer: {
@@ -179,7 +169,6 @@ const useStyles = () => {
             width: 48,
             height: 48,
             borderRadius: borderRadius.l,
-            margin: spacing.sm,
             backgroundColor: color.neutral._100,
             borderWidth: borderWidth.s,
             borderColor: color.primary._300,

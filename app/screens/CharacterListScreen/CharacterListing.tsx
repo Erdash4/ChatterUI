@@ -2,16 +2,11 @@ import Avatar from '@components/views/Avatar'
 import { AppSettings } from '@lib/constants/GlobalValues'
 import { CharacterSorter } from '@lib/state/CharacterSorter'
 import { Characters, CharInfo } from '@lib/state/Characters'
-import { Chats } from '@lib/state/Chat'
-import { Logger } from '@lib/state/Logger'
 import { Theme } from '@lib/theme/ThemeManager'
 import { getFriendlyTimeStamp } from '@lib/utils/Time'
-import { useRouter } from 'expo-router'
-import { ActivityIndicator, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { useMMKVBoolean } from 'react-native-mmkv'
-import { useShallow } from 'zustand/react/shallow'
 
-import { usePathname } from 'expo-router/build/hooks'
 import CharacterEditPopup from './CharacterEditPopup'
 
 type CharacterListingProps = {
@@ -25,43 +20,9 @@ const CharacterListing: React.FC<CharacterListingProps> = ({
     nowLoading,
     setNowLoading,
 }) => {
-    const path = usePathname()
-    const router = useRouter()
     const [showTags, _] = useMMKVBoolean(AppSettings.ShowTags)
     const { setShowSearch, setTagFilter, tagFilter } = CharacterSorter.useSorter()
-    const { color } = Theme.useTheme()
     const styles = useStyles()
-
-    const { loadedCharId, setCurrentCard } = Characters.useCharacterStore(
-        useShallow((state) => ({
-            loadedCharId: state.id,
-            setCurrentCard: state.setCard,
-        }))
-    )
-
-    const { loadChat } = Chats.useChat()
-
-    const setCurrentCharacter = async (charId: number) => {
-        if (nowLoading || path === '/screens/ChatScreen') return
-        try {
-            setNowLoading(true)
-            await setCurrentCard(charId)
-            let chatId = character.latestChat
-            if (!chatId) {
-                chatId = await Chats.db.mutate.createChat(charId)
-            }
-            if (!chatId) {
-                Logger.errorToast('Chat creation backup has failed! Please report.')
-                return
-            }
-            await loadChat(chatId)
-            setNowLoading(false)
-            router.push('/screens/ChatScreen')
-        } catch (error) {
-            Logger.errorToast(`Couldn't load character: ${error}`)
-            setNowLoading(false)
-        }
-    }
 
     const getPreviewText = () => {
         if (!character.latestSwipe || !character.latestName) return '(No Chat Data)'
@@ -69,11 +30,11 @@ const CharacterListing: React.FC<CharacterListingProps> = ({
     }
 
     return (
-        <View style={styles.longButtonContainer}>
-            <TouchableOpacity
-                style={styles.longButton}
-                disabled={nowLoading}
-                onPress={() => setCurrentCharacter(character.id)}>
+        <CharacterEditPopup
+            character={character}
+            setNowLoading={setNowLoading}
+            nowLoading={nowLoading}>
+            <View style={styles.longButtonContainer}>
                 <Avatar
                     targetImage={Characters.getImageDir(character.image_id)}
                     style={styles.avatar}
@@ -116,36 +77,20 @@ const CharacterListing: React.FC<CharacterListingProps> = ({
                             ))}
                     </View>
                 </View>
-            </TouchableOpacity>
-            <View>
-                {nowLoading && character.id === loadedCharId ? (
-                    <ActivityIndicator
-                        color={color.text._100}
-                        style={{ paddingLeft: 8 }}
-                        size={28}
-                    />
-                ) : (
-                    <CharacterEditPopup
-                        characterInfo={character}
-                        setNowLoading={setNowLoading}
-                        nowLoading={nowLoading}
-                    />
-                )}
             </View>
-        </View>
+        </CharacterEditPopup>
     )
 }
 
 export default CharacterListing
 
 const useStyles = () => {
-    const { color, spacing, borderWidth, borderRadius, fontSize } = Theme.useTheme()
+    const { color, spacing, borderRadius, fontSize } = Theme.useTheme()
 
     return StyleSheet.create({
         longButton: {
             flexDirection: 'row',
             flex: 1,
-            padding: spacing.l,
         },
 
         longButtonContainer: {
@@ -154,13 +99,15 @@ const useStyles = () => {
             alignItems: 'center',
             borderRadius: borderRadius.m,
             flex: 1,
+            paddingVertical: spacing.l,
+            paddingHorizontal: spacing.xl,
         },
 
         avatar: {
             width: 48,
             height: 48,
             borderRadius: borderRadius.l,
-            margin: spacing.sm,
+            marginVertical: spacing.sm,
             backgroundColor: color.neutral._200,
             borderColor: color.neutral._200,
             borderWidth: 1,

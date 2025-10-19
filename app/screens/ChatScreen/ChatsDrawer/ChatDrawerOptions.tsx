@@ -5,15 +5,17 @@ import { Characters } from '@lib/state/Characters'
 import { Chats } from '@lib/state/Chat'
 import { Logger } from '@lib/state/Logger'
 import { saveStringToDownload } from '@lib/utils/File'
-import React, { useState } from 'react'
+import React, { ReactNode, useState } from 'react'
 import { View } from 'react-native'
 import { useShallow } from 'zustand/react/shallow'
 
 type ChatEditPopupProps = {
     item: Awaited<ReturnType<typeof Chats.db.query.chatListQuery>>[0]
+    children: ReactNode
+    onPress: () => void
 }
 
-const ChatEditPopup: React.FC<ChatEditPopupProps> = ({ item }) => {
+const ChatEditPopup: React.FC<ChatEditPopupProps> = ({ item, children, onPress }) => {
     const [showRename, setShowRename] = useState<boolean>(false)
 
     const { charName, charId } = Characters.useCharacterStore(
@@ -111,7 +113,7 @@ const ChatEditPopup: React.FC<ChatEditPopupProps> = ({ item }) => {
     }
 
     return (
-        <View>
+        <>
             <InputSheet
                 title="Rename Chat"
                 visible={showRename}
@@ -123,8 +125,9 @@ const ChatEditPopup: React.FC<ChatEditPopupProps> = ({ item }) => {
                 defaultValue={item.name}
             />
             <ContextMenu
-                triggerIcon="edit"
-                placement="left"
+                placement="center"
+                longPress
+                onPress={onPress}
                 buttons={[
                     {
                         label: 'Rename',
@@ -160,9 +163,10 @@ const ChatEditPopup: React.FC<ChatEditPopupProps> = ({ item }) => {
                             },
                         ],
                     },
-                ]}
-            />
-        </View>
+                ]}>
+                {children}
+            </ContextMenu>
+        </>
     )
 }
 

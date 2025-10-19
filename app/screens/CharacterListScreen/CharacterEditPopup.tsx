@@ -1,21 +1,51 @@
 import Alert from '@components/views/Alert'
 import ContextMenu from '@components/views/ContextMenu'
 import { CharInfo, Characters } from '@lib/state/Characters'
-import { useRouter } from 'expo-router'
+import { Chats } from '@lib/state/Chat'
+import { Logger } from '@lib/state/Logger'
+import { usePathname, useRouter } from 'expo-router'
+import { ReactNode } from 'react'
 import { View } from 'react-native'
 
 type CharacterEditPopupProps = {
-    characterInfo: CharInfo
+    character: CharInfo
     nowLoading: boolean
     setNowLoading: (b: boolean) => void
+    children: ReactNode
 }
 
 const CharacterEditPopup: React.FC<CharacterEditPopupProps> = ({
-    characterInfo,
+    character,
     setNowLoading,
     nowLoading,
+    children,
 }) => {
+    const path = usePathname()
     const router = useRouter()
+
+    const { loadChat } = Chats.useChat()
+
+    const setCurrentCharacter = async () => {
+        if (nowLoading || path === '/screens/ChatScreen' || !character.id) return
+        try {
+            setNowLoading(true)
+            await setCurrentCard(character.id)
+            let chatId = character.latestChat
+            if (!chatId) {
+                chatId = await Chats.db.mutate.createChat(character.id)
+            }
+            if (!chatId) {
+                Logger.errorToast('Chat creation backup has failed! Please report.')
+                return
+            }
+            await loadChat(chatId)
+            setNowLoading(false)
+            router.push('/screens/ChatScreen')
+        } catch (error) {
+            Logger.errorToast(`Couldn't load character: ${error}`)
+            setNowLoading(false)
+        }
+    }
 
     const setCurrentCard = Characters.useCharacterStore((state) => state.setCard)
 
@@ -23,7 +53,7 @@ const CharacterEditPopup: React.FC<CharacterEditPopupProps> = ({
         close()
         Alert.alert({
             title: 'Delete Character',
-            description: `Are you sure you want to delete '${characterInfo.name}'? This cannot be undone.`,
+            description: `Are you sure you want to delete '${character.name}'?\nThis cannot be undone.`,
             buttons: [
                 {
                     label: 'Cancel',
@@ -31,7 +61,7 @@ const CharacterEditPopup: React.FC<CharacterEditPopupProps> = ({
                 {
                     label: 'Delete Character',
                     onPress: async () => {
-                        Characters.db.mutate.deleteCard(characterInfo.id ?? -1)
+                        Characters.db.mutate.deleteCard(character.id ?? -1)
                     },
                     type: 'warning',
                 },
@@ -40,9 +70,10 @@ const CharacterEditPopup: React.FC<CharacterEditPopupProps> = ({
     }
 
     const cloneCard = (close: () => void) => {
+        close()
         Alert.alert({
             title: 'Clone Character',
-            description: `Are you sure you want to clone '${characterInfo.name}'?`,
+            description: `Are you sure you want to clone '${character.name}'?`,
             buttons: [
                 {
                     label: 'Cancel',
@@ -51,8 +82,8 @@ const CharacterEditPopup: React.FC<CharacterEditPopupProps> = ({
                     label: 'Clone Character',
                     onPress: async () => {
                         setNowLoading(true)
-                        await Characters.db.mutate.duplicateCard(characterInfo.id)
-                        close()
+                        await Characters.db.mutate.duplicateCard(character.id)
+
                         setNowLoading(false)
                     },
                 },
@@ -63,24 +94,25 @@ const CharacterEditPopup: React.FC<CharacterEditPopupProps> = ({
     const editCharacter = async (close: () => void) => {
         if (nowLoading) return
         setNowLoading(true)
-        await setCurrentCard(characterInfo.id)
+        await setCurrentCard(character.id)
         setNowLoading(false)
         close()
         router.push('/screens/CharacterEditorScreen')
     }
 
     return (
-        <View style={{ paddingHorizontal: 6 }}>
-            <ContextMenu
-                triggerIcon="edit"
-                buttons={[
-                    { label: 'Edit', icon: 'edit', onPress: editCharacter },
-                    { label: 'Clone', icon: 'copy1', onPress: cloneCard },
-                    { label: 'Delete', icon: 'delete', onPress: deleteCard, variant: 'warning' },
-                ]}
-                placement="left"
-            />
-        </View>
+        <ContextMenu
+            onPress={setCurrentCharacter}
+            longPress
+            delayLongPress={300}
+            buttons={[
+                { label: 'Edit', icon: 'edit', onPress: editCharacter },
+                { label: 'Clone', icon: 'copy1', onPress: cloneCard },
+                { label: 'Delete', icon: 'delete', onPress: deleteCard, variant: 'warning' },
+            ]}
+            placement="center">
+            <View pointerEvents="none">{children}</View>
+        </ContextMenu>
     )
 }
 

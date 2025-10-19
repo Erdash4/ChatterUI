@@ -118,7 +118,7 @@ const ChatScreen = () => {
                             buttonStyle={{
                                 marginRight: 16,
                             }}
-                            iconName="download"
+                            iconName="upload"
                             variant="tertiary"
                             iconSize={20}
                             onPress={handleImportChat}
@@ -164,7 +164,7 @@ const ChatScreen = () => {
                 </Animated.View>
 
                 {/**Drawer has to be outside of the KeyboardAvoidingView */}
-                <SettingsDrawer useInset />
+                <SettingsDrawer />
                 <ChatsDrawer />
             </View>
         </Drawer.Gesture>

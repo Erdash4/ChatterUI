@@ -18,25 +18,30 @@ const ChatDrawerItem: React.FC<ChatDrawerItemProps> = ({ item, onLoad }) => {
     const date = new Date(item.last_modified ?? 0)
     const { chatId } = Chats.useChat()
     return (
-        <View style={item.id === chatId ? styles.chatItemActive : styles.chatItem}>
-            <TouchableOpacity
-                style={{ flex: 1, paddingHorizontal: spacing.xs, paddingVertical: spacing.m }}
-                onPress={() => onLoad(item.id)}>
-                <Text style={styles.title}>{item.name}</Text>
+        <ChatEditPopup item={item} onPress={() => onLoad(item.id)}>
+            <View style={item.id === chatId ? styles.chatItemActive : styles.chatItem}>
                 <View
-                    style={{
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                        marginTop: spacing.xl,
-                    }}>
-                    <Ionicons name="chatbox" size={20} color={color.text._400} />
-                    <Text style={styles.smallTextChat}>{item.entryCount}</Text>
-                    <Text style={styles.smallText}>{date.toLocaleDateString()}</Text>
-                    <Text style={styles.smallText}>{date.toLocaleTimeString()}</Text>
+                    style={{ flex: 1, paddingHorizontal: spacing.xs, paddingVertical: spacing.m }}>
+                    <Text style={styles.title}>{item.name}</Text>
+                    <View
+                        style={{
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                            marginTop: spacing.xl,
+                            justifyContent: 'space-between',
+                        }}>
+                        <View style={{ flexDirection: 'row' }}>
+                            <Ionicons name="chatbox" size={20} color={color.text._400} />
+                            <Text style={styles.smallTextChat}>{item.entryCount}</Text>
+                        </View>
+                        <View style={{ flexDirection: 'row' }}>
+                            <Text style={styles.smallText}>{date.toLocaleDateString()}</Text>
+                            <Text style={styles.smallText}>{date.toLocaleTimeString()}</Text>
+                        </View>
+                    </View>
                 </View>
-            </TouchableOpacity>
-            <ChatEditPopup item={item} />
-        </View>
+            </View>
+        </ChatEditPopup>
     )
 }
 
