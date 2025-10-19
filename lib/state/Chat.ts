@@ -204,10 +204,13 @@ export namespace Chats {
                 const userID = Characters.useUserStore.getState().id
                 if (userID !== data.user_id) {
                     Logger.info('Autoloading User with ID: ' + data.user_id)
-                    await Characters.useUserStore.getState().setCard(data.user_id)
-                    const name = Characters.useUserStore.getState().card?.name
+                    const name = await Characters.useUserStore.getState().setCard(data.user_id)
                     if (name) {
                         Logger.infoToast('Loading User : ' + name)
+                    } else {
+                        Logger.warn(
+                            `Failed to load User with ID ${data.user_id}, it was likely deleted. Consider relinking this chat.`
+                        )
                     }
                 }
             }
