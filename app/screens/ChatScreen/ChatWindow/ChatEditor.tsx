@@ -1,11 +1,9 @@
 import ThemedButton from '@components/buttons/ThemedButton'
-import FadeBackrop from '@components/views/FadeBackdrop'
-import { useUnfocusTextInput } from '@lib/hooks/UnfocusTextInput'
+import BottomSheet from '@components/views/BottomSheet'
 import { Chats } from '@lib/state/Chat'
 import { Theme } from '@lib/theme/ThemeManager'
 import React, { useEffect, useState } from 'react'
-import { GestureResponderEvent, Modal, StyleSheet, Text, TextInput, View } from 'react-native'
-import { KeyboardAvoidingView, useKeyboardState } from 'react-native-keyboard-controller'
+import { StyleSheet, Text, TextInput, View } from 'react-native'
 import Animated, { SlideOutDown } from 'react-native-reanimated'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { create } from 'zustand'
@@ -39,15 +37,11 @@ const ChatEditor = () => {
         }))
     )
     const styles = useStyles()
-    const inputRef = useUnfocusTextInput()
 
     const { updateEntry, deleteEntry } = Chats.useEntry()
     const { swipeText, swipe } = Chats.useSwipeData(index)
     const entry = Chats.useEntryData(index)
     const [placeholderText, setPlaceholderText] = useState('')
-    const insets = useSafeAreaInsets()
-    const keyboardState = useKeyboardState()
-    const bottomPad = keyboardState.isVisible ? 0 : insets.bottom
     useEffect(() => {
         editMode && swipeText !== undefined && setPlaceholderText(swipeText)
     }, [swipeText, editMode])
@@ -69,83 +63,55 @@ const ChatEditor = () => {
         hide()
     }
 
-    const handleOverlayClick = (e: GestureResponderEvent) => {
-        if (e.target === e.currentTarget) handleClose()
-    }
-
-    const handleAutoFocus = () => {
-        setTimeout(() => {
-            inputRef.current?.focus()
-            inputRef.current?.setSelection(placeholderText.length, placeholderText.length)
-        }, 1)
-    }
-
     return (
-        <Modal
+        <BottomSheet
             visible={editMode}
-            animationType="fade"
-            transparent
-            statusBarTranslucent
-            navigationBarTranslucent
-            onShow={handleAutoFocus}
-            onRequestClose={handleClose}
-            style={{ flex: 1 }}>
-            <KeyboardAvoidingView
-                behavior="padding"
-                style={{ flex: 1 }}
-                keyboardVerticalOffset={-insets.bottom}>
-                <FadeBackrop handleOverlayClick={handleOverlayClick} />
-                <View style={{ flex: 1 }}>
-                    <View style={{ flex: 1 }} />
-                    <Animated.View
-                        exiting={SlideOutDown.duration(100)}
-                        style={styles.editorContainer}>
-                        <View style={styles.topText}>
-                            <Text numberOfLines={1} style={styles.nameText} ellipsizeMode="tail">
-                                {entry?.name}
-                            </Text>
-                            <Text style={styles.timeText}>
-                                {swipe?.send_date.toLocaleTimeString()}
-                            </Text>
-                        </View>
-
-                        <TextInput
-                            ref={inputRef}
-                            style={styles.messageInput}
-                            value={placeholderText}
-                            onChangeText={setPlaceholderText}
-                            textBreakStrategy="simple"
-                            multiline
-                        />
-
-                        <View
-                            style={{
-                                flexDirection: 'row',
-                                justifyContent: 'space-between',
-                            }}>
-                            <ThemedButton
-                                label="Delete"
-                                iconName="delete"
-                                onPress={handleDeleteMessage}
-                                variant="critical"
-                            />
-                            <ThemedButton
-                                iconName="reload1"
-                                variant="tertiary"
-                                label="Reset"
-                                onPress={() => swipeText && setPlaceholderText(swipeText)}
-                            />
-                            <ThemedButton
-                                label="Confirm"
-                                iconName="check"
-                                onPress={handleEditMessage}
-                                variant="secondary"
-                            />
-                        </View>
-                    </Animated.View>
+            setVisible={(visible) => {
+                if (!visible) handleClose()
+            }}
+            onClose={handleClose}>
+            <Animated.View exiting={SlideOutDown.duration(100)} style={styles.editorContainer}>
+                <View style={styles.topText}>
+                    <Text numberOfLines={1} style={styles.nameText} ellipsizeMode="tail">
+                        {entry?.name}
+                    </Text>
+                    <Text style={styles.timeText}>{swipe?.send_date.toLocaleTimeString()}</Text>
                 </View>
-            </KeyboardAvoidingView>
-        </Modal>
+
+                <TextInput
+                    style={styles.messageInput}
+                    value={placeholderText}
+                    onChangeText={setPlaceholderText}
+                    textBreakStrategy="simple"
+                    multiline
+                />
+
+                <View
+                    style={{
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                    }}>
+                    <ThemedButton
+                        label="Delete"
+                        iconName="delete"
+                        onPress={handleDeleteMessage}
+                        variant="critical"
+                    />
+                    <ThemedButton
+                        iconName="reload1"
+                        variant="tertiary"
+                        label="Reset"
+                        onPress={() => swipeText && setPlaceholderText(swipeText)}
+                    />
+                    <ThemedButton
+                        label="Confirm"
+                        iconName="check"
+                        onPress={handleEditMessage}
+                        variant="secondary"
+                    />
+                </View>
+            </Animated.View>
+        </BottomSheet>
     )
 }
 
@@ -156,14 +122,6 @@ const useStyles = () => {
     const insets = useSafeAreaInsets()
     return StyleSheet.create({
         editorContainer: {
-            flexShrink: 1,
-            backgroundColor: color.neutral._100,
-            paddingTop: spacing.xl,
-            paddingBottom: spacing.l + insets.bottom,
-            paddingHorizontal: spacing.xl,
-            borderTopRightRadius: borderRadius.l,
-            borderTopLeftRadius: borderRadius.l,
-            marginTop: insets.top,
             rowGap: 12,
         },
 
@@ -192,7 +150,6 @@ const useStyles = () => {
             borderRadius: 8,
             borderWidth: 1,
             padding: 8,
-            flexShrink: 1,
         },
     })
 }

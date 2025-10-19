@@ -50,7 +50,8 @@ const InputSheet: React.FC<InputSheetProps> = ({
                     <Text
                         style={{
                             color: color.text._100,
-                            fontSize: fontSize.xl,
+                            fontSize: fontSize.l,
+                            paddingLeft: spacing.s,
                         }}>
                         {title}
                     </Text>

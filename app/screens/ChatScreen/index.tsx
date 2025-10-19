@@ -30,10 +30,10 @@ const ChatScreen = () => {
     )
     const userId = Characters.useUserStore(useShallow((state) => state.id))
 
-    const { height, progress } = useReanimatedKeyboardAnimation()
+    const { height } = useReanimatedKeyboardAnimation()
     const animatedStyle = useAnimatedStyle(() => {
         return {
-            paddingBottom: (-height.value - insets.bottom) * progress.value + insets.bottom,
+            paddingBottom: -height.value - insets.bottom,
             flex: 1,
         }
     })
@@ -148,7 +148,7 @@ const ChatScreen = () => {
                     closeDirection: 'left',
                 },
             ]}>
-            <View style={{ flex: 1 }}>
+            <View style={{ flex: 1, paddingBottom: insets.bottom + 4 }}>
                 <Animated.View style={animatedStyle}>
                     <HeaderTitle />
                     <HeaderButton

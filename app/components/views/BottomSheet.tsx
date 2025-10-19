@@ -23,10 +23,10 @@ const BottomSheet: React.FC<BottomSheetProps> = ({
 }) => {
     const { color, spacing } = Theme.useTheme()
     const insets = useSafeAreaInsets()
-    const { height, progress } = useReanimatedKeyboardAnimation()
+    const { height } = useReanimatedKeyboardAnimation()
     const animatedStyle = useAnimatedStyle(() => {
         return {
-            paddingBottom: (-height.value - insets.bottom) * progress.value,
+            paddingBottom: -height.value - insets.bottom,
             flex: 1,
             alignItems: 'flex-end',
         }
@@ -51,7 +51,7 @@ const BottomSheet: React.FC<BottomSheetProps> = ({
                         {
                             paddingTop: spacing.xl2,
                             paddingBottom: insets.bottom + spacing.xl2,
-                            paddingHorizontal: spacing.xl3,
+                            paddingHorizontal: spacing.xl2,
                             maxHeight: '70%',
                             width: '100%',
                             borderTopLeftRadius: spacing.xl2,
