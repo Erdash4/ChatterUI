@@ -1,16 +1,18 @@
 import ThemedButton from '@components/buttons/ThemedButton'
+import ThemedSwitch from '@components/input/ThemedSwitch'
 import Alert from '@components/views/Alert'
 import ContextMenu from '@components/views/ContextMenu'
 import HeaderButton from '@components/views/HeaderButton'
 import HeaderTitle from '@components/views/HeaderTitle'
 import InputSheet from '@components/views/InputSheet'
+import { Octicons } from '@expo/vector-icons'
 import { Logger } from '@lib/state/Logger'
 import { DefaultColorSchemes, ThemeColor } from '@lib/theme/ThemeColor'
 import { Theme } from '@lib/theme/ThemeManager'
 import { pickJSONDocument } from '@lib/utils/File'
 import { setBackgroundColorAsync } from 'expo-system-ui'
 import React, { useState } from 'react'
-import { FlatList, Linking, Text, TouchableOpacity, View } from 'react-native'
+import { FlatList, Linking, Text, TouchableOpacity, useColorScheme, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useShallow } from 'zustand/react/shallow'
 
@@ -21,19 +23,34 @@ type ColorThemeItemProps = {
 }
 
 const ColorThemeItem: React.FC<ColorThemeItemProps> = ({ item, index, showDelete = false }) => {
-    const { color, setColor, customColors, removeColorScheme } = Theme.useColorState(
+    const {
+        systemDark,
+        removeColorScheme,
+        color,
+        darkColor,
+        lightColor,
+        setColor,
+        setDarkColor,
+        setLightColor,
+    } = Theme.useColorState(
         useShallow((state) => ({
+            systemDark: state.useSystemDarkMode,
             color: state.color,
+            lightColor: state.lightColor,
+            darkColor: state.darkColor,
             setColor: state.setColor,
-            customColors: state.customColors,
+            setLightColor: state.setLightColor,
+            setDarkColor: state.setDarkColor,
             removeColorScheme: state.removeColorScheme,
         }))
     )
+    const systemTheme = useColorScheme()
+    const activeColor = systemDark ? (systemTheme === 'dark' ? darkColor : lightColor) : color
 
     const handleRemoveColorScheme = (index: number) => {
         Alert.alert({
             title: 'Delete Theme',
-            description: `Are you sure you want to delete ${customColors[0]?.name}? This cannot be undone!`,
+            description: `Are you sure you want to delete "${item.name}"? This cannot be undone!`,
             buttons: [
                 { label: 'Cancel' },
                 {
@@ -55,6 +72,7 @@ const ColorThemeItem: React.FC<ColorThemeItemProps> = ({ item, index, showDelete
                 alignItems: 'center',
             }}>
             <TouchableOpacity
+                disabled={systemDark}
                 onPress={() => {
                     setColor(item)
                     setBackgroundColorAsync(item.neutral._100)
@@ -88,20 +106,16 @@ const ColorThemeItem: React.FC<ColorThemeItemProps> = ({ item, index, showDelete
                             borderRadius: 24,
                         }}
                     />
-                    <Text
-                        style={{ color: item.text._100, flex: 1 }}
-                        numberOfLines={1}
-                        ellipsizeMode="tail">
+                    <Text style={{ color: item.text._100, flex: 1 }} ellipsizeMode="tail">
                         {item.name}
                     </Text>
-                    {color.name === item.name && (
+                    {!systemDark && item.name === color.name && (
                         <Text
                             style={{
                                 color: item.text._100,
                                 borderColor: item.neutral._300,
                                 borderWidth: 2,
                                 paddingHorizontal: 8,
-                                paddingVertical: 2,
                                 borderRadius: 8,
                             }}>
                             Active
@@ -110,7 +124,7 @@ const ColorThemeItem: React.FC<ColorThemeItemProps> = ({ item, index, showDelete
                 </View>
                 {showDelete ? (
                     <ThemedButton
-                        iconStyle={{ color: color.error._500 }}
+                        iconStyle={{ color: item.error._500 }}
                         variant="tertiary"
                         iconSize={20}
                         iconName="delete"
@@ -124,13 +138,72 @@ const ColorThemeItem: React.FC<ColorThemeItemProps> = ({ item, index, showDelete
                     </Text>
                 )}
             </TouchableOpacity>
+            {systemDark && (
+                <>
+                    <TouchableOpacity
+                        style={{
+                            padding: 10,
+                            borderColor: activeColor.text._100,
+                            borderWidth: 1,
+                            backgroundColor: activeColor.neutral._100,
+                            paddingHorizontal: 16,
+                            paddingVertical: 12,
+                            borderRadius: 8,
+                        }}
+                        onPress={() => {
+                            setLightColor(item)
+                            if (systemTheme === 'light') setBackgroundColorAsync(item.neutral._100)
+                        }}>
+                        <Octicons
+                            color={
+                                item.name === lightColor.name
+                                    ? activeColor.text._100
+                                    : activeColor.text._700
+                            }
+                            name="sun"
+                            icon
+                            size={18}
+                        />
+                    </TouchableOpacity>
+
+                    <TouchableOpacity
+                        style={{
+                            padding: 10,
+                            borderColor: activeColor.text._100,
+                            borderWidth: 1,
+                            backgroundColor: activeColor.neutral._100,
+                            paddingHorizontal: 16,
+                            paddingVertical: 12,
+                            borderRadius: 8,
+                        }}
+                        onPress={() => {
+                            setDarkColor(item)
+                            if (systemTheme === 'light') setBackgroundColorAsync(item.neutral._100)
+                        }}>
+                        <Octicons
+                            color={
+                                item.name === darkColor.name
+                                    ? activeColor.text._100
+                                    : activeColor.text._700
+                            }
+                            name="moon"
+                            icon
+                            size={18}
+                        />
+                    </TouchableOpacity>
+                </>
+            )}
         </View>
     )
 }
 
 const ColorSelector = () => {
-    const { customColors, addCustomColor } = Theme.useColorState(
+    const { systemDark, setSystemDark, customColors, addCustomColor } = Theme.useColorState(
         useShallow((state) => ({
+            // system
+            systemDark: state.useSystemDarkMode,
+            setSystemDark: state.setUseSystemDarkMode,
+            // custom color
             customColors: state.customColors,
             addCustomColor: state.addCustomColor,
         }))
@@ -139,8 +212,13 @@ const ColorSelector = () => {
     const [showPaste, setShowPaste] = useState(false)
 
     return (
-        <SafeAreaView edges={['bottom']} style={{ padding: 16, rowGap: 16 }}>
+        <SafeAreaView edges={['bottom']} style={{ paddingHorizontal: 16, rowGap: 16, flex: 1 }}>
             <HeaderTitle title="Themes" />
+            <ThemedSwitch
+                value={systemDark}
+                onChangeValue={setSystemDark}
+                label="Use System Dark Mode"
+            />
             <HeaderButton
                 headerRight={() => (
                     <ContextMenu
@@ -194,10 +272,12 @@ const ColorSelector = () => {
                 multiline
                 title="Paste Theme Here"
             />
+
             <FlatList
+                style={{ flex: 1 }}
                 contentContainerStyle={{ rowGap: 8 }}
                 data={[...DefaultColorSchemes.schemes, ...customColors]}
-                keyExtractor={(item, index) => item.name}
+                keyExtractor={(item) => item.name}
                 renderItem={({ item, index }) => (
                     <ColorThemeItem
                         item={item}

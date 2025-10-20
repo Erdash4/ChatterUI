@@ -6,13 +6,21 @@ import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 
 import { DefaultColorSchemes, ThemeColor, themeColorSchemaV1 } from './ThemeColor'
+import { useShallow } from 'zustand/react/shallow'
+import { useColorScheme } from 'react-native'
 
 interface ColorStateProps {
+    useSystemDarkMode: boolean
+    setUseSystemDarkMode: (b: boolean) => void
     customColors: ThemeColor[]
     addCustomColor: (colorScheme: ThemeColor) => void
     removeColorScheme: (index: number) => void
     color: ThemeColor
+    lightColor: ThemeColor
+    darkColor: ThemeColor
     setColor: (colorScheme: ThemeColor) => void
+    setLightColor: (colorScheme: ThemeColor) => void
+    setDarkColor: (colorScheme: ThemeColor) => void
 }
 
 export const useGlobalStyles = () => {
@@ -24,10 +32,23 @@ export namespace Theme {
     export const useColorState = create<ColorStateProps>()(
         persist(
             (set, get) => ({
+                useSystemDarkMode: true,
                 color: DefaultColorSchemes.lavenderDark,
+                darkColor: DefaultColorSchemes.lavenderDark,
+                lightColor: DefaultColorSchemes.lavenderLight,
                 setColor: (color) => {
-                    set((state) => ({ ...state, color: color }))
+                    set({ color: color })
                 },
+                setLightColor: (color) => {
+                    set({ lightColor: color })
+                },
+                setDarkColor: (color) => {
+                    set({ darkColor: color })
+                },
+                setUseSystemDarkMode: (b) => {
+                    set({ useSystemDarkMode: b })
+                },
+
                 customColors: [],
                 addCustomColor: (colorScheme: ThemeColor) => {
                     const validation = themeColorSchemaV1.safeParse(colorScheme)
@@ -61,18 +82,44 @@ export namespace Theme {
                         return
                     }
                     const colors = [...get().customColors]
-                    colors.splice(index, 1)
-                    set((state) => ({
-                        ...state,
+                    const removedArr = colors.splice(index, 1)
+                    const removed = removedArr?.[0]
+                    let color = get().color
+                    let lightColor = get().lightColor
+                    let darkColor = get().darkColor
+                    if (removed) {
+                        if (removed.name === color.name) color = DefaultColorSchemes.lavenderDark
+                        if (removed.name === lightColor.name)
+                            color = DefaultColorSchemes.lavenderLight
+                        if (removed.name === darkColor.name)
+                            color = DefaultColorSchemes.lavenderDark
+                    }
+                    set({
                         customColors: colors,
-                    }))
+                        color,
+                        lightColor,
+                        darkColor,
+                    })
                 },
             }),
             {
                 name: Storage.ColorState,
                 storage: createMMKVStorage(),
-                version: 1,
-                partialize: (state) => ({ color: state.color, customColors: state.customColors }),
+                version: 2,
+                partialize: (state) => ({
+                    color: state.color,
+                    customColors: state.customColors,
+                    darkColor: state.darkColor,
+                    lightColor: state.lightColor,
+                    useSystemDarkMode: state.useSystemDarkMode,
+                }),
+                migrate: (persistedState: any, version) => {
+                    if (version === 1) {
+                        persistedState.darkColor = DefaultColorSchemes.lavenderDark
+                        persistedState.lightColor = DefaultColorSchemes.lavenderLight
+                        persistedState.useSystemDarkMode = false
+                    }
+                },
             }
         )
     )
@@ -106,13 +153,28 @@ export namespace Theme {
 
     const fontSize = { s: 12, m: 14, l: 16, xl: 18, xl2: 20, xl3: 24 }
 
+    const font = ''
+
     export const useTheme = () => {
-        const color = useColorState((state) => state.color)
-        const font = ''
+        const systemTheme = useColorScheme()
+        const { selectedColor, useSystemDarkMode, lightColor, darkColor } = useColorState(
+            useShallow((state) => ({
+                selectedColor: state.color,
+                useSystemDarkMode: state.useSystemDarkMode,
+                lightColor: state.lightColor,
+                darkColor: state.darkColor,
+            }))
+        )
+
+        const color = useSystemDarkMode
+            ? systemTheme === 'dark'
+                ? darkColor
+                : lightColor
+            : selectedColor
 
         return useMemo(
             () => ({ color, spacing, font, borderWidth, fontSize, borderRadius }),
-            [color]
+            [color, systemTheme]
         )
     }
 }
