@@ -1,6 +1,6 @@
 import Avatar from '@components/views/Avatar'
 import { AppSettings } from '@lib/constants/GlobalValues'
-import { useAvatarViewerStore } from '@lib/state/AvatarViewer'
+import { useAvatarViewerStore } from '@lib/state/components/AvatarViewer'
 import { Characters } from '@lib/state/Characters'
 import { Chats } from '@lib/state/Chat'
 import { Theme } from '@lib/theme/ThemeManager'

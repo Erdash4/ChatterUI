@@ -1,7 +1,7 @@
 import ThemedButton from '@components/buttons/ThemedButton'
 import Avatar from '@components/views/Avatar'
 import FadeBackrop from '@components/views/FadeBackdrop'
-import { useAvatarViewerStore } from '@lib/state/AvatarViewer'
+import { useAvatarViewerStore } from '@lib/state/components/AvatarViewer'
 import { Characters } from '@lib/state/Characters'
 import { Theme } from '@lib/theme/ThemeManager'
 import { useRouter } from 'expo-router'

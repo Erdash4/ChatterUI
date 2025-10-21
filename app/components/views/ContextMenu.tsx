@@ -1,4 +1,9 @@
 import { AntDesign } from '@expo/vector-icons'
+import {
+    ContextMenuButtonProps,
+    Placement,
+    useContextMenuStore,
+} from '@lib/state/components/ContextMenu'
 import { Theme } from '@lib/theme/ThemeManager'
 import { randomUUID } from 'expo-crypto'
 import { useFocusEffect } from 'expo-router'
@@ -19,22 +24,7 @@ import {
 import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { scheduleOnRN } from 'react-native-worklets'
-import { create } from 'zustand'
 import Portal from './Portal'
-
-export type Placement = 'top' | 'bottom' | 'left' | 'right' | 'auto' | 'center'
-
-export type ContextMenuButtonProps = {
-    key?: string
-    label: string
-    onPress?: (close: () => void) => void
-    submenu?: ContextMenuButtonProps[]
-    icon?: keyof typeof AntDesign.glyphMap
-    iconSize?: number
-    textColor?: string
-    variant?: 'normal' | 'warning'
-    disabled?: boolean
-}
 
 export interface ContextMenuProps extends ViewProps {
     triggerIcon?: keyof typeof AntDesign.glyphMap
@@ -49,20 +39,6 @@ export interface ContextMenuProps extends ViewProps {
     longPress?: boolean
 }
 
-export type MenuState = {
-    openMenuId: string | null
-    anchor: LayoutRectangle | null
-    placement: Placement
-    buttons: ContextMenuButtonProps[]
-    openMenu: (
-        id: string,
-        anchor: LayoutRectangle,
-        buttons: ContextMenuButtonProps[],
-        placement: Placement
-    ) => void
-    closeMenu: () => void
-}
-
 type ContextMenuWindowProps = {
     buttons: ContextMenuButtonProps[]
     handleCloseMenu: () => void
@@ -74,16 +50,6 @@ type ContextMenuWindowProps = {
 }
 
 const genId = () => `context-menu-${randomUUID()}`
-
-const useContextMenuStore = create<MenuState>((set) => ({
-    openMenuId: null,
-    anchor: null,
-    placement: 'auto',
-    buttons: [],
-    openMenu: (id, anchor, buttons, placement) =>
-        set({ openMenuId: id, anchor, buttons, placement }),
-    closeMenu: () => set({ openMenuId: null, anchor: null, buttons: [], placement: 'auto' }),
-}))
 
 const defaultAnimatedMenuValues = {
     top: 0,

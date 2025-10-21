@@ -1,31 +1,10 @@
 import FadeBackrop from '@components/views/FadeBackdrop'
+import { AlertButtonProps, AlertProps, useAlertStore } from '@lib/state/components/Alert'
 import { Theme } from '@lib/theme/ThemeManager'
 import React, { ReactNode } from 'react'
 import { Modal, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import Animated, { FadeInDown } from 'react-native-reanimated'
-import { create } from 'zustand'
 import { useShallow } from 'zustand/react/shallow'
-
-type AlertButtonProps = {
-    label: string
-    onPress?: () => void | Promise<void>
-    type?: 'warning' | 'default'
-}
-
-type AlertProps = {
-    title: string
-    description: string
-    buttons: AlertButtonProps[]
-    alignButtons?: 'left' | 'right'
-    onDismiss?: () => void
-}
-
-type AlertState = {
-    visible: boolean
-    props: AlertProps
-    hide: () => void
-    show: (props: AlertProps) => void
-}
 
 namespace Alert {
     export const alert = (props: AlertProps) => {
@@ -34,25 +13,6 @@ namespace Alert {
 }
 
 export default Alert
-
-const useAlertStore = create<AlertState>()((set, get) => ({
-    visible: false,
-    props: {
-        title: 'Are You Sure?',
-        description: 'LIke `sure` sure?',
-        buttons: [
-            { label: 'Cancel', onPress: () => {}, type: 'default' },
-            { label: 'Confirm', onPress: () => {}, type: 'warning' },
-        ],
-        alignButtons: 'right',
-    },
-    hide: () => {
-        set((state) => ({ ...state, visible: false }))
-    },
-    show: (props: AlertProps) => {
-        set((state) => ({ ...state, visible: true, props: props }))
-    },
-}))
 
 type AlertProviderProps = {
     children: ReactNode
