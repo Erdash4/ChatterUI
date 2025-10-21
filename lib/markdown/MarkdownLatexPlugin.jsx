@@ -8,8 +8,8 @@ module.exports = function latexDetectorPlugin(md) {
             const max = state.eMarks[startLine]
             const line = state.src.slice(start, max).trim()
 
-            let isBracket = line.startsWith('\\[')
-            let isDollar = line.startsWith('$$')
+            const isBracket = line.startsWith('\\[')
+            const isDollar = line.startsWith('$$')
 
             if (!isBracket && !isDollar) return false
 

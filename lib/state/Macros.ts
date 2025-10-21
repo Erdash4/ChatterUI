@@ -1,4 +1,5 @@
 import { Macro, replaceMacroBase } from '@lib/utils/Macros'
+
 import { Characters } from './Characters'
 
 /**

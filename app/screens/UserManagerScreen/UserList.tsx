@@ -1,4 +1,5 @@
 import ThemedButton from '@components/buttons/ThemedButton'
+import InputSheet from '@components/views/InputSheet'
 import { Characters } from '@lib/state/Characters'
 import { Theme } from '@lib/theme/ThemeManager'
 import { FlashList } from '@shopify/flash-list'
@@ -7,7 +8,6 @@ import React, { useState } from 'react'
 import { Text, View } from 'react-native'
 import { useShallow } from 'zustand/react/shallow'
 
-import InputSheet from '@components/views/InputSheet'
 import UserListing from './UserListing'
 
 const UserList = () => {

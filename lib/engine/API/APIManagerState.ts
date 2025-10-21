@@ -3,10 +3,10 @@ import { Logger } from '@lib/state/Logger'
 import { createMMKVStorage } from '@lib/storage/MMKV'
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
+import { useShallow } from 'zustand/react/shallow'
 
 import { APIConfiguration, APIValues } from './APIBuilder.types'
 import { defaultTemplates } from './DefaultAPI'
-import { useShallow } from 'zustand/react/shallow'
 
 export interface APIManagerValue extends APIValues {
     active: boolean

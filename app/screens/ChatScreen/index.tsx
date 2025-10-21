@@ -6,6 +6,9 @@ import HeaderTitle from '@components/views/HeaderTitle'
 import SettingsDrawer from '@components/views/SettingsDrawer'
 import { Characters } from '@lib/state/Characters'
 import { Chats } from '@lib/state/Chat'
+import { Logger } from '@lib/state/Logger'
+import { ChatImportSchema } from '@lib/utils/ChatSchema'
+import { pickStringDocument } from '@lib/utils/File'
 import ChatInput from '@screens/ChatScreen/ChatInput'
 import ChatWindow from '@screens/ChatScreen/ChatWindow'
 import ChatsDrawer from '@screens/ChatScreen/ChatsDrawer'
@@ -15,10 +18,8 @@ import { useReanimatedKeyboardAnimation } from 'react-native-keyboard-controller
 import Animated, { useAnimatedStyle } from 'react-native-reanimated'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { useShallow } from 'zustand/react/shallow'
+
 import ChatEditor from './ChatWindow/ChatEditor'
-import { pickStringDocument } from '@lib/utils/File'
-import { ChatImportSchema } from '@lib/utils/ChatSchema'
-import { Logger } from '@lib/state/Logger'
 
 const ChatScreen = () => {
     const insets = useSafeAreaInsets()

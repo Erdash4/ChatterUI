@@ -24,6 +24,7 @@ import Animated, {
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { create } from 'zustand'
 import { useShallow } from 'zustand/react/shallow'
+
 import ChatOptions from './ChatInputOptions'
 
 export type Attachment = {

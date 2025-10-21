@@ -51,11 +51,9 @@ const CharacterListing: React.FC<CharacterListingProps> = ({
                                 {getFriendlyTimeStamp(character.last_modified)}
                             </Text>
                         </View>
-                        {
-                            <Text numberOfLines={1} ellipsizeMode="tail" style={styles.previewText}>
-                                {getPreviewText()}
-                            </Text>
-                        }
+                        <Text numberOfLines={1} ellipsizeMode="tail" style={styles.previewText}>
+                            {getPreviewText()}
+                        </Text>
                     </View>
                 </View>
             </CharacterEditPopup>

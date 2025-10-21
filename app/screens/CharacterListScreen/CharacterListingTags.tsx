@@ -1,8 +1,8 @@
-import { View, Text, TouchableOpacity, Pressable } from 'react-native'
-import React from 'react'
-import { Theme } from '@lib/theme/ThemeManager'
 import ThemedButton from '@components/buttons/ThemedButton'
 import { AntDesign } from '@expo/vector-icons'
+import { Theme } from '@lib/theme/ThemeManager'
+import React from 'react'
+import { View, Text, TouchableOpacity, Pressable } from 'react-native'
 
 type CharacterListingTagsProps = {
     tags: string[]

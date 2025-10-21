@@ -1,9 +1,9 @@
 import { AppSettings, CLAUDE_VERSION } from '@lib/constants/GlobalValues'
 import { SSEFetch } from '@lib/engine/SSEFetch'
 import { Logger } from '@lib/state/Logger'
+import { mmkv } from '@lib/storage/MMKV'
 import { nativeApplicationVersion } from 'expo-application'
 
-import { mmkv } from '@lib/storage/MMKV'
 import { buildContext, ContextBuilderParams } from './ContextBuilder'
 import { buildRequest, RequestBuilderParams } from './RequestBuilder'
 
@@ -132,7 +132,6 @@ export const buildAndSendRequest = async ({
                     parseOutput(event, reasonPattern, !inReasoning)
                 ) {
                     inReasoning = true
-                    return
                 }
             },
             onEnd: onEnd,

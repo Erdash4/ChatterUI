@@ -6,10 +6,10 @@ import { eq } from 'drizzle-orm'
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 
-import { replaceMacros } from '../state/Macros'
-import { createMMKVStorage } from '../storage/MMKV'
 import { Characters } from './Characters'
 import { Logger } from './Logger'
+import { replaceMacros } from '../state/Macros'
+import { createMMKVStorage } from '../storage/MMKV'
 
 export const defaultSystemPromptFormat =
     '{{system_prefix}}{{system_prompt}}\n{{character_desc}}\n{{personality}}\n{{scenario}}\n{{user_desc}}{{system_suffix}}'

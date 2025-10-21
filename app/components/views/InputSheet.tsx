@@ -3,6 +3,7 @@ import ThemedTextInput from '@components/input/ThemedTextInput'
 import { Theme } from '@lib/theme/ThemeManager'
 import React, { useState } from 'react'
 import { Text, View } from 'react-native'
+
 import BottomSheet from './BottomSheet'
 
 export type InputSheetProps = {

@@ -1,11 +1,10 @@
 import { SamplerConfigData, SamplerID, Samplers } from '@lib/constants/SamplerData'
 import { InstructType } from '@lib/state/Instructs'
 import { SamplersManager } from '@lib/state/SamplerState'
+import merge from 'lodash.merge'
 
 import { APIConfiguration, APISampler, APIValues } from './APIBuilder.types'
 import { Message } from './ContextBuilder'
-
-import merge from 'lodash.merge'
 
 export interface RequestBuilderParams {
     apiConfig: APIConfiguration

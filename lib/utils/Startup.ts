@@ -5,7 +5,9 @@ import { useAppModeStore } from '@lib/state/AppMode'
 import { Instructs } from '@lib/state/Instructs'
 import { SamplersManager } from '@lib/state/SamplerState'
 import { useTTSStore } from '@lib/state/TTS'
+import { useChatInputTextStore } from '@screens/ChatScreen/ChatInput'
 import { getThreads } from '@vali98/react-native-cpu-info'
+import { setTextIntentEnabled, useTextIntentOnForeground } from '@vali98/react-native-process-text'
 import { getCpuFeatures } from 'cui-llama.rn'
 import { DeviceType, getDeviceTypeAsync } from 'expo-device'
 import {
@@ -15,13 +17,14 @@ import {
     readAsStringAsync,
     readDirectoryAsync,
 } from 'expo-file-system'
+import * as KeepAwake from 'expo-keep-awake'
 import { router } from 'expo-router'
 import { setBackgroundColorAsync as setUIBackgroundColor } from 'expo-system-ui'
 import { z } from 'zod'
 
-import { useChatInputTextStore } from '@screens/ChatScreen/ChatInput'
-import { setTextIntentEnabled, useTextIntentOnForeground } from '@vali98/react-native-process-text'
-import * as KeepAwake from 'expo-keep-awake'
+import { AppDirectory } from './File'
+import { patchAndroidText } from './PatchText'
+import { lockScreenOrientation } from './Screen'
 import { AppSettings, AppSettingsDefault, Global } from '../constants/GlobalValues'
 import { Llama } from '../engine/Local/LlamaLocal'
 import { Characters } from '../state/Characters'
@@ -29,9 +32,6 @@ import { Chats } from '../state/Chat'
 import { Logger } from '../state/Logger'
 import { mmkv } from '../storage/MMKV'
 import { Theme } from '../theme/ThemeManager'
-import { AppDirectory } from './File'
-import { patchAndroidText } from './PatchText'
-import { lockScreenOrientation } from './Screen'
 
 const loadNewestChat = async () => {
     Logger.info('Loading latest chat')

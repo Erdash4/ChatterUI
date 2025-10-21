@@ -1,6 +1,7 @@
 import ThemedButton from '@components/buttons/ThemedButton'
 import ThemedTextInput from '@components/input/ThemedTextInput'
 import Drawer from '@components/views/Drawer'
+import { YAxisOnlyTransition } from '@lib/animations/transitions'
 import { useDebounce } from '@lib/hooks/Debounce'
 import { Characters } from '@lib/state/Characters'
 import { Chats } from '@lib/state/Chat'
@@ -11,12 +12,11 @@ import { useLiveQuery } from 'drizzle-orm/expo-sqlite'
 import { useState } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import Animated, { FadeIn, FadeOut } from 'react-native-reanimated'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { useShallow } from 'zustand/react/shallow'
 
-import { YAxisOnlyTransition } from '@lib/animations/transitions'
 import ChatDrawerItem from './ChatDrawerItem'
 import ChatDrawerSearchItem from './ChatDrawerSearchItem'
-import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 const ChatsDrawer = () => {
     const styles = useStyles()

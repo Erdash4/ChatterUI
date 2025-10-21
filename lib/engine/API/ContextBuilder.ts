@@ -3,12 +3,12 @@ import { CharacterCardData, CharacterTokenCache } from '@lib/state/Characters'
 import { ChatEntry } from '@lib/state/Chat'
 import { defaultSystemPromptFormat, InstructTokenCache, InstructType } from '@lib/state/Instructs'
 import { Logger } from '@lib/state/Logger'
+import { replaceMacros } from '@lib/state/Macros'
 import { mmkv } from '@lib/storage/MMKV'
+import { Macro } from '@lib/utils/Macros'
 import { readAsStringAsync } from 'expo-file-system'
 
-import { replaceMacros } from '@lib/state/Macros'
 import { APIConfiguration, APIValues } from './APIBuilder.types'
-import { Macro } from '@lib/utils/Macros'
 
 export type MessageLoader = {
     retrieve: (limit: number, offset: number) => Promise<ChatEntry[]>
@@ -87,7 +87,7 @@ export const buildChatCompletionContext = async ({
         usePrefix: false,
     })
 
-    let initial = systemPrompt
+    const initial = systemPrompt
     let total_length = systemPromptLength
 
     const payload: Message[] = [
@@ -222,7 +222,7 @@ export const buildTextCompletionContext = async ({
     })
 
     let payload = systemPrompt
-    let payloadLength = systemPromptLength
+    const payloadLength = systemPromptLength
 
     // suffix must be delayed for example messages
     let message_acc = ``
@@ -335,7 +335,7 @@ const thinkRule = {
 }
 
 const getMacroRules = (instruct: InstructType) => {
-    let data: Macro[] = []
+    const data: Macro[] = []
     if (instruct.hide_think_tags) {
         data.push(thinkRule)
     }

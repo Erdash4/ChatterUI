@@ -12,11 +12,11 @@ import { getInfoAsync, writeAsStringAsync } from 'expo-file-system'
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 
+import { checkGGMLDeprecated } from './GGML'
+import { KV, Model } from './Model'
 import { AppSettings } from '../../constants/GlobalValues'
 import { Logger } from '../../state/Logger'
 import { createMMKVStorage, mmkv } from '../../storage/MMKV'
-import { checkGGMLDeprecated } from './GGML'
-import { KV, Model } from './Model'
 
 export type CompletionTimings = {
     predicted_per_token_ms: number

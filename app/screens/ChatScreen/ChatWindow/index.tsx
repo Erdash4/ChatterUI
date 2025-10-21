@@ -14,11 +14,12 @@ import { FlatList } from 'react-native'
 import { useMMKVBoolean } from 'react-native-mmkv'
 import Animated, { FadeIn, FadeOut, LinearTransition } from 'react-native-reanimated'
 import { useShallow } from 'zustand/react/shallow'
+
 import { useInputHeightStore } from '../ChatInput'
 import ChatFooter from './ChatFooter'
+import ChatHeaderGradient from './ChatHeaderGradient'
 import ChatItem from './ChatItem'
 import ChatModelName from './ChatModelName'
-import ChatHeaderGradient from './ChatHeaderGradient'
 
 type ListItem = {
     index: number

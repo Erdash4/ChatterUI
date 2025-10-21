@@ -1,11 +1,11 @@
-import { View, Text, StyleSheet } from 'react-native'
-import React from 'react'
-import { Theme } from '@lib/theme/ThemeManager'
-import { useShallow } from 'zustand/react/shallow'
-import { Llama } from '@lib/engine/Local/LlamaLocal'
 import { AntDesign } from '@expo/vector-icons'
-
+import { Llama } from '@lib/engine/Local/LlamaLocal'
+import { Theme } from '@lib/theme/ThemeManager'
+import React from 'react'
+import { View, Text, StyleSheet } from 'react-native'
 import * as Progress from 'react-native-progress'
+import { useShallow } from 'zustand/react/shallow'
+
 type ModelInfoHeaderProps = {
     modelImporting: boolean
     modelLoading: boolean

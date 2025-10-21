@@ -1,4 +1,5 @@
 import ThemedButton from '@components/buttons/ThemedButton'
+import Alert from '@components/views/Alert'
 import { AppSettings } from '@lib/constants/GlobalValues'
 import { Chats, useInference } from '@lib/state/Chat'
 import { Logger } from '@lib/state/Logger'
@@ -15,7 +16,6 @@ import { useShallow } from 'zustand/react/shallow'
 
 import { useChatEditorStore } from './ChatEditor'
 import ChatTTS from './ChatTTS'
-import Alert from '@components/views/Alert'
 
 interface OptionsStateProps {
     activeIndex?: number

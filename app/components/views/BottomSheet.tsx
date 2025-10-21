@@ -4,6 +4,7 @@ import { Modal, View, ViewStyle } from 'react-native'
 import { useReanimatedKeyboardAnimation } from 'react-native-keyboard-controller'
 import Animated, { useAnimatedStyle } from 'react-native-reanimated'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
+
 import FadeBackrop from './FadeBackdrop'
 
 export interface BottomSheetProps {

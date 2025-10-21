@@ -1,17 +1,17 @@
-import { MaterialCommunityIcons } from '@expo/vector-icons'
-import { APIManager } from '@lib/engine/API/APIManagerState'
-import { Logger } from '@lib/state/Logger'
-import { Theme } from '@lib/theme/ThemeManager'
-import { FlatList, Linking, Text, View } from 'react-native'
-import { useShallow } from 'zustand/react/shallow'
-
 import ContextMenu from '@components/views/ContextMenu'
 import HeaderButton from '@components/views/HeaderButton'
 import HeaderTitle from '@components/views/HeaderTitle'
 import InputSheet from '@components/views/InputSheet'
+import { MaterialCommunityIcons } from '@expo/vector-icons'
+import { APIManager } from '@lib/engine/API/APIManagerState'
+import { Logger } from '@lib/state/Logger'
+import { Theme } from '@lib/theme/ThemeManager'
 import { pickJSONDocument } from '@lib/utils/File'
 import { useState } from 'react'
+import { FlatList, Linking, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import { useShallow } from 'zustand/react/shallow'
+
 import TemplateItem from './TemplateItem'
 
 const TemplateManager = () => {

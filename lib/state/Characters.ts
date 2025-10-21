@@ -2,6 +2,7 @@ import { db as database } from '@db'
 import { Tokenizer } from '@lib/engine/Tokenizer'
 import { Storage } from '@lib/enums/Storage'
 import { saveStringToDownload } from '@lib/utils/File'
+import { replaceMacroBase } from '@lib/utils/Macros'
 import {
     characterGreetings,
     characterTags,
@@ -22,10 +23,9 @@ import { z } from 'zod'
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 
-import { replaceMacroBase } from '@lib/utils/Macros'
+import { Logger } from './Logger'
 import { createMMKVStorage } from '../storage/MMKV'
 import { createPNGWithText, getPngChunkText } from '../utils/PNG'
-import { Logger } from './Logger'
 
 export type CharInfo = {
     name: string

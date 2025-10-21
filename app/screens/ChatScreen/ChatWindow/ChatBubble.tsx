@@ -6,12 +6,12 @@ import { Pressable, Text, View } from 'react-native'
 import { useMMKVBoolean } from 'react-native-mmkv'
 import { useShallow } from 'zustand/react/shallow'
 
-import ChatQuickActions, { useChatActionsState } from './ChatQuickActions'
 import ChatAttachments from './ChatAttachments'
+import { useChatEditorStore } from './ChatEditor'
+import ChatQuickActions, { useChatActionsState } from './ChatQuickActions'
+import ChatSwipes from './ChatSwipes'
 import ChatText from './ChatText'
 import ChatTextLast from './ChatTextLast'
-import { useChatEditorStore } from './ChatEditor'
-import ChatSwipes from './ChatSwipes'
 
 type ChatTextProps = {
     index: number

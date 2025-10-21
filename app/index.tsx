@@ -1,3 +1,4 @@
+import ThemedButton from '@components/buttons/ThemedButton'
 import HeaderTitle from '@components/views/HeaderTitle'
 import { db } from '@db'
 import { AntDesign } from '@expo/vector-icons'
@@ -11,7 +12,6 @@ import { SplashScreen } from 'expo-router'
 import { useEffect, useState } from 'react'
 import { Linking, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
-import ThemedButton from '@components/buttons/ThemedButton'
 import migrations from '../db/migrations/migrations'
 
 const Home = () => {
@@ -55,7 +55,7 @@ const Home = () => {
                     If you are seeing this, something has gone terribly wrong. Report this error
                     below, include a screenshot of the log above.
                 </Text>
-                <Text style={styles.subtitle}></Text>
+                <Text style={styles.subtitle} />
                 <ThemedButton
                     variant="secondary"
                     label="Github Repository"

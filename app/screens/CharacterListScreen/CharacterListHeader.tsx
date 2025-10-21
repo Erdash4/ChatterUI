@@ -4,6 +4,7 @@ import ThemedTextInput from '@components/input/ThemedTextInput'
 import { db } from '@db'
 import { AppSettings } from '@lib/constants/GlobalValues'
 import { CharacterSorter } from '@lib/state/CharacterSorter'
+import { Logger } from '@lib/state/Logger'
 import { TagHider } from '@lib/state/TagHider'
 import { Theme } from '@lib/theme/ThemeManager'
 import { characterTags, tags } from 'db/schema'
@@ -15,7 +16,6 @@ import { BackHandler, Text, View } from 'react-native'
 import { useMMKVBoolean } from 'react-native-mmkv'
 import Animated, { FadeIn, FadeOut, LinearTransition } from 'react-native-reanimated'
 
-import { Logger } from '@lib/state/Logger'
 import SortButton from './SortButton'
 
 type CharacterListHeaderProps = {
