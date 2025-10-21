@@ -2,12 +2,12 @@ import { Storage } from '@lib/enums/Storage'
 import { Logger } from '@lib/state/Logger'
 import { createMMKVStorage } from '@lib/storage/MMKV'
 import { useMemo } from 'react'
+import { useColorScheme } from 'react-native'
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
+import { useShallow } from 'zustand/react/shallow'
 
 import { DefaultColorSchemes, ThemeColor, themeColorSchemaV1 } from './ThemeColor'
-import { useShallow } from 'zustand/react/shallow'
-import { useColorScheme } from 'react-native'
 
 interface ColorStateProps {
     useSystemDarkMode: boolean
@@ -90,9 +90,9 @@ export namespace Theme {
                     if (removed) {
                         if (removed.name === color.name) color = DefaultColorSchemes.lavenderDark
                         if (removed.name === lightColor.name)
-                            color = DefaultColorSchemes.lavenderLight
+                            lightColor = DefaultColorSchemes.lavenderLight
                         if (removed.name === darkColor.name)
-                            color = DefaultColorSchemes.lavenderDark
+                            darkColor = DefaultColorSchemes.lavenderDark
                     }
                     set({
                         customColors: colors,
