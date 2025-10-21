@@ -228,10 +228,10 @@ export namespace Instructs {
                 tokenCache: undefined,
                 load: async (id: number) => {
                     const data = await db.query.instruct(id)
-                    set((state) => ({ ...state, data: data, tokenCache: undefined }))
+                    set({ data: data, tokenCache: undefined })
                 },
                 setData: (instruct: InstructType) => {
-                    set((state) => ({ ...state, data: instruct, tokenCache: undefined }))
+                    set({ data: instruct, tokenCache: undefined })
                 },
                 getCache: async (charName: string, userName: string) => {
                     const cache = get().tokenCache
@@ -267,7 +267,7 @@ export namespace Instructs {
                         output_suffix_length: await getTokenCount(instruct.output_suffix),
                         user_alignment_message_length: await getTokenCount(instruct.system_prompt),
                     }
-                    set((state) => ({ ...state, tokenCache: newCache }))
+                    set({ tokenCache: newCache })
                     return newCache
                 },
                 replacedMacros: () => {

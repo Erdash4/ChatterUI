@@ -16,7 +16,7 @@ export const useAppModeStore = create<AppModeStateProps>()(
         (set) => ({
             appMode: 'local',
             setAppMode: (mode) => {
-                set((state) => ({ ...state, appMode: mode }))
+                set({ appMode: mode })
             },
         }),
         {

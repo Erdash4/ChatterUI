@@ -69,20 +69,18 @@ export namespace Characters {
                 tokenCache: undefined,
                 setCard: async (id: number) => {
                     const card = await db.query.card(id)
-                    if (card)
-                        set((state) => ({ ...state, card: card, id: id, tokenCache: undefined }))
+                    if (card) set({ card: card, id: id, tokenCache: undefined })
                     return card?.name
                 },
                 unloadCard: () => {
-                    set((state) => ({
-                        ...state,
+                    set({
                         id: undefined,
                         card: undefined,
                         tokenCache: undefined,
-                    }))
+                    })
                 },
                 updateCard: (card: CharacterCardData) => {
-                    set((state) => ({ ...state, card: card }))
+                    set({ card })
                 },
                 getImage: () => {
                     return getImageDir(get().card?.image_id ?? 0)
@@ -100,7 +98,7 @@ export namespace Characters {
                     await deleteImage(oldImageID)
                     await copyImage(sourceURI, imageID)
                     card.image_id = imageID
-                    set((state) => ({ ...state, card: card }))
+                    set({ card })
                 },
                 getCache: async (userName: string) => {
                     const cache = get().tokenCache
@@ -130,7 +128,7 @@ export namespace Characters {
                         scenario_length: await getTokenCount(scenario),
                     }
 
-                    set((state) => ({ ...state, tokenCache: newCache }))
+                    set({ tokenCache: newCache })
                     return newCache
                 },
             }),
@@ -157,19 +155,18 @@ export namespace Characters {
         tokenCache: undefined,
         setCard: async (id: number) => {
             const card = await db.query.card(id)
-            set((state) => ({ ...state, card: card, id: id, tokenCache: undefined }))
+            set({ card: card, id: id, tokenCache: undefined })
             return card?.name
         },
         updateCard: (card: CharacterCardData) => {
-            set((state) => ({ ...state, card: card }))
+            set({ card })
         },
         unloadCard: () => {
-            set((state) => ({
-                ...state,
+            set({
                 id: undefined,
                 card: undefined,
                 tokenCache: undefined,
-            }))
+            })
         },
         getImage: () => {
             return getImageDir(get().card?.image_id ?? 0)
@@ -187,7 +184,7 @@ export namespace Characters {
             await deleteImage(oldImageID)
             await copyImage(sourceURI, imageID)
             card.image_id = imageID
-            set((state) => ({ ...state, card: card }))
+            set({ card })
         },
         getCache: async (charName: string) => {
             const cache = get().tokenCache
@@ -217,7 +214,7 @@ export namespace Characters {
                 personality_length: await getTokenCount(personality),
                 scenario_length: await getTokenCount(scenario),
             }
-            set((state) => ({ ...state, tokenCache: newCache }))
+            set({ tokenCache: newCache })
             return newCache
         },
     }))

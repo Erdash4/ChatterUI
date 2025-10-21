@@ -10,5 +10,5 @@ export const useAvatarViewerStore = create<ViewerStateProps>()((set) => ({
     showViewer: false,
     isUser: false,
     setShow: (showState: boolean, isUser: boolean = false) =>
-        set((state) => ({ ...state, showViewer: showState, isUser: isUser })),
+        set({ showViewer: showState, isUser: isUser }),
 }))

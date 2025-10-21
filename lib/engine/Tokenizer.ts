@@ -47,7 +47,7 @@ export namespace Tokenizer {
                 vocab_only: true,
                 use_mlock: true,
             })
-            set((state) => ({ ...state, model: context }))
+            set({ model: context })
         },
     }))
 

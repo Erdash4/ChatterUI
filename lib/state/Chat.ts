@@ -166,19 +166,17 @@ export const useInference = create<InferenceStateType>((set, get) => ({
     },
     nowGenerating: false,
     currentSwipeId: undefined,
-    startGenerating: (swipeId: number) =>
-        set((state) => ({ ...state, currentSwipeId: swipeId, nowGenerating: true })),
+    startGenerating: (swipeId: number) => set({ currentSwipeId: swipeId, nowGenerating: true }),
     stopGenerating: () => {
-        set((state) => ({ ...state, nowGenerating: false, currentSwipeId: undefined }))
+        set({ nowGenerating: false, currentSwipeId: undefined })
         if (mmkv.getBoolean(AppSettings.NotifyOnComplete)) sendGenerateCompleteNotification()
     },
     setAbort: (fn) => {
-        set((state) => ({
-            ...state,
+        set({
             abortFunction: async () => {
                 await fn()
             },
-        }))
+        })
     },
 }))
 
@@ -255,11 +253,7 @@ export namespace Chats {
             if (get().data?.id === chatId) get().reset()
         },
 
-        reset: () =>
-            set((state: ChatState) => ({
-                ...state,
-                data: undefined,
-            })),
+        reset: () => set({ data: undefined }),
 
         addEntry: async (
             name: string,
@@ -284,7 +278,6 @@ export namespace Chats {
             }
             if (entry) messages.push(entry)
             set((state) => ({
-                ...state,
                 data: state?.data ? { ...state.data, messages: [...messages] } : state.data,
             }))
             return entry?.swipes[0].id
@@ -300,7 +293,6 @@ export namespace Chats {
             set((state) => {
                 if (!state.data) return state
                 return {
-                    ...state,
                     data: {
                         ...state.data,
                         messages: messages.filter((item, ind) => ind !== index),
@@ -352,7 +344,6 @@ export namespace Chats {
             messages[index].swipes[messages[index].swipe_id] = entry
 
             set((state) => ({
-                ...state,
                 data: state?.data ? { ...state.data, messages: messages } : state.data,
             }))
         },
@@ -373,7 +364,6 @@ export namespace Chats {
             set((state) => {
                 if (state.data) {
                     return {
-                        ...state,
                         data: { ...state.data, messages: messages },
                     }
                 } else return state
@@ -394,8 +384,7 @@ export namespace Chats {
             if (swipe) messages[index].swipes.push(swipe)
             await db.mutate.updateEntrySwipeId(entryId, messages[index].swipes.length - 1)
             messages[index].swipe_id = messages[index].swipes.length - 1
-            set((state: ChatState) => ({
-                ...state,
+            set((state) => ({
                 data: state?.data ? { ...state.data, messages: messages } : state.data,
             }))
             return swipe?.id
@@ -431,17 +420,14 @@ export namespace Chats {
 
             messages[index].swipes[swipe_id].token_count = new_token_count
             set((state: ChatState) => ({
-                ...state,
                 data: state?.data ? { ...state.data, messages: messages } : state.data,
             }))
             return new_token_count
         },
-        setBuffer: (newBuffer: OutputBuffer) =>
-            set((state: ChatState) => ({ ...state, buffer: newBuffer })),
+        setBuffer: (newBuffer: OutputBuffer) => set({ buffer: newBuffer }),
 
         insertBuffer: (data: string) =>
             set((state: ChatState) => ({
-                ...state,
                 buffer: { ...state.buffer, data: state.buffer.data + data },
             })),
 
@@ -482,7 +468,6 @@ export namespace Chats {
             message.swipes[message.swipe_id].regen_cache = message.swipes[message.swipe_id].swipe
             messages[messages.length - 1] = message
             set((state) => ({
-                ...state,
                 data: state?.data ? { ...state.data, messages: messages } : state.data,
             }))
         },
@@ -499,7 +484,6 @@ export namespace Chats {
             message.swipes[message.swipe_id].regen_cache = ''
             messages[messages.length - 1] = message
             set((state) => ({
-                ...state,
                 data: state?.data ? { ...state.data, messages: messages } : state.data,
             }))
         },
@@ -511,7 +495,6 @@ export namespace Chats {
             message.attachments = message.attachments.filter((item) => item.id !== attachmentId)
             messages[index] = message
             set((state) => ({
-                ...state,
                 data: state?.data ? { ...state.data, messages: [...messages] } : state.data,
             }))
         },

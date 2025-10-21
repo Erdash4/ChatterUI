@@ -36,11 +36,10 @@ export namespace APIManager {
                     const values = [...get().values]
                     values.forEach((item) => (item.active = false))
                     values.push(value)
-                    set((state) => ({
-                        ...state,
+                    set({
                         values: values,
                         activeIndex: values.length - 1,
-                    }))
+                    })
                 },
 
                 addTemplate: (template) => {
@@ -55,7 +54,6 @@ export namespace APIManager {
                     }
                     const output = verifyJSON(template, defaultTemplates[0])
                     set((state) => ({
-                        ...state,
                         customTemplates: [...state.customTemplates, output],
                     }))
                 },
@@ -66,7 +64,7 @@ export namespace APIManager {
                         activeIndex = -1
                     }
                     values.splice(index, 1)
-                    set((state) => ({ ...state, values: values, activeIndex: activeIndex }))
+                    set({ values: values, activeIndex: activeIndex })
                 },
                 removeTemplate: (index) => {
                     const templates = get().customTemplates
@@ -87,7 +85,7 @@ export namespace APIManager {
                     if (!newValue.active && oldValue.active) {
                         active = { activeIndex: -1 }
                     }
-                    set((state) => ({ ...state, values: values, ...active }))
+                    set({ values: values, ...active })
                 },
                 getTemplates: () => {
                     return [...defaultTemplates, ...get().customTemplates]

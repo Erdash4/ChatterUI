@@ -189,7 +189,6 @@ namespace Drawer {
         values: {},
         setShow: (key, value) =>
             set((state) => ({
-                ...state,
                 values: { ...state.values, [key]: value },
             })),
     }))

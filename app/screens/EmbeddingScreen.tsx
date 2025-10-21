@@ -198,10 +198,9 @@ export namespace EmbeddingState {
                 embedding: true,
             })
             if (!model) return
-            set((state) => ({
-                ...state,
+            set({
                 model: model,
-            }))
+            })
         },
         getEmbedding: async (text: string) => {
             return await get()?.model?.embedding(text)

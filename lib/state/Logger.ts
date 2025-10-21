@@ -36,10 +36,10 @@ export namespace Logger {
                 addLog: (entry) => {
                     const newlogs = [...get().logs, entry]
                     if (newlogs.length > maxloglength) newlogs.shift()
-                    set((state) => ({ ...state, logs: newlogs }))
+                    set({ logs: newlogs })
                 },
                 flushLogs: () => {
-                    set((state) => ({ ...state, logs: [] }))
+                    set({ logs: [] })
                 },
             }),
             {

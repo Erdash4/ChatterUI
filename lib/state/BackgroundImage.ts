@@ -30,7 +30,7 @@ export const useBackgroundStore = create<BackgroundImageStateProps>()(
                     const name = result.assets[0].name
                     await copyAsync({ from: uri, to: AppDirectory.Assets + name })
 
-                    set((state) => ({ ...state, image: name }))
+                    set({ image: name })
                     Logger.infoToast('Successfully Imported!')
                 } catch (e) {
                     Logger.error('Something went wrong with importing: ' + e)
@@ -39,7 +39,7 @@ export const useBackgroundStore = create<BackgroundImageStateProps>()(
             removeImage: () => {
                 const imageName = get().image
                 if (imageName) deleteAsync(AppDirectory.Assets + imageName, { idempotent: true })
-                set((state) => ({ ...state, image: undefined }))
+                set({ image: undefined })
                 Logger.warnToast('Background Deleted!')
             },
         }),

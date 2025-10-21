@@ -42,14 +42,12 @@ export namespace SamplersManager {
                     }
                     config.data = fixSamplerConfig(config.data)
                     set((state) => ({
-                        ...state,
                         configList: [...state.configList, config],
                         currentConfigIndex: state.configList.length,
                     }))
                 },
                 deleteSamplerConfig: (index) => {
                     set((state) => ({
-                        ...state,
                         configList: state.configList.filter((item, i) => i !== index),
                         currentConfigIndex:
                             index === state.currentConfigIndex ? 0 : state.currentConfigIndex,
@@ -60,11 +58,7 @@ export namespace SamplersManager {
                     if (index >= maxLength || index < 0) {
                         return
                     }
-
-                    set((state) => ({
-                        ...state,
-                        currentConfigIndex: index,
-                    }))
+                    set({ currentConfigIndex: index })
                 },
                 updateCurrentConfig: (config) => {
                     const configs = get().configList

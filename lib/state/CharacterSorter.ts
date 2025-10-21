@@ -30,7 +30,7 @@ export namespace CharacterSorter {
                 textFilter: '',
                 tagFilter: [],
                 setShowSearch: (b) => {
-                    if (b) set((state) => ({ ...state, showSearch: b }))
+                    if (b) set({ showSearch: b })
                     else
                         set({
                             showSearch: b,

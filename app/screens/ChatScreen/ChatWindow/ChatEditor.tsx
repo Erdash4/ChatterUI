@@ -20,10 +20,10 @@ export const useChatEditorStore = create<ChatEditorStateProps>()((set) => ({
     index: 0,
     editMode: false,
     hide: () => {
-        set((state) => ({ ...state, editMode: false }))
+        set({ editMode: false })
     },
     show: (index) => {
-        set((state) => ({ ...state, editMode: true, index: index }))
+        set({ editMode: true, index: index })
     },
 }))
 

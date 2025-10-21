@@ -33,9 +33,9 @@ export const useAlertStore = create<AlertStoreProps>()((set, get) => ({
         alignButtons: 'right',
     },
     hide: () => {
-        set((state) => ({ ...state, visible: false }))
+        set({ visible: false })
     },
     show: (props: AlertProps) => {
-        set((state) => ({ ...state, visible: true, props: props }))
+        set({ visible: true, props: props })
     },
 }))

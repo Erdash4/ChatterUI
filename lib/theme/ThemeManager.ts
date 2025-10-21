@@ -71,10 +71,7 @@ export namespace Theme {
                         Logger.errorToast('Color Name Already Used')
                         return
                     }
-                    set((state) => ({
-                        ...state,
-                        customColors: [...get().customColors, colorScheme],
-                    }))
+                    set({ customColors: [...get().customColors, colorScheme] })
                     Logger.info(`Successfully imported ${colorScheme.name}`)
                 },
                 removeColorScheme: (index: number) => {

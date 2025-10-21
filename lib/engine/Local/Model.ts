@@ -293,10 +293,10 @@ export namespace KV {
                 kvCacheLoaded: false,
                 kvCacheTokens: [],
                 setKvCacheLoaded: (b: boolean) => {
-                    set((state) => ({ ...state, kvCacheLoaded: b }))
+                    set({ kvCacheLoaded: b })
                 },
                 setKvCacheTokens: (tokens: number[]) => {
-                    set((state) => ({ ...state, kvCacheTokens: tokens }))
+                    set({ kvCacheTokens: tokens })
                 },
                 verifyKVCache: (tokens: number[]) => {
                     const cachedTokens = get().kvCacheTokens
