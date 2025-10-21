@@ -90,7 +90,7 @@ const migrateModelData_0_7_10_to_0_8_0 = () => {
         if (model) JSON.parse(model)
     } catch (e) {
         Logger.warn('Model could not be parsed, resetting')
-        mmkv.delete(oldDef)
+        mmkv.remove(oldDef)
     }
 }
 
@@ -102,7 +102,7 @@ const migrateModelData_0_8_4_to_0_8_5 = () => {
         if (!modelData) return
         const data = JSON.parse(modelData)
         if (!data) return
-        mmkv.delete(oldDef)
+        mmkv.remove(oldDef)
         Llama.useLlamaPreferencesStore.getState().setLastModelLoaded(data)
     } catch (e) {}
 }
@@ -114,16 +114,16 @@ const migrateTTSData_0_8_5_to_0_8_6 = () => {
         TTSAuto = `ttsauto`, 
     */
     if (mmkv.getBoolean('ttsauto')) {
-        mmkv.delete('ttsauto')
+        mmkv.remove('ttsauto')
         useTTSStore.getState().setAuto(true)
     }
     if (mmkv.getBoolean('ttsenable')) {
-        mmkv.delete('ttsenable')
+        mmkv.remove('ttsenable')
         useTTSStore.getState().setEnabled(true)
     }
     const speakerData = mmkv.getString('ttsspeaker')
     if (speakerData) {
-        mmkv.delete('ttsspeaker')
+        mmkv.remove('ttsspeaker')
         try {
             const voiceData = JSON.parse(speakerData)
             const voiceSchema = z.object({
@@ -183,7 +183,7 @@ const migrateAppMode_0_8_5_to_0_8_6 = () => {
     if (oldAppMode === 'local' || oldAppMode === 'remote') {
         useAppModeStore.getState().setAppMode(oldAppMode)
     }
-    mmkv.delete(oldKey)
+    mmkv.remove(oldKey)
     Logger.warn('Migrated appmode from 0.8.5 to 0.8.6')
 }
 
