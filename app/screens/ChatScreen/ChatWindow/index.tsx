@@ -32,9 +32,9 @@ const ChatWindow = () => {
     const { chat } = Chats.useChat()
     const charId = Characters.useCharacterStore((state) => state.card?.id)
     const { appMode } = useAppMode()
-    const [saveScroll, _] = useMMKVBoolean(AppSettings.SaveScrollPosition)
-    const [showModelname, __] = useMMKVBoolean(AppSettings.ShowModelInChat)
-    const [autoScroll, ___] = useMMKVBoolean(AppSettings.AutoScroll)
+    const [saveScroll] = useMMKVBoolean(AppSettings.SaveScrollPosition)
+    const [showModelname] = useMMKVBoolean(AppSettings.ShowModelInChat)
+    const [autoScroll] = useMMKVBoolean(AppSettings.AutoScroll)
     const chatInputHeight = useInputHeightStore(useShallow((state) => state.height))
     const { data: { background_image: backgroundImage } = {} } = useLiveQuery(
         Characters.db.query.backgroundImageQuery(charId ?? -1)

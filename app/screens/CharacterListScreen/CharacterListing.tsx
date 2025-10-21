@@ -21,7 +21,7 @@ const CharacterListing: React.FC<CharacterListingProps> = ({
     nowLoading,
     setNowLoading,
 }) => {
-    const [showTags, _] = useMMKVBoolean(AppSettings.ShowTags)
+    const [showTags] = useMMKVBoolean(AppSettings.ShowTags)
     const { setShowSearch, setTagFilter, tagFilter } = CharacterSorter.useSorter()
     const styles = useStyles()
 

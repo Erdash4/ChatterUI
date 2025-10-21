@@ -12,7 +12,7 @@ import UserInfo from './UserInfo'
 
 const SettingsDrawer = () => {
     const { color, spacing } = Theme.useTheme()
-    const [devMode, _] = useMMKVBoolean(AppSettings.DevMode)
+    const [devMode] = useMMKVBoolean(AppSettings.DevMode)
 
     return (
         <Drawer.Body

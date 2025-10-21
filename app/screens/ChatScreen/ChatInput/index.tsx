@@ -60,7 +60,7 @@ const ChatInput = () => {
     const inputRef = useUnfocusTextInput()
 
     const { color, borderRadius, spacing } = Theme.useTheme()
-    const [sendOnEnter, _] = useMMKVBoolean(AppSettings.SendOnEnter)
+    const [sendOnEnter] = useMMKVBoolean(AppSettings.SendOnEnter)
     const [attachments, setAttachments] = useState<Attachment[]>([])
     const [hideOptions, setHideOptions] = useState(false)
     const { addEntry } = Chats.useEntry()

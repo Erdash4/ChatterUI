@@ -46,7 +46,7 @@ const ChatQuickActions: React.FC<ChatActionProps> = ({ index, nowGenerating, isL
     )
     const showEditor = useChatEditorStore((state) => state.show)
     const { color } = Theme.useTheme()
-    const [quickDelete, __] = useMMKVBoolean(AppSettings.QuickDelete)
+    const [quickDelete] = useMMKVBoolean(AppSettings.QuickDelete)
     const { deleteEntry } = Chats.useEntry()
     const { chatId, loadChat } = Chats.useChat()
     const { swipe } = Chats.useSwipeData(index)

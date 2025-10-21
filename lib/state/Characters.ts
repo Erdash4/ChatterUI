@@ -478,7 +478,7 @@ export namespace Characters {
             ) => {
                 const { data } = createBlankV2Card(name)
 
-                const [{ id }, ..._] = await database
+                const [{ id }] = await database
                     .insert(characters)
                     .values({ ...data, type: type })
                     .returning({ id: characters.id })
@@ -579,7 +579,7 @@ export namespace Characters {
             }
 
             export const addAltGreeting = async (charId: number) => {
-                const [{ id }, ..._] = await database
+                const [{ id }] = await database
                     .insert(characterGreetings)
                     .values({
                         character_id: charId,
@@ -642,7 +642,7 @@ export namespace Characters {
                 const { data } = card
                 const image_id = await database.transaction(async (tx) => {
                     try {
-                        const [{ id, image_id }, ..._] = await tx
+                        const [{ id, image_id }] = await tx
                             .insert(characters)
                             .values({
                                 type: 'character',

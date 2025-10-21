@@ -17,8 +17,8 @@ type ChatFrameProps = {
 
 const ChatFrame: React.FC<ChatFrameProps> = ({ children, index, nowGenerating, isLast }) => {
     const { color, spacing, borderRadius, fontSize } = Theme.useTheme()
-    const [wide, _] = useMMKVBoolean(AppSettings.WideChatMode)
-    const [alternate, __] = useMMKVBoolean(AppSettings.AlternatingChatMode)
+    const [wide] = useMMKVBoolean(AppSettings.WideChatMode)
+    const [alternate] = useMMKVBoolean(AppSettings.AlternatingChatMode)
     const message = Chats.useEntryData(index)
     const setShowViewer = useAvatarViewerStore((state) => state.setShow)
     const charImageId = Characters.useCharacterStore((state) => state.card?.image_id) ?? 0

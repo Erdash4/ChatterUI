@@ -407,7 +407,7 @@ export namespace Instructs {
         export namespace mutate {
             export const createInstruct = async (instruct: InstructType): Promise<number> => {
                 const { id, ...input } = instruct
-                const [{ newid }, ...rest] = await database
+                const [{ newid }] = await database
                     .insert(instructs)
                     .values(input)
                     .returning({ newid: instructs.id })

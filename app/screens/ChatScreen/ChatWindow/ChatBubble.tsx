@@ -28,7 +28,7 @@ const ChatBubble: React.FC<ChatTextProps> = ({
 }) => {
     const message = Chats.useEntryData(index)
     const { appMode } = useAppMode()
-    const [showTPS, _] = useMMKVBoolean(AppSettings.ShowTokenPerSecond)
+    const [showTPS] = useMMKVBoolean(AppSettings.ShowTokenPerSecond)
     const { color, spacing, borderRadius, fontSize } = Theme.useTheme()
 
     const { activeIndex, setShowOptions } = useChatActionsState(

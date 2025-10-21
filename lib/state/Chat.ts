@@ -657,7 +657,7 @@ export namespace Chats {
                 const charName = card.name
                 return await database.transaction(async (tx) => {
                     if (!card || !charName) return
-                    const [{ chatId }, ..._] = await tx
+                    const [{ chatId }] = await tx
                         .insert(chats)
                         .values({
                             character_id: charId,
@@ -673,7 +673,7 @@ export namespace Chats {
                     ].filter((item) => item)
 
                     if (greetings.length > 0) {
-                        const [{ entryId }, ...__] = await tx
+                        const [{ entryId }] = await tx
                             .insert(chatEntries)
                             .values({
                                 chat_id: chatId,
@@ -715,7 +715,7 @@ export namespace Chats {
                 message: string,
                 attachments: string[] = []
             ) => {
-                const [{ entryId }, ...__] = await database
+                const [{ entryId }] = await database
                     .insert(chatEntries)
                     .values({
                         chat_id: chatId,
@@ -808,7 +808,7 @@ export namespace Chats {
                 chat.last_modified = Date.now()
 
                 const newChatId = await database.transaction(async (tx) => {
-                    const [{ newChatId }, ..._] = await tx
+                    const [{ newChatId }] = await tx
                         .insert(chats)
                         .values(chat)
                         .returning({ newChatId: chats.id })

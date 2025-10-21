@@ -41,7 +41,7 @@ const DrawerButton = ({ item, index }: DrawerButtonProps) => {
 }
 
 const RouteList = () => {
-    const [devMode, _] = useMMKVBoolean(AppSettings.DevMode)
+    const [devMode] = useMMKVBoolean(AppSettings.DevMode)
     const { appMode } = useAppMode()
     const paths = getPaths(appMode === 'remote')
     return (

@@ -30,7 +30,7 @@ export namespace TagHider {
     )
 
     export const useHiddenTags = () => {
-        const [tagHider, _] = useMMKVBoolean(AppSettings.UseTagHider)
+        const [tagHider] = useMMKVBoolean(AppSettings.UseTagHider)
         const tags = TagHider.useTagHiderStore(useShallow((state) => state.tags))
         if (!tagHider) return []
         return tags

@@ -220,7 +220,7 @@ export namespace Model {
         deleteOnFailure: boolean
     ) => {
         try {
-            const [{ id }, ...rest] = await db
+            const [{ id }] = await db
                 .insert(model_data)
                 .values(initialModelEntry(filename, file_path))
                 .returning({ id: model_data.id })

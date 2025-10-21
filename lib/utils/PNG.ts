@@ -234,7 +234,7 @@ function slice_by_16_tables(T: Int32Array) {
 
 const TT = slice_by_16_tables(T0)
 
-const [T1, T2, T3, T4, T5, T6, T7, T8, T9, Ta, Tb, Tc, Td, Te, Tf, ..._] = TT
+const [T1, T2, T3, T4, T5, T6, T7, T8, T9, Ta, Tb, Tc, Td, Te, Tf] = TT
 
 function crc32_buf(B: Uint8Array) {
     let C = -1,

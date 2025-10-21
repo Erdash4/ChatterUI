@@ -39,8 +39,8 @@ const ModelSettings: React.FC<ModelSettingsProp> = ({ modelImporting, modelLoadi
     const [saveKV, setSaveKV] = useMMKVBoolean(AppSettings.SaveLocalKV)
     const [autoloadLocal, setAutoloadLocal] = useMMKVBoolean(AppSettings.AutoLoadLocal)
     const [showModelInChat, setShowModelInChat] = useMMKVBoolean(AppSettings.ShowModelInChat)
-    const [threadCount, _] = useMMKVNumber(Global.CPUThreads)
-    const [cpuFeatures, __] = useMMKVObject<CPUFeatures>(Global.CpuFeatures)
+    const [threadCount] = useMMKVNumber(Global.CPUThreads)
+    const [cpuFeatures] = useMMKVObject<CPUFeatures>(Global.CpuFeatures)
 
     const [kvSize, setKVSize] = useState(0)
 

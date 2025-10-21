@@ -60,8 +60,8 @@ export async function registerForPushNotificationsAsync() {
 }
 
 export function useNotificationObserver() {
-    const [autoLoad, _] = useMMKVBoolean(AppSettings.ChatOnStartup)
-    const [useAuth, __] = useMMKVBoolean(AppSettings.LocallyAuthenticateUser)
+    const [autoLoad] = useMMKVBoolean(AppSettings.ChatOnStartup)
+    const [useAuth] = useMMKVBoolean(AppSettings.LocallyAuthenticateUser)
     const { chat, loadChat } = Chats.useChat()
     const { setCard } = Characters.useCharacterStore()
     const router = useRouter()
