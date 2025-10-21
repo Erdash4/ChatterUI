@@ -142,7 +142,6 @@ const ColorThemeItem: React.FC<ColorThemeItemProps> = ({ item, index, showDelete
                 <>
                     <TouchableOpacity
                         style={{
-                            padding: 10,
                             borderColor: activeColor.text._100,
                             borderWidth: 1,
                             backgroundColor: activeColor.neutral._100,
@@ -168,7 +167,6 @@ const ColorThemeItem: React.FC<ColorThemeItemProps> = ({ item, index, showDelete
 
                     <TouchableOpacity
                         style={{
-                            padding: 10,
                             borderColor: activeColor.text._100,
                             borderWidth: 1,
                             backgroundColor: activeColor.neutral._100,

@@ -86,7 +86,7 @@ const HorizontalSelector = <T,>({
                         {
                             position: 'absolute',
                             backgroundColor: color.primary._300,
-                            borderRadius: 6,
+                            borderRadius: 8,
                         },
                         animatedStyle,
                     ]}

@@ -106,7 +106,7 @@ const useStyles = () => {
 
         subtitle: {
             color: color.text._400,
-            marginHorizontal: 32,
+            marginHorizontal: 24,
             textAlign: 'center',
         },
 

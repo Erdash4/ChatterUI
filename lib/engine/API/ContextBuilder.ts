@@ -77,6 +77,7 @@ export const buildChatCompletionContext = async ({
     if (apiConfig.request.completionType.type !== 'chatCompletions') return
     const completionFeats = apiConfig.request.completionType
     const { characterCache, userCache, instructCache } = cache
+    const usePrefix = false
     const { systemPrompt, systemPromptLength } = getSystemPrompt({
         instruct,
         user,
@@ -84,7 +85,7 @@ export const buildChatCompletionContext = async ({
         userCache,
         characterCache,
         instructCache,
-        usePrefix: false,
+        usePrefix,
     })
 
     const initial = systemPrompt
@@ -114,7 +115,7 @@ export const buildChatCompletionContext = async ({
             hasImage
         )
 
-        const swipe_len = message.id != -1 ? await chatTokenizer(message, index) : 0
+        const swipe_len = message.id !== -1 ? await chatTokenizer(message, index) : 0
         const len = swipe_len + name_length + timestamp_length
 
         if (total_length + len > maxLength && !bypassContextLength) break
@@ -208,7 +209,7 @@ export const buildTextCompletionContext = async ({
     messageLoader,
 }: ContextBuilderParams) => {
     const delta = performance.now()
-
+    const useSuffix = false
     const { characterCache, userCache, instructCache } = cache
 
     const { systemPrompt, systemPromptLength } = getSystemPrompt({
@@ -218,7 +219,7 @@ export const buildTextCompletionContext = async ({
         userCache,
         characterCache,
         instructCache,
-        useSuffix: false,
+        useSuffix,
     })
 
     let payload = systemPrompt
@@ -439,12 +440,12 @@ export const getSystemPrompt = ({
         },
         {
             macro: '{{personality}}',
-            value: (instruct.personality && character?.personality) || '',
+            value: instruct.personality ? (character?.personality ?? '') : '',
             length: instruct.personality ? characterCache.personality_length : 0,
         },
         {
             macro: '{{scenario}}',
-            value: (instruct.scenario && character?.scenario) || '',
+            value: instruct.scenario ? (character?.scenario ?? '') : '',
             length: instruct.scenario ? characterCache.scenario_length : 0,
         },
     ]

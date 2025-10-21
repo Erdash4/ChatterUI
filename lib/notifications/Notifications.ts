@@ -70,7 +70,7 @@ export function useNotificationObserver() {
         let isMounted = true
 
         async function redirect(notification: Notifications.Notification) {
-            if (chat || autoLoad || useAuth) return
+            if (chat ?? autoLoad ?? useAuth) return
             const data = notification.request.content.data
             const chatId = data?.chatId as number | undefined
             const characterId = data?.characterId as number | undefined

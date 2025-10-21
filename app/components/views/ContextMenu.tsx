@@ -75,7 +75,7 @@ const ContextMenu: React.FC<ContextMenuProps> = ({
     delayLongPress,
     longPress,
 }) => {
-    const idRef = useRef<string>(genId())
+    const [idRef] = useState(() => genId())
     const triggerRef = useRef<View>(null)
     const viewRef = useRef<View>(null)
     const styles = useStyles()
@@ -87,7 +87,7 @@ const ContextMenu: React.FC<ContextMenuProps> = ({
     const animatedMenuValues = useSharedValue(defaultAnimatedMenuValues)
     const getMenuPosition = useMenuPosition()
 
-    const isOpen = openMenuId === idRef.current
+    const isOpen = openMenuId === idRef
     const animatedMenuStyle = useAnimatedStyle(() => {
         return animatedMenuValues.value
     })
@@ -107,10 +107,10 @@ const ContextMenu: React.FC<ContextMenuProps> = ({
             const anchor: LayoutRectangle = {
                 x: isCentered ? ne.pageX : pageX,
                 y: isCentered ? ne.pageY : pageY,
-                width,
-                height,
+                width: width,
+                height: height,
             }
-            openMenu(idRef.current, anchor, buttons, placement)
+            openMenu(idRef, anchor, buttons, placement)
         })
     }
 
@@ -180,8 +180,8 @@ const ContextMenu: React.FC<ContextMenuProps> = ({
     const updateOvershotPlacement = (width: number, height: number) => {
         animatedMenuValues.value = {
             ...animatedMenuValues.value,
-            width,
-            height,
+            width: width,
+            height: height,
             opacity: 1,
         }
     }
@@ -207,14 +207,15 @@ const ContextMenu: React.FC<ContextMenuProps> = ({
         width: number
         height: number
     }) => {
+        const opacity = 1
         animatedMenuValues.value = withTiming(
-            { top, left, height, width, opacity: 1 },
+            { top, left, height, width, opacity },
             { duration: CONTEXT_MENU_LAYOUT_DURATION },
             (finished) => {
                 if (finished) {
                     animatedMenuValues.value = {
-                        top,
-                        left,
+                        top: top,
+                        left: left,
                         opacity: 1,
                         height: null,
                         width: null,
@@ -244,7 +245,7 @@ const ContextMenu: React.FC<ContextMenuProps> = ({
                     if (!longPress) return
                     handleOpen(event)
                 }}
-                key={idRef.current}
+                key={idRef}
                 disabled={disabled}>
                 {children}
                 {!children && (
@@ -257,7 +258,7 @@ const ContextMenu: React.FC<ContextMenuProps> = ({
             </TouchableOpacity>
 
             {isOpen && anchor && (
-                <Portal name={idRef.current}>
+                <Portal name={idRef}>
                     <Pressable style={StyleSheet.absoluteFill} onPress={handleCloseMenu}>
                         <Animated.View style={[styles.menuContainer, animatedMenuStyle]}>
                             <View ref={viewRef} onLayout={onLayout}>
@@ -360,7 +361,7 @@ const ContextMenuButton: React.FC<
         hidden,
     } = props
     const styles = useStyles()
-    const key = useRef(randomUUID()).current
+    const [key] = useState(randomUUID())
     const hasSubmenu = !!submenu
     const textColors = {
         warning: styles.menuTextError,
@@ -469,9 +470,9 @@ const useMenuPosition = () => {
         }
 
         return {
-            top,
-            left,
-            overshot,
+            top: top,
+            left: left,
+            overshot: overshot,
             width: actualWidth - CONTEXT_MENU_POSITION_OFFSET,
             height: actualHeight - CONTEXT_MENU_POSITION_OFFSET,
         }

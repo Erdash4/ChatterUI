@@ -145,7 +145,7 @@ const buildLocalPayload = async () => {
         return
     }
 
-    const finalMediaPaths = hasAudio || hasImage ? { media_paths: mediaPaths } : {}
+    const finalMediaPaths = (hasAudio ?? hasImage) ? { media_paths: mediaPaths } : {}
 
     return {
         ...payloadFields,

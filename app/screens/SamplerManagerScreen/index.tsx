@@ -275,8 +275,6 @@ const SamplerManagerScreen = () => {
                                         }}
                                     />
                                 )
-
-                                break
                             //case 'custom':
                             default:
                                 return (

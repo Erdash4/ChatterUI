@@ -238,7 +238,7 @@ const ChracterEditorScreen = () => {
                         bottomOffset={16}
                         showsVerticalScrollIndicator={false}
                         keyboardShouldPersistTaps="always"
-                        contentContainerStyle={{ rowGap: 8, paddingBottom: 48 }}>
+                        contentContainerStyle={{ rowGap: 8, paddingBottom: 24 }}>
                         <View style={styles.characterHeader}>
                             <ContextMenu
                                 placement="right"

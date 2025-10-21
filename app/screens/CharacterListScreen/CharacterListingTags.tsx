@@ -19,6 +19,7 @@ const CharacterListingTags: React.FC<CharacterListingTagsProps> = ({ tags, onPre
         <View
             style={{
                 flexDirection: 'row',
+                // eslint-disable-next-line internal/enforce-spacing-values
                 paddingLeft: 72,
                 paddingRight: 16,
                 alignItems: 'center',

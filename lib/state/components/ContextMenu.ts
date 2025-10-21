@@ -36,6 +36,6 @@ export const useContextMenuStore = create<ContextMenuStoreProps>((set) => ({
     placement: 'auto',
     buttons: [],
     openMenu: (id, anchor, buttons, placement) =>
-        set({ openMenuId: id, anchor, buttons, placement }),
+        set({ openMenuId: id, anchor: anchor, buttons: buttons, placement: placement }),
     closeMenu: () => set({ openMenuId: null, anchor: null, buttons: [], placement: 'auto' }),
 }))

@@ -96,9 +96,9 @@ export namespace Theme {
                     }
                     set({
                         customColors: colors,
-                        color,
-                        lightColor,
-                        darkColor,
+                        color: color,
+                        lightColor: lightColor,
+                        darkColor: darkColor,
                     })
                 },
             }),
