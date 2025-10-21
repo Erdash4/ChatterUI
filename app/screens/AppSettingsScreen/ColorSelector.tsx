@@ -69,7 +69,7 @@ const ColorThemeItem: React.FC<ColorThemeItemProps> = ({ item, index, showDelete
             style={{
                 flexDirection: 'row',
                 columnGap: 4,
-                alignItems: 'center',
+                alignItems: 'stretch',
             }}>
             <TouchableOpacity
                 disabled={systemDark}
@@ -146,9 +146,9 @@ const ColorThemeItem: React.FC<ColorThemeItemProps> = ({ item, index, showDelete
                             borderColor: activeColor.text._100,
                             borderWidth: 1,
                             backgroundColor: activeColor.neutral._100,
-                            paddingHorizontal: 16,
-                            paddingVertical: 12,
+                            paddingHorizontal: 12,
                             borderRadius: 8,
+                            justifyContent: 'center',
                         }}
                         onPress={() => {
                             setLightColor(item)
@@ -162,7 +162,7 @@ const ColorThemeItem: React.FC<ColorThemeItemProps> = ({ item, index, showDelete
                             }
                             name="sun"
                             icon
-                            size={18}
+                            size={17}
                         />
                     </TouchableOpacity>
 
@@ -172,9 +172,9 @@ const ColorThemeItem: React.FC<ColorThemeItemProps> = ({ item, index, showDelete
                             borderColor: activeColor.text._100,
                             borderWidth: 1,
                             backgroundColor: activeColor.neutral._100,
-                            paddingHorizontal: 16,
-                            paddingVertical: 12,
+                            paddingHorizontal: 12,
                             borderRadius: 8,
+                            justifyContent: 'center',
                         }}
                         onPress={() => {
                             setDarkColor(item)
