@@ -1,4 +1,5 @@
 import { useLiveQuery } from 'drizzle-orm/expo-sqlite'
+import { usePathname } from 'expo-router'
 import { useState } from 'react'
 import { View } from 'react-native'
 import Animated, { LinearTransition } from 'react-native-reanimated'
@@ -46,6 +47,10 @@ const CharacterList: React.FC = () => {
         last_modified: item.last_modified ?? 0,
         tags: item.tags.map((item) => item.tag.tag),
     }))
+
+    // do not render when not shown, optimizes some rerenders
+    const path = usePathname()
+    if (path !== '/') return
 
     return (
         <View style={{ paddingTop: 16, paddingHorizontal: 8, flex: 1 }}>
