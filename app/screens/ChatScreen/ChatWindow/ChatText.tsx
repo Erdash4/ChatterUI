@@ -1,10 +1,11 @@
+import React, { useRef, useState } from 'react'
+import { Animated, Easing, useAnimatedValue, View } from 'react-native'
+import Markdown from 'react-native-markdown-display'
+
 import ThemedButton from '@components/buttons/ThemedButton'
 import { useTextFilter } from '@lib/hooks/TextFilter'
 import { MarkdownStyle } from '@lib/markdown/Markdown'
 import { Chats } from '@lib/state/Chat'
-import React, { useRef, useState } from 'react'
-import { Animated, Easing, useAnimatedValue, View } from 'react-native'
-import Markdown from 'react-native-markdown-display'
 
 type ChatTextProps = {
     nowGenerating: boolean

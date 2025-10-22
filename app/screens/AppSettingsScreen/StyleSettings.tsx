@@ -1,11 +1,12 @@
-import ThemedButton from '@components/buttons/ThemedButton'
-import SectionTitle from '@components/text/SectionTitle'
-import Alert from '@components/views/Alert'
-import { useBackgroundStore } from '@lib/state/BackgroundImage'
 import { useRouter } from 'expo-router'
 import React from 'react'
 import { View } from 'react-native'
 import { useShallow } from 'zustand/react/shallow'
+
+import ThemedButton from '@components/buttons/ThemedButton'
+import SectionTitle from '@components/text/SectionTitle'
+import Alert from '@components/views/Alert'
+import { useBackgroundStore } from '@lib/state/BackgroundImage'
 
 const StyleSettings = () => {
     const router = useRouter()

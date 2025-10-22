@@ -1,16 +1,17 @@
 import { Octicons } from '@expo/vector-icons'
-import { Theme } from '@lib/theme/ThemeManager'
-import React, { useEffect, useMemo } from 'react'
+import React, { useMemo } from 'react'
 import { View } from 'react-native'
 import Animated, {
-    useSharedValue,
+    Easing,
     useAnimatedStyle,
+    useSharedValue,
+    withDelay,
     withRepeat,
     withSequence,
     withTiming,
-    Easing,
-    withDelay,
 } from 'react-native-reanimated'
+
+import { Theme } from '@lib/theme/ThemeManager'
 
 const translateMax = -8
 
@@ -45,7 +46,7 @@ const Dot: React.FC<DotProps> = ({ offset }) => {
                     false
                 )
             ),
-        []
+        [offset]
     )
 
     const animatedStyle = useAnimatedStyle(() => {

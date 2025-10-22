@@ -1,10 +1,11 @@
-import ThemedSwitch from '@components/input/ThemedSwitch'
-import SectionTitle from '@components/text/SectionTitle'
-import { AppSettings } from '@lib/constants/GlobalValues'
 import { useTextIntentStatus } from '@vali98/react-native-process-text'
 import React from 'react'
 import { View } from 'react-native'
 import { useMMKVBoolean } from 'react-native-mmkv'
+
+import ThemedSwitch from '@components/input/ThemedSwitch'
+import SectionTitle from '@components/text/SectionTitle'
+import { AppSettings } from '@lib/constants/GlobalValues'
 
 const ChatSettings = () => {
     const [firstMes, setFirstMes] = useMMKVBoolean(AppSettings.CreateFirstMes)

@@ -168,10 +168,8 @@ module.exports = function latexDetectorPlugin(md) {
     })*/
 }
 
-function looksLikeLaTeX(content) {
-    const latexPattern =
-        /\\(frac|vec|Delta|alpha|beta|gamma|theta|mu|cdot|ldots|int|sum|sqrt)\b|[_^]\w+|[_^]{\w+}|[=+\-*/^]/
-    const codeLikePattern = /(function|var|let|const|if\s*\(|=>|import|return|class|\{\}|\(\))/
-
-    return latexPattern.test(content) && !codeLikePattern.test(content)
-}
+// function looksLikeLaTeX(content) {
+//    const latexPattern =/\\(frac|vec|Delta|alpha|beta|gamma|theta|mu|cdot|ldots|int|sum|sqrt)\b|[_^]\w+|[_^]{\w+}|[=+\-*/^]/
+//    const codeLikePattern = /(function|var|let|const|if\s*\(|=>|import|return|class|\{\}|\(\))/
+//    return latexPattern.test(content) && !codeLikePattern.test(content)
+// }

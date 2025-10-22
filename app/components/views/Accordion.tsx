@@ -1,7 +1,8 @@
 import { Entypo } from '@expo/vector-icons'
-import { Theme } from '@lib/theme/ThemeManager'
 import React, { useState } from 'react'
 import { Pressable, Text, TextStyle, View, ViewProps, ViewStyle } from 'react-native'
+
+import { Theme } from '@lib/theme/ThemeManager'
 
 interface AccordionProps extends ViewProps {
     defaultState?: boolean

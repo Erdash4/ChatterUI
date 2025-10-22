@@ -1,12 +1,13 @@
-import ThemedButton from '@components/buttons/ThemedButton'
-import Accordion from '@components/views/Accordion'
-import { Logger } from '@lib/state/Logger'
-import { Theme } from '@lib/theme/ThemeManager'
 import { setStringAsync } from 'expo-clipboard'
 import { useMemo } from 'react'
 import { Platform, StyleSheet, Text, View } from 'react-native'
 import { MarkdownIt } from 'react-native-markdown-display'
 import MathJax from 'react-native-mathjax-svg'
+
+import ThemedButton from '@components/buttons/ThemedButton'
+import Accordion from '@components/views/Accordion'
+import { Logger } from '@lib/state/Logger'
+import { Theme } from '@lib/theme/ThemeManager'
 
 import latexPlugin from './MarkdownLatexPlugin'
 import doubleQuotePlugin from './MarkdownQuotePlugin'
@@ -108,7 +109,7 @@ export namespace MarkdownStyle {
                 rules: RenderRules,
                 style: mdStyle,
             }),
-            [Rules, RenderRules]
+            [mdStyle]
         )
         return { markdown, rules, style }
     }

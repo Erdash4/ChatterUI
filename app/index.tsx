@@ -1,16 +1,17 @@
+import { AntDesign } from '@expo/vector-icons'
+import { useMigrations } from 'drizzle-orm/expo-sqlite/migrator'
+import { SplashScreen } from 'expo-router'
+import { useEffect, useState } from 'react'
+import { Linking, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+
 import ThemedButton from '@components/buttons/ThemedButton'
 import HeaderTitle from '@components/views/HeaderTitle'
 import { db } from '@db'
-import { AntDesign } from '@expo/vector-icons'
 import useLocalAuth from '@lib/hooks/LocalAuth'
 import { useNotificationObserver } from '@lib/notifications/Notifications'
 import { Theme } from '@lib/theme/ThemeManager'
 import { loadChatOnInit, startupApp, useTextIntentFocus } from '@lib/utils/Startup'
 import CharacterList from '@screens/CharacterListScreen'
-import { useMigrations } from 'drizzle-orm/expo-sqlite/migrator'
-import { SplashScreen } from 'expo-router'
-import { useEffect, useState } from 'react'
-import { Linking, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
 import migrations from '../db/migrations/migrations'
 
@@ -29,7 +30,7 @@ const Home = () => {
         if (authorized && success) {
             loadChatOnInit()
         }
-    }, [authorized])
+    }, [authorized, success])
 
     useEffect(() => {
         /**

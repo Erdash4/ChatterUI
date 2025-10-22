@@ -1,6 +1,7 @@
 import { Ionicons } from '@expo/vector-icons'
-import { Theme } from '@lib/theme/ThemeManager'
 import { View, Text } from 'react-native'
+
+import { Theme } from '@lib/theme/ThemeManager'
 
 const CharactersEmpty = () => {
     const { color, spacing, fontSize } = Theme.useTheme()

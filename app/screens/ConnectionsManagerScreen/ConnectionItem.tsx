@@ -1,11 +1,12 @@
+import { useState } from 'react'
+import { StyleSheet, Text, View } from 'react-native'
+import { useShallow } from 'zustand/react/shallow'
+
 import ThemedButton from '@components/buttons/ThemedButton'
 import ThemedSwitch from '@components/input/ThemedSwitch'
 import Alert from '@components/views/Alert'
 import { APIManagerValue, APIManager } from '@lib/engine/API/APIManagerState'
 import { Theme } from '@lib/theme/ThemeManager'
-import { useState } from 'react'
-import { StyleSheet, Text, View } from 'react-native'
-import { useShallow } from 'zustand/react/shallow'
 
 import ConnectionEditor from './ConnectionEditor'
 

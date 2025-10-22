@@ -1,9 +1,10 @@
-import Avatar from '@components/views/Avatar'
-import { Characters } from '@lib/state/Characters'
-import { Theme } from '@lib/theme/ThemeManager'
 import { useRouter } from 'expo-router'
 import { Text, TouchableOpacity } from 'react-native'
 import { useShallow } from 'zustand/react/shallow'
+
+import Avatar from '@components/views/Avatar'
+import { Characters } from '@lib/state/Characters'
+import { Theme } from '@lib/theme/ThemeManager'
 
 const UserInfo = () => {
     const router = useRouter()

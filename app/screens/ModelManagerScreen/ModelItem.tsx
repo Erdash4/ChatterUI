@@ -1,7 +1,11 @@
+import { AntDesign } from '@expo/vector-icons'
+import { useState } from 'react'
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { useShallow } from 'zustand/react/shallow'
+
 import DropdownSheet from '@components/input/DropdownSheet'
 import Alert from '@components/views/Alert'
 import InputSheet from '@components/views/InputSheet'
-import { AntDesign } from '@expo/vector-icons'
 import { GGMLNameMap } from '@lib/engine/Local'
 import { Llama } from '@lib/engine/Local/LlamaLocal'
 import { Model, ModelListQueryType } from '@lib/engine/Local/Model'
@@ -9,9 +13,6 @@ import { Logger } from '@lib/state/Logger'
 import { Theme } from '@lib/theme/ThemeManager'
 import { readableFileSize } from '@lib/utils/File'
 import { ModelDataType } from 'db/schema'
-import { useState } from 'react'
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import { useShallow } from 'zustand/react/shallow'
 
 type ModelItemProps = {
     item: ModelListQueryType

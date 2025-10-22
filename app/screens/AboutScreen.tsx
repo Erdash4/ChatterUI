@@ -1,3 +1,7 @@
+import React, { useState } from 'react'
+import { Image, Linking, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { useMMKVBoolean } from 'react-native-mmkv'
+
 import SupportButton from '@components/buttons/SupportButton'
 import ThemedButton from '@components/buttons/ThemedButton'
 import HeaderTitle from '@components/views/HeaderTitle'
@@ -5,9 +9,6 @@ import { AppSettings } from '@lib/constants/GlobalValues'
 import { Logger } from '@lib/state/Logger'
 import { Theme } from '@lib/theme/ThemeManager'
 import appConfig from 'app.config'
-import React, { useState } from 'react'
-import { Image, Linking, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import { useMMKVBoolean } from 'react-native-mmkv'
 
 const AboutScreen = () => {
     const styles = useStyles()
@@ -55,8 +56,8 @@ const AboutScreen = () => {
                 ChatterUI is a free and open-source application developed by Vali-98
             </Text>
             <Text style={{ marginBottom: spacing.xl3, ...styles.body }}>
-                This app is a passion project I develop in my free time. If you're enjoying the app,
-                consider supporting its development!
+                {`This app is a passion project I develop in my free time. If you're enjoying the app,
+                consider supporting its development!`}
             </Text>
             <Text style={{ ...styles.body, marginBottom: spacing.m }}>
                 Donate to ChatterUI here:
@@ -65,7 +66,7 @@ const AboutScreen = () => {
             <SupportButton />
 
             <Text style={styles.body}>Got an issue? Report it here:</Text>
-            <Text style={styles.subtitleText}>(Don't forget to add your Logs!)</Text>
+            <Text style={styles.subtitleText}>({`Don't forget to add your Logs!`})</Text>
 
             <ThemedButton
                 buttonStyle={{ marginTop: spacing.m }}
@@ -101,7 +102,7 @@ const useStyles = () => {
             width: 120,
             height: 120,
             backgroundColor: 'black',
-            // eslint-disable-next-line internal/enforce-spacing-values
+
             borderRadius: 60,
         },
     })

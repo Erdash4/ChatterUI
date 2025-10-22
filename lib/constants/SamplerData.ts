@@ -773,8 +773,9 @@ export const Samplers = {
     },
 } as const
 
+// this is just to typecheck if Samplers contains all SamplerID's
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const dummy = () => {
-    // this is just to typecheck if Samplers contains all SamplerID's
     defineSamplers(Samplers)
 }
 

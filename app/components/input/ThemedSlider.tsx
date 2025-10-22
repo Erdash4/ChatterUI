@@ -1,7 +1,8 @@
-import { Theme } from '@lib/theme/ThemeManager'
 import Slider from '@react-native-community/slider'
 import { useCallback, useState } from 'react'
 import { StyleSheet, Text, TextInput, View } from 'react-native'
+
+import { Theme } from '@lib/theme/ThemeManager'
 
 type ThemedSliderProps = {
     label: string

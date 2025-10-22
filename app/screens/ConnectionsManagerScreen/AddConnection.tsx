@@ -1,3 +1,9 @@
+import { Stack, useRouter } from 'expo-router'
+import { useCallback, useEffect, useState } from 'react'
+import { ScrollView, StyleSheet, Text, View } from 'react-native'
+import { SafeAreaView } from 'react-native-safe-area-context'
+import { useShallow } from 'zustand/react/shallow'
+
 import HeartbeatButton from '@components/buttons/HeartbeatButton'
 import ThemedButton from '@components/buttons/ThemedButton'
 import DropdownSheet from '@components/input/DropdownSheet'
@@ -7,11 +13,6 @@ import { CLAUDE_VERSION } from '@lib/constants/GlobalValues'
 import { APIManagerValue, APIManager } from '@lib/engine/API/APIManagerState'
 import { Logger } from '@lib/state/Logger'
 import { Theme } from '@lib/theme/ThemeManager'
-import { Stack, useRouter } from 'expo-router'
-import { useEffect, useState } from 'react'
-import { ScrollView, StyleSheet, Text, View } from 'react-native'
-import { SafeAreaView } from 'react-native-safe-area-context'
-import { useShallow } from 'zustand/react/shallow'
 
 const AddConnection = () => {
     const styles = useStyles()
@@ -32,7 +33,7 @@ const AddConnection = () => {
     })
     const [modelList, setModelList] = useState<any[]>([])
 
-    const handleGetModelList = async () => {
+    const handleGetModelList = useCallback(async () => {
         if (!template.features.useModel) return
 
         const auth: any = {}
@@ -61,11 +62,11 @@ const AddConnection = () => {
             return
         }
         setModelList(models)
-    }
+    }, [template, values])
 
     useEffect(() => {
         handleGetModelList()
-    }, [template])
+    }, [template, handleGetModelList])
 
     return (
         <SafeAreaView edges={['bottom']} style={styles.mainContainer}>

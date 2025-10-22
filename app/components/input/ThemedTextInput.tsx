@@ -1,7 +1,7 @@
+import { Text, TextInput, TextInputProps, View, ViewStyle } from 'react-native'
+
 import { useUnfocusTextInput } from '@lib/hooks/UnfocusTextInput'
 import { Theme } from '@lib/theme/ThemeManager'
-import { useRef } from 'react'
-import { View, Text, StyleSheet, TextInput, TextInputProps, ViewStyle } from 'react-native'
 
 interface ThemedTextInputProps extends TextInputProps {
     label?: string

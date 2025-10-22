@@ -1,11 +1,12 @@
+import { useCallback, useEffect, useRef, useState } from 'react'
+import { View, Animated, Easing, useAnimatedValue } from 'react-native'
+import Markdown from 'react-native-markdown-display'
+
 import ThemedButton from '@components/buttons/ThemedButton'
 import AnimatedEllipsis from '@components/text/AnimatedEllipsis'
 import { useTextFilter } from '@lib/hooks/TextFilter'
 import { MarkdownStyle } from '@lib/markdown/Markdown'
 import { Chats, useInference } from '@lib/state/Chat'
-import { useEffect, useRef, useState } from 'react'
-import { View, Animated, Easing, useAnimatedValue } from 'react-native'
-import Markdown from 'react-native-markdown-display'
 
 type ChatTextProps = {
     nowGenerating: boolean
@@ -25,18 +26,7 @@ const ChatTextLast: React.FC<ChatTextProps> = ({ nowGenerating, index }) => {
     const targetHeight = useRef(-1)
     const firstRender = useRef(true)
 
-    const handleAnimateHeight = (newheight: number, heightDelta: number = 1) => {
-        animHeight.stopAnimation(() =>
-            Animated.timing(animHeight, {
-                toValue: newheight,
-                duration: 300 * heightDelta,
-                useNativeDriver: false,
-                easing: Easing.inOut((x) => x * x),
-            }).start()
-        )
-    }
-
-    const updateHeight = () => {
+    const updateHeight = useCallback(() => {
         if (firstRender.current) return (firstRender.current = false)
         const showPadding = nowGenerating && buffer.data
         const overflowPadding = showPadding ? 12 : 0
@@ -45,18 +35,24 @@ const ChatTextLast: React.FC<ChatTextProps> = ({ nowGenerating, index }) => {
                 const newHeight = measuredHeight + overflowPadding
                 if (targetHeight.current === newHeight) return
                 if (targetHeight.current > -1) animHeight.setValue(targetHeight.current)
-                handleAnimateHeight(
-                    newHeight,
-                    Math.max(1, Math.abs(newHeight - targetHeight.current) / 1000)
+
+                animHeight.stopAnimation(() =>
+                    Animated.timing(animHeight, {
+                        toValue: newHeight,
+                        duration:
+                            300 * Math.max(1, Math.abs(newHeight - targetHeight.current) / 1000),
+                        useNativeDriver: false,
+                        easing: Easing.inOut((x) => x * x),
+                    }).start()
                 )
                 targetHeight.current = newHeight
             })
         }
-    }
+    }, [animHeight, buffer.data, nowGenerating])
 
     useEffect(() => {
         if (!nowGenerating && !firstRender.current) setTimeout(() => updateHeight(), 400)
-    }, [nowGenerating])
+    }, [nowGenerating, updateHeight])
 
     const filteredText = useTextFilter(swipeText?.trim() ?? '')
     const renderedText = showHidden ? swipeText?.trim() : filteredText.result

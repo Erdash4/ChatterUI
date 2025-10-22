@@ -1,3 +1,10 @@
+import { useLiveQuery } from 'drizzle-orm/expo-sqlite'
+import { useState } from 'react'
+import { SectionList } from 'react-native'
+import Animated, { Easing, SlideInLeft, SlideOutLeft } from 'react-native-reanimated'
+import { SafeAreaView } from 'react-native-safe-area-context'
+import { useShallow } from 'zustand/react/shallow'
+
 import ThemedButton from '@components/buttons/ThemedButton'
 import SectionTitle from '@components/text/SectionTitle'
 import HeaderButton from '@components/views/HeaderButton'
@@ -5,12 +12,6 @@ import HeaderTitle from '@components/views/HeaderTitle'
 import { Llama } from '@lib/engine/Local/LlamaLocal'
 import { Model } from '@lib/engine/Local/Model'
 import { Theme } from '@lib/theme/ThemeManager'
-import { useLiveQuery } from 'drizzle-orm/expo-sqlite'
-import { useState } from 'react'
-import { SectionList } from 'react-native'
-import Animated, { Easing, SlideInLeft, SlideOutLeft } from 'react-native-reanimated'
-import { SafeAreaView } from 'react-native-safe-area-context'
-import { useShallow } from 'zustand/react/shallow'
 
 import ModelEmpty from './ModelEmpty'
 import ModelInfoHeader from './ModelInfoHeader'
@@ -27,7 +28,7 @@ const ModelManagerScreen = () => {
         Model.getModelListQuery2(),
         [mmprojLinks]
     )
-    const { data: mmprojList, updatedAt: mmprojUpdated } = useLiveQuery(Model.getMMPROJListQuery())
+    const { data: mmprojList } = useLiveQuery(Model.getMMPROJListQuery())
 
     const [showSettings, setShowSettings] = useState(false)
     const [modelLoading, setModelLoading] = useState(false)

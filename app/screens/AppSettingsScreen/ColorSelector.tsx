@@ -1,3 +1,10 @@
+import { Octicons } from '@expo/vector-icons'
+import { setBackgroundColorAsync } from 'expo-system-ui'
+import React, { useState } from 'react'
+import { FlatList, Linking, Text, TouchableOpacity, useColorScheme, View } from 'react-native'
+import { SafeAreaView } from 'react-native-safe-area-context'
+import { useShallow } from 'zustand/react/shallow'
+
 import ThemedButton from '@components/buttons/ThemedButton'
 import ThemedSwitch from '@components/input/ThemedSwitch'
 import Alert from '@components/views/Alert'
@@ -5,16 +12,10 @@ import ContextMenu from '@components/views/ContextMenu'
 import HeaderButton from '@components/views/HeaderButton'
 import HeaderTitle from '@components/views/HeaderTitle'
 import InputSheet from '@components/views/InputSheet'
-import { Octicons } from '@expo/vector-icons'
 import { Logger } from '@lib/state/Logger'
 import { DefaultColorSchemes, ThemeColor } from '@lib/theme/ThemeColor'
 import { Theme } from '@lib/theme/ThemeManager'
 import { pickJSONDocument } from '@lib/utils/File'
-import { setBackgroundColorAsync } from 'expo-system-ui'
-import React, { useState } from 'react'
-import { FlatList, Linking, Text, TouchableOpacity, useColorScheme, View } from 'react-native'
-import { SafeAreaView } from 'react-native-safe-area-context'
-import { useShallow } from 'zustand/react/shallow'
 
 type ColorThemeItemProps = {
     item: ThemeColor

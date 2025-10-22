@@ -1,10 +1,11 @@
 import { Octicons } from '@expo/vector-icons'
+import { TouchableOpacity, View } from 'react-native'
+import Animated, { ZoomIn, ZoomOut } from 'react-native-reanimated'
+
 import { Chats, useInference } from '@lib/state/Chat'
 import { Logger } from '@lib/state/Logger'
 import { useTTS } from '@lib/state/TTS'
 import { Theme } from '@lib/theme/ThemeManager'
-import { TouchableOpacity, View } from 'react-native'
-import Animated, { ZoomIn, ZoomOut } from 'react-native-reanimated'
 
 type TTSProps = {
     index: number

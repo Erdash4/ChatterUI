@@ -1,5 +1,6 @@
-import Drawer from '@components/views/Drawer'
 import { StyleSheet } from 'react-native'
+
+import Drawer from '@components/views/Drawer'
 
 import UserList from './UserList'
 

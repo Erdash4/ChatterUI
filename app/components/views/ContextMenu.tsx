@@ -1,10 +1,4 @@
 import { AntDesign } from '@expo/vector-icons'
-import {
-    ContextMenuButtonProps,
-    Placement,
-    useContextMenuStore,
-} from '@lib/state/components/ContextMenu'
-import { Theme } from '@lib/theme/ThemeManager'
 import { randomUUID } from 'expo-crypto'
 import { useFocusEffect } from 'expo-router'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
@@ -24,6 +18,13 @@ import {
 import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { scheduleOnRN } from 'react-native-worklets'
+
+import {
+    ContextMenuButtonProps,
+    Placement,
+    useContextMenuStore,
+} from '@lib/state/components/ContextMenu'
+import { Theme } from '@lib/theme/ThemeManager'
 
 import Portal from './Portal'
 
@@ -97,7 +98,7 @@ const ContextMenu: React.FC<ContextMenuProps> = ({
         animatedMenuValues.value = defaultAnimatedMenuValues
         runAnimation.current = true
         initialRender.current = true
-    }, [openMenuId])
+    }, [animatedMenuValues, isOpen, openMenuId])
 
     const handleOpen = (event: GestureResponderEvent) => {
         if (!triggerRef.current) return
@@ -114,10 +115,10 @@ const ContextMenu: React.FC<ContextMenuProps> = ({
         })
     }
 
-    const handleCloseMenu = () => {
+    const handleCloseMenu = useCallback(() => {
         setExpandedSubmenus([])
         closeMenu()
-    }
+    }, [closeMenu])
 
     const reposition = () => {
         runAnimation.current = true
@@ -135,7 +136,7 @@ const ContextMenu: React.FC<ContextMenuProps> = ({
             }
             const handler = BackHandler.addEventListener('hardwareBackPress', backAction)
             return () => handler.remove()
-        }, [isOpen])
+        }, [handleCloseMenu, isOpen])
     )
 
     const onLayout = () => {
@@ -320,7 +321,7 @@ const ContextMenuWindow: React.FC<ContextMenuWindowProps> = ({
                 )
             }
         })
-    }, [hidden])
+    }, [buttons.length, hidden, isSubmenu, menuAnimatedValues, reposition])
 
     return (
         <Animated.View style={[styles.menu, height]}>

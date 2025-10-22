@@ -1,7 +1,8 @@
+import { Text, TouchableOpacity, View } from 'react-native'
+
 import { Chats } from '@lib/state/Chat'
 import { Theme } from '@lib/theme/ThemeManager'
 import { getFriendlyTimeStamp } from '@lib/utils/Time'
-import { Text, TouchableOpacity, View } from 'react-native'
 
 type ChatDrawerSearchItemProps = {
     query: string

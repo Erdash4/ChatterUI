@@ -1,3 +1,6 @@
+import { StyleSheet, Text, View } from 'react-native'
+import { useShallow } from 'zustand/react/shallow'
+
 import Alert from '@components/views/Alert'
 import Avatar from '@components/views/Avatar'
 import ContextMenu from '@components/views/ContextMenu'
@@ -5,8 +8,6 @@ import Drawer from '@components/views/Drawer'
 import { Characters } from '@lib/state/Characters'
 import { Theme } from '@lib/theme/ThemeManager'
 import { getFriendlyTimeStamp } from '@lib/utils/Time'
-import { StyleSheet, Text, View } from 'react-native'
-import { useShallow } from 'zustand/react/shallow'
 
 type CharacterData = Awaited<ReturnType<typeof Characters.db.query.cardListQuery>>[0]
 
@@ -16,7 +17,6 @@ type CharacterListingProps = {
 
 const UserListing: React.FC<CharacterListingProps> = ({ user }) => {
     const styles = useStyles()
-    const { spacing } = Theme.useTheme()
     const setShow = Drawer.useDrawerStore((state) => state.setShow)
 
     const setShowDrawer = (b: boolean) => {

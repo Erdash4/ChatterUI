@@ -1,5 +1,4 @@
 import { AntDesign } from '@expo/vector-icons'
-import { Theme } from '@lib/theme/ThemeManager'
 import { useEffect } from 'react'
 import { Pressable, Text, ViewStyle } from 'react-native'
 import Animated, {
@@ -11,6 +10,8 @@ import Animated, {
     ZoomIn,
     ZoomOut,
 } from 'react-native-reanimated'
+
+import { Theme } from '@lib/theme/ThemeManager'
 
 type ThemedCheckboxProps = {
     label?: string
@@ -40,7 +41,7 @@ const ThemedCheckbox: React.FC<ThemedCheckboxProps> = ({
         // this useEffect is necessary as onChangeValue may not update value
         // hence cannot triggered within onPress
         colorChange.value = withTiming(value ? 1 : 0, { duration: 100 })
-    }, [value])
+    }, [colorChange, value])
 
     return (
         <Pressable

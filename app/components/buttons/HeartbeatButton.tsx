@@ -1,6 +1,7 @@
-import { Theme } from '@lib/theme/ThemeManager'
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { Text, View } from 'react-native'
+
+import { Theme } from '@lib/theme/ThemeManager'
 
 import ThemedButton from './ThemedButton'
 
@@ -28,7 +29,7 @@ const HeartbeatButton: React.FC<HeartbeatButtonProps> = ({
         try {
             const newurl = new URL('v1/models', api)
             return newurl.toString()
-        } catch (e) {
+        } catch {
             return ''
         }
     },
@@ -38,12 +39,8 @@ const HeartbeatButton: React.FC<HeartbeatButtonProps> = ({
     headers = {},
     callback = () => {},
 }) => {
-    const { color, spacing } = Theme.useTheme()
+    const { color } = Theme.useTheme()
     const [status, setStatus] = useState<ResponseStatus>(ResponseStatus.DEFAULT)
-
-    useEffect(() => {
-        handleCheck()
-    }, [])
 
     const StatusMessage = () => {
         switch (status) {
@@ -56,7 +53,7 @@ const HeartbeatButton: React.FC<HeartbeatButtonProps> = ({
         }
     }
 
-    const handleCheck = async () => {
+    const handleCheck = useCallback(async () => {
         const endpoint = apiFormat(api)
         try {
             const controller = new AbortController()
@@ -71,10 +68,14 @@ const HeartbeatButton: React.FC<HeartbeatButtonProps> = ({
             clearTimeout(timeout)
             callback()
             setStatus(response.status === 200 ? ResponseStatus.OK : ResponseStatus.ERROR)
-        } catch (error) {
+        } catch {
             setStatus(ResponseStatus.ERROR)
         }
-    }
+    }, [api, apiFormat, callback, headers])
+
+    useEffect(() => {
+        handleCheck()
+    }, [handleCheck])
 
     const getButtonColor = () => {
         switch (status) {

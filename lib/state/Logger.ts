@@ -1,7 +1,8 @@
-import { Storage } from '@lib/enums/Storage'
 import Toast from 'react-native-simple-toast'
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
+
+import { Storage } from '@lib/enums/Storage'
 
 import { AppSettings } from '../constants/GlobalValues'
 import { createMMKVStorage, mmkv } from '../storage/MMKV'

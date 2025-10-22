@@ -19,6 +19,6 @@ export const replaceMacros = (
         { macro: /{{?char}}?/g, value: charName },
         ...(options?.extraMacros ?? []),
     ]
-    for (const rule of rules) newtext = replaceMacroBase(text, { extraMacros: rules })
+    newtext = replaceMacroBase(text, { extraMacros: rules })
     return newtext
 }

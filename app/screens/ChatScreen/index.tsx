@@ -1,3 +1,10 @@
+import { useEffect } from 'react'
+import { View } from 'react-native'
+import { useReanimatedKeyboardAnimation } from 'react-native-keyboard-controller'
+import Animated, { useAnimatedStyle } from 'react-native-reanimated'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { useShallow } from 'zustand/react/shallow'
+
 import ThemedButton from '@components/buttons/ThemedButton'
 import AvatarViewer from '@components/views/AvatarViewer'
 import Drawer from '@components/views/Drawer'
@@ -10,14 +17,8 @@ import { Logger } from '@lib/state/Logger'
 import { ChatImportSchema } from '@lib/utils/ChatSchema'
 import { pickStringDocument } from '@lib/utils/File'
 import ChatInput from '@screens/ChatScreen/ChatInput'
-import ChatWindow from '@screens/ChatScreen/ChatWindow'
 import ChatsDrawer from '@screens/ChatScreen/ChatsDrawer'
-import { useEffect } from 'react'
-import { View } from 'react-native'
-import { useReanimatedKeyboardAnimation } from 'react-native-keyboard-controller'
-import Animated, { useAnimatedStyle } from 'react-native-reanimated'
-import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import { useShallow } from 'zustand/react/shallow'
+import ChatWindow from '@screens/ChatScreen/ChatWindow'
 
 import ChatEditor from './ChatWindow/ChatEditor'
 
@@ -53,7 +54,7 @@ const ChatScreen = () => {
             unloadCharacter()
             unloadChat()
         }
-    }, [])
+    }, [unloadCharacter, unloadChat])
 
     const handleCreateChat = async () => {
         if (charId)

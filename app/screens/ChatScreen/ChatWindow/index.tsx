@@ -1,3 +1,11 @@
+import { useLiveQuery } from 'drizzle-orm/expo-sqlite'
+import { ImageBackground } from 'expo-image'
+import { useEffect, useRef } from 'react'
+import { FlatList } from 'react-native'
+import { useMMKVBoolean } from 'react-native-mmkv'
+import Animated, { FadeIn, FadeOut, LinearTransition } from 'react-native-reanimated'
+import { useShallow } from 'zustand/react/shallow'
+
 import Drawer from '@components/views/Drawer'
 import HeaderTitle from '@components/views/HeaderTitle'
 import { AppSettings } from '@lib/constants/GlobalValues'
@@ -7,13 +15,6 @@ import { useBackgroundStore } from '@lib/state/BackgroundImage'
 import { Characters } from '@lib/state/Characters'
 import { Chats } from '@lib/state/Chat'
 import { AppDirectory } from '@lib/utils/File'
-import { useLiveQuery } from 'drizzle-orm/expo-sqlite'
-import { ImageBackground } from 'expo-image'
-import { useEffect, useRef } from 'react'
-import { FlatList } from 'react-native'
-import { useMMKVBoolean } from 'react-native-mmkv'
-import Animated, { FadeIn, FadeOut, LinearTransition } from 'react-native-reanimated'
-import { useShallow } from 'zustand/react/shallow'
 
 import { useInputHeightStore } from '../ChatInput'
 import ChatFooter from './ChatFooter'
@@ -68,7 +69,7 @@ const ChatWindow = () => {
                 animated: chat.autoScroll.cause === 'search',
                 viewOffset: 32,
             })
-    }, [chat?.id, chat?.autoScroll])
+    }, [chat, saveScroll])
     const image = useBackgroundStore((state) => state.image)
 
     const list: ListItem[] = (chat?.messages ?? [])

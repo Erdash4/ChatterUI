@@ -1,10 +1,11 @@
-import ThemedSwitch from '@components/input/ThemedSwitch'
-import SectionTitle from '@components/text/SectionTitle'
-import { AppSettings } from '@lib/constants/GlobalValues'
 import * as KeepAwake from 'expo-keep-awake'
 import React from 'react'
 import { View } from 'react-native'
 import { useMMKVBoolean } from 'react-native-mmkv'
+
+import ThemedSwitch from '@components/input/ThemedSwitch'
+import SectionTitle from '@components/text/SectionTitle'
+import { AppSettings } from '@lib/constants/GlobalValues'
 
 const ScreenSettings = () => {
     const [unlockOrientation, setUnlockOrientation] = useMMKVBoolean(AppSettings.UnlockOrientation)

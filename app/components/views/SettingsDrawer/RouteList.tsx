@@ -1,11 +1,12 @@
 import { AntDesign } from '@expo/vector-icons'
-import { AppSettings } from '@lib/constants/GlobalValues'
-import { useAppMode } from '@lib/state/AppMode'
-import { Theme } from '@lib/theme/ThemeManager'
 import { Href, useRouter } from 'expo-router'
 import { FlatList, StyleSheet, Text, TouchableOpacity } from 'react-native'
 import { useMMKVBoolean } from 'react-native-mmkv'
 import Animated, { Easing, SlideInLeft } from 'react-native-reanimated'
+
+import { AppSettings } from '@lib/constants/GlobalValues'
+import { useAppMode } from '@lib/state/AppMode'
+import { Theme } from '@lib/theme/ThemeManager'
 
 type ButtonData = {
     name: string

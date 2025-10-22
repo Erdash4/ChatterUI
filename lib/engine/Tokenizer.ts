@@ -1,5 +1,3 @@
-import { useAppModeStore } from '@lib/state/AppMode'
-import { Logger } from '@lib/state/Logger'
 import { initLlama, LlamaContext } from 'cui-llama.rn'
 import { Asset } from 'expo-asset'
 import {
@@ -10,6 +8,9 @@ import {
     makeDirectoryAsync,
 } from 'expo-file-system'
 import { create } from 'zustand'
+
+import { useAppModeStore } from '@lib/state/AppMode'
+import { Logger } from '@lib/state/Logger'
 
 import { Llama } from './Local/LlamaLocal'
 

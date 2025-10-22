@@ -1,6 +1,7 @@
-import { Theme } from '@lib/theme/ThemeManager'
 import React, { ReactNode } from 'react'
 import { TextProps, TextStyle } from 'react-native'
+
+import { Theme } from '@lib/theme/ThemeManager'
 
 import TText from './TText'
 

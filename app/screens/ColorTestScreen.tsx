@@ -1,6 +1,7 @@
-import { Theme } from '@lib/theme/ThemeManager'
 import React from 'react'
 import { Text, View } from 'react-native'
+
+import { Theme } from '@lib/theme/ThemeManager'
 
 const ColorTestScreen = () => {
     const { color, spacing } = Theme.useTheme()

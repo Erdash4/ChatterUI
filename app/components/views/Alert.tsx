@@ -1,10 +1,11 @@
-import FadeBackrop from '@components/views/FadeBackdrop'
-import { AlertButtonProps, AlertProps, useAlertStore } from '@lib/state/components/Alert'
-import { Theme } from '@lib/theme/ThemeManager'
 import React, { ReactNode } from 'react'
 import { Modal, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import Animated, { FadeInDown } from 'react-native-reanimated'
 import { useShallow } from 'zustand/react/shallow'
+
+import FadeBackrop from '@components/views/FadeBackdrop'
+import { AlertButtonProps, AlertProps, useAlertStore } from '@lib/state/components/Alert'
+import { Theme } from '@lib/theme/ThemeManager'
 
 namespace Alert {
     export const alert = (props: AlertProps) => {

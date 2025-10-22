@@ -1,14 +1,15 @@
+import { useRouter } from 'expo-router'
+import { useEffect, useState } from 'react'
+import { Image, Modal, StyleSheet, Text, View } from 'react-native'
+import Animated, { FadeInDown } from 'react-native-reanimated'
+import { useShallow } from 'zustand/react/shallow'
+
 import ThemedButton from '@components/buttons/ThemedButton'
 import Avatar from '@components/views/Avatar'
 import FadeBackrop from '@components/views/FadeBackdrop'
 import { Characters } from '@lib/state/Characters'
 import { useAvatarViewerStore } from '@lib/state/components/AvatarViewer'
 import { Theme } from '@lib/theme/ThemeManager'
-import { useRouter } from 'expo-router'
-import { useEffect, useState } from 'react'
-import { Image, Modal, StyleSheet, Text, View } from 'react-native'
-import Animated, { FadeInDown } from 'react-native-reanimated'
-import { useShallow } from 'zustand/react/shallow'
 
 type AvatarViewerProps = {
     editorButton?: boolean

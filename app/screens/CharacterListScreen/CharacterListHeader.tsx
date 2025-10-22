@@ -1,3 +1,11 @@
+import { count, eq, notInArray } from 'drizzle-orm'
+import { useLiveQuery } from 'drizzle-orm/expo-sqlite'
+import { useFocusEffect } from 'expo-router'
+import { useCallback } from 'react'
+import { BackHandler, Text, View } from 'react-native'
+import { useMMKVBoolean } from 'react-native-mmkv'
+import Animated, { FadeIn, FadeOut, LinearTransition } from 'react-native-reanimated'
+
 import ThemedButton from '@components/buttons/ThemedButton'
 import StringArrayEditor from '@components/input/StringArrayEditor'
 import ThemedTextInput from '@components/input/ThemedTextInput'
@@ -8,13 +16,6 @@ import { Logger } from '@lib/state/Logger'
 import { TagHider } from '@lib/state/TagHider'
 import { Theme } from '@lib/theme/ThemeManager'
 import { characterTags, tags } from 'db/schema'
-import { count, eq, notInArray } from 'drizzle-orm'
-import { useLiveQuery } from 'drizzle-orm/expo-sqlite'
-import { useFocusEffect } from 'expo-router'
-import { useCallback } from 'react'
-import { BackHandler, Text, View } from 'react-native'
-import { useMMKVBoolean } from 'react-native-mmkv'
-import Animated, { FadeIn, FadeOut, LinearTransition } from 'react-native-reanimated'
 
 import SortButton from './SortButton'
 
@@ -53,7 +54,7 @@ const CharacterListHeader: React.FC<CharacterListHeaderProps> = ({ resultLength 
                 return true
             })
             return () => handler.remove()
-        }, [showSearch])
+        }, [setShowSearch, setTextFilter, showSearch])
     )
 
     return (

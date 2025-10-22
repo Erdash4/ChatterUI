@@ -1,12 +1,13 @@
-import { rawdb } from '@db'
-import { LlamaConfig } from '@lib/engine/Local/LlamaLocal'
-import { Theme } from '@lib/theme/ThemeManager'
 import { initLlama, LlamaContext } from 'cui-llama.rn'
 import { NativeEmbeddingResult } from 'cui-llama.rn/lib/typescript/NativeRNLlama'
 import { documentDirectory } from 'expo-file-system'
 import { useState } from 'react'
 import { Text, TextInput, TouchableOpacity, View } from 'react-native'
 import { create } from 'zustand'
+
+import { rawdb } from '@db'
+import { LlamaConfig } from '@lib/engine/Local/LlamaLocal'
+import { Theme } from '@lib/theme/ThemeManager'
 
 /*const insertRandomData = async () => {
     const input = Array(8)
@@ -21,7 +22,7 @@ import { create } from 'zustand'
 
 const EmbeddingScreen = () => {
     const { color } = Theme.useTheme()
-    const { loadModel, getEmbed } = EmbeddingState.useEmbedding((state) => ({
+    const { getEmbed } = EmbeddingState.useEmbedding((state) => ({
         loadModel: state.loadModel,
         getEmbed: state.getEmbedding,
     }))
@@ -153,9 +154,9 @@ const createTables = async () => {
 }
 
 const insertData = async () => {
-    const embedsize = 384
-    const batchsize = 10000
-    const batches = 1
+    // const embedsize = 384
+    // const batchsize = 10000
+    // const batches = 1
     /*
     for (let i = 0; i < batches; i++) {
       const input = Array(batchsize)

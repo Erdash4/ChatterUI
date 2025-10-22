@@ -1,9 +1,10 @@
-import { Storage } from '@lib/enums/Storage'
-import { Logger } from '@lib/state/Logger'
-import { createMMKVStorage } from '@lib/storage/MMKV'
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 import { useShallow } from 'zustand/react/shallow'
+
+import { Storage } from '@lib/enums/Storage'
+import { Logger } from '@lib/state/Logger'
+import { createMMKVStorage } from '@lib/storage/MMKV'
 
 import { APIConfiguration, APIValues } from './APIBuilder.types'
 import { defaultTemplates } from './DefaultAPI'

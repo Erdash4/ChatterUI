@@ -1,13 +1,14 @@
-import Alert from '@components/views/Alert'
-import { AppSettings } from '@lib/constants/GlobalValues'
-import { Characters } from '@lib/state/Characters'
-import { Chats } from '@lib/state/Chat'
-import { Logger } from '@lib/state/Logger'
 import * as Notifications from 'expo-notifications'
 import { useRouter } from 'expo-router'
 import { useEffect } from 'react'
 import { Linking, Platform } from 'react-native'
 import { useMMKVBoolean } from 'react-native-mmkv'
+
+import Alert from '@components/views/Alert'
+import { AppSettings } from '@lib/constants/GlobalValues'
+import { Characters } from '@lib/state/Characters'
+import { Chats } from '@lib/state/Chat'
+import { Logger } from '@lib/state/Logger'
 
 export const setupNotifications = () => {
     Notifications.setNotificationHandler({
@@ -101,5 +102,5 @@ export function useNotificationObserver() {
             isMounted = false
             subscription.remove()
         }
-    }, [autoLoad, useAuth])
+    }, [autoLoad, useAuth, chat, loadChat, router, setCard])
 }

@@ -1,10 +1,11 @@
+import { Pressable, Text, View } from 'react-native'
+import { useMMKVBoolean } from 'react-native-mmkv'
+import { useShallow } from 'zustand/react/shallow'
+
 import { AppSettings } from '@lib/constants/GlobalValues'
 import { useAppMode } from '@lib/state/AppMode'
 import { Chats } from '@lib/state/Chat'
 import { Theme } from '@lib/theme/ThemeManager'
-import { Pressable, Text, View } from 'react-native'
-import { useMMKVBoolean } from 'react-native-mmkv'
-import { useShallow } from 'zustand/react/shallow'
 
 import ChatAttachments from './ChatAttachments'
 import { useChatEditorStore } from './ChatEditor'

@@ -1,7 +1,8 @@
-import { Logger } from '@lib/state/Logger'
 import React from 'react'
 import { createTransformProps } from 'react-fast-hoc'
 import { Platform, Text, StyleSheet } from 'react-native'
+
+import { Logger } from '@lib/state/Logger'
 
 const patchText = () => {
     if (Platform.OS !== 'android') {

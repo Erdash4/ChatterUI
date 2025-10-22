@@ -1,9 +1,10 @@
 import { Ionicons } from '@expo/vector-icons'
-import { Llama } from '@lib/engine/Local/LlamaLocal'
-import { Theme } from '@lib/theme/ThemeManager'
 import { useRouter } from 'expo-router'
 import React from 'react'
 import { View, Text, TouchableOpacity } from 'react-native'
+
+import { Llama } from '@lib/engine/Local/LlamaLocal'
+import { Theme } from '@lib/theme/ThemeManager'
 
 const ChatModelName = () => {
     const model = Llama.useLlamaModelStore((state) => state.model)

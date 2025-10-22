@@ -1,10 +1,11 @@
+import { Text, View } from 'react-native'
+import { useMMKVBoolean } from 'react-native-mmkv'
+
 import SupportButton from '@components/buttons/SupportButton'
 import Drawer from '@components/views/Drawer'
 import { AppSettings } from '@lib/constants/GlobalValues'
 import { Theme } from '@lib/theme/ThemeManager'
 import appConfig from 'app.config'
-import { Text, View } from 'react-native'
-import { useMMKVBoolean } from 'react-native-mmkv'
 
 import AppModeToggle from './AppModeToggle'
 import RouteList from './RouteList'

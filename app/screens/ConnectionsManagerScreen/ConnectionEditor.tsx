@@ -1,3 +1,7 @@
+import { useCallback, useEffect, useState } from 'react'
+import { ScrollView, StyleSheet, Text, View } from 'react-native'
+import { useShallow } from 'zustand/react/shallow'
+
 import HeartbeatButton from '@components/buttons/HeartbeatButton'
 import ThemedButton from '@components/buttons/ThemedButton'
 import DropdownSheet from '@components/input/DropdownSheet'
@@ -9,10 +13,6 @@ import { APIConfiguration } from '@lib/engine/API/APIBuilder.types'
 import { APIManager, APIManagerValue } from '@lib/engine/API/APIManagerState'
 import { Logger } from '@lib/state/Logger'
 import { Theme } from '@lib/theme/ThemeManager'
-import { useEffect, useState } from 'react'
-import { ScrollView, StyleSheet, Text, View } from 'react-native'
-import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import { useShallow } from 'zustand/react/shallow'
 
 type ConnectionEditorProps = {
     index: number
@@ -27,7 +27,7 @@ const ConnectionEditor: React.FC<ConnectionEditorProps> = ({
     close,
     originalValues,
 }) => {
-    const { color, spacing, fontSize } = Theme.useTheme()
+    const { color, fontSize } = Theme.useTheme()
     const styles = useStyles()
 
     const { editValue, getTemplates } = APIManager.useConnectionsStore(
@@ -43,11 +43,6 @@ const ConnectionEditor: React.FC<ConnectionEditorProps> = ({
     const [modelList, setModelList] = useState<any[]>([])
 
     useEffect(() => {
-        setValues(originalValues)
-        handleGetModelList()
-    }, [originalValues])
-
-    useEffect(() => {
         const newTemplate = getTemplates().find((item) => item.name === values.configName)
         if (!newTemplate) {
             Logger.errorToast('Could not get valid template!')
@@ -56,9 +51,9 @@ const ConnectionEditor: React.FC<ConnectionEditorProps> = ({
         }
 
         setTemplate(newTemplate)
-    }, [])
+    }, [close, values, getTemplates])
 
-    const handleGetModelList = async () => {
+    const handleGetModelList = useCallback(async () => {
         if (!template.features.useModel || !show) return
         const auth: any = {}
         if (template.features.useKey) {
@@ -75,11 +70,12 @@ const ConnectionEditor: React.FC<ConnectionEditorProps> = ({
         }
         const models = getNestedValue(data, template.model.modelListParser)
         setModelList(models)
-    }
-
+    }, [show, template, values])
+    // TODO: Replace with react query
     useEffect(() => {
+        setValues(originalValues)
         handleGetModelList()
-    }, [])
+    }, [originalValues, handleGetModelList])
 
     return (
         <BottomSheet
@@ -255,7 +251,6 @@ const ConnectionEditor: React.FC<ConnectionEditorProps> = ({
 export default ConnectionEditor
 
 const useStyles = () => {
-    const insets = useSafeAreaInsets()
     const { color, spacing } = Theme.useTheme()
     return StyleSheet.create({
         mainContainer: {

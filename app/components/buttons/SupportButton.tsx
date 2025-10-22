@@ -1,7 +1,8 @@
 import { FontAwesome } from '@expo/vector-icons'
-import { Theme } from '@lib/theme/ThemeManager'
 import React from 'react'
 import { Linking } from 'react-native'
+
+import { Theme } from '@lib/theme/ThemeManager'
 
 import ThemedButton from './ThemedButton'
 

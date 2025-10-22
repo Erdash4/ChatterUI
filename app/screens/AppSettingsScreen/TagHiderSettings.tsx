@@ -1,10 +1,11 @@
+import { View } from 'react-native'
+import { useMMKVBoolean } from 'react-native-mmkv'
+import { useShallow } from 'zustand/react/shallow'
+
 import StringArrayEditor from '@components/input/StringArrayEditor'
 import ThemedSwitch from '@components/input/ThemedSwitch'
 import { AppSettings } from '@lib/constants/GlobalValues'
 import { TagHider } from '@lib/state/TagHider'
-import { View } from 'react-native'
-import { useMMKVBoolean } from 'react-native-mmkv'
-import { useShallow } from 'zustand/react/shallow'
 
 const TagHiderSettings = () => {
     const [tagHider, setUseTagHider] = useMMKVBoolean(AppSettings.UseTagHider)

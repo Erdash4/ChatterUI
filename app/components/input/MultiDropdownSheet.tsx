@@ -1,9 +1,9 @@
-import BottomSheet from '@components/views/BottomSheet'
 import { Entypo } from '@expo/vector-icons'
-import { Theme } from '@lib/theme/ThemeManager'
 import { useState } from 'react'
 import { FlatList, Pressable, StyleSheet, Text, TextInput, View, ViewStyle } from 'react-native'
-import { useSafeAreaInsets } from 'react-native-safe-area-context'
+
+import BottomSheet from '@components/views/BottomSheet'
+import { Theme } from '@lib/theme/ThemeManager'
 
 type DropdownItemProps = {
     label: string
@@ -145,7 +145,6 @@ const MultiDropdownSheet = <T,>({
 export default MultiDropdownSheet
 
 export const useDropdownStyles = () => {
-    const insets = useSafeAreaInsets()
     const { color, spacing, borderRadius } = Theme.useTheme()
     return StyleSheet.create({
         button: {

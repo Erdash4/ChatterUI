@@ -1,6 +1,4 @@
-import ThemedButton, { ThemedButtonProps } from '@components/buttons/ThemedButton'
 import { AntDesign } from '@expo/vector-icons'
-import { Theme } from '@lib/theme/ThemeManager'
 import { useFocusEffect } from 'expo-router'
 import React, { ComponentProps, ReactNode, useCallback } from 'react'
 import { BackHandler, StyleSheet, View, ViewStyle } from 'react-native'
@@ -19,6 +17,9 @@ import Animated, {
 } from 'react-native-reanimated'
 import { create } from 'zustand'
 import { useShallow } from 'zustand/react/shallow'
+
+import ThemedButton, { ThemedButtonProps } from '@components/buttons/ThemedButton'
+import { Theme } from '@lib/theme/ThemeManager'
 
 import FadeBackrop from './FadeBackdrop'
 
@@ -106,7 +107,7 @@ namespace Drawer {
                 }
                 const handler = BackHandler.addEventListener('hardwareBackPress', backAction)
                 return () => handler.remove()
-            }, [show])
+            }, [drawerId, setShow, show])
         )
         if (!show) return
 

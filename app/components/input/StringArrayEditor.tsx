@@ -1,7 +1,4 @@
-import ThemedButton from '@components/buttons/ThemedButton'
 import { AntDesign } from '@expo/vector-icons'
-import { Logger } from '@lib/state/Logger'
-import { Theme } from '@lib/theme/ThemeManager'
 import React, { useState } from 'react'
 import {
     Text,
@@ -12,6 +9,10 @@ import {
     ViewStyle,
     ScrollView,
 } from 'react-native'
+
+import ThemedButton from '@components/buttons/ThemedButton'
+import { Logger } from '@lib/state/Logger'
+import { Theme } from '@lib/theme/ThemeManager'
 
 type StringArrayEditorProps = {
     containerStyle?: ViewStyle

@@ -1,9 +1,10 @@
-import ContextMenu from '@components/views/ContextMenu'
-import Drawer from '@components/views/Drawer'
 import { Ionicons } from '@expo/vector-icons'
-import { Theme } from '@lib/theme/ThemeManager'
 import { useRouter } from 'expo-router'
 import { StyleSheet } from 'react-native'
+
+import ContextMenu from '@components/views/ContextMenu'
+import Drawer from '@components/views/Drawer'
+import { Theme } from '@lib/theme/ThemeManager'
 
 const ChatOptions = () => {
     const router = useRouter()
@@ -52,7 +53,7 @@ const ChatOptions = () => {
 export default ChatOptions
 
 const useStyles = () => {
-    const { color, spacing, borderWidth } = Theme.useTheme()
+    const { color } = Theme.useTheme()
 
     return StyleSheet.create({
         optionsButton: {

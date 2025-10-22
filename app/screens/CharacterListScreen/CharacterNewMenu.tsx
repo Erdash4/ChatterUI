@@ -1,10 +1,11 @@
+import { useRouter } from 'expo-router'
+import { useState } from 'react'
+import { useShallow } from 'zustand/react/shallow'
+
 import ContextMenu from '@components/views/ContextMenu'
 import InputSheet from '@components/views/InputSheet'
 import { Characters } from '@lib/state/Characters'
 import { Logger } from '@lib/state/Logger'
-import { useRouter } from 'expo-router'
-import { useState } from 'react'
-import { useShallow } from 'zustand/react/shallow'
 
 type CharacterNewMenuProps = {
     nowLoading: boolean

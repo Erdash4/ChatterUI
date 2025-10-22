@@ -1,9 +1,10 @@
 import { AntDesign } from '@expo/vector-icons'
+import React from 'react'
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+
 import { continueResponse, generateResponse, regenerateResponse } from '@lib/engine/Inference'
 import { Chats } from '@lib/state/Chat'
 import { Theme } from '@lib/theme/ThemeManager'
-import React from 'react'
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
 type SwipesProps = {
     nowGenerating: boolean

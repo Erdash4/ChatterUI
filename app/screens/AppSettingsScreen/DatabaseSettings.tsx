@@ -1,15 +1,16 @@
-import ThemedButton from '@components/buttons/ThemedButton'
-import SectionTitle from '@components/text/SectionTitle'
-import Alert from '@components/views/Alert'
-import { Logger } from '@lib/state/Logger'
-import { Theme } from '@lib/theme/ThemeManager'
 import { localDownload } from '@vali98/react-native-fs'
-import appConfig from 'app.config'
 import { reloadAppAsync } from 'expo'
 import { getDocumentAsync } from 'expo-document-picker'
 import { copyAsync, deleteAsync, documentDirectory } from 'expo-file-system'
 import React from 'react'
 import { Text, View } from 'react-native'
+
+import ThemedButton from '@components/buttons/ThemedButton'
+import SectionTitle from '@components/text/SectionTitle'
+import Alert from '@components/views/Alert'
+import { Logger } from '@lib/state/Logger'
+import { Theme } from '@lib/theme/ThemeManager'
+import appConfig from 'app.config'
 
 const appVersion = appConfig.expo.version
 
@@ -65,7 +66,7 @@ const DatabaseSettings = () => {
                     paddingBottom: spacing.xs,
                     marginBottom: spacing.m,
                 }}>
-                WARNING: only import if you are certain it's from the same version!
+                WARNING: ensure imported database is from the same app version!
             </Text>
             <ThemedButton
                 label="Export Database"

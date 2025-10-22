@@ -1,3 +1,5 @@
+import { readAsStringAsync } from 'expo-file-system'
+
 import { AppSettings } from '@lib/constants/GlobalValues'
 import { CharacterCardData, CharacterTokenCache } from '@lib/state/Characters'
 import { ChatEntry } from '@lib/state/Chat'
@@ -6,7 +8,6 @@ import { Logger } from '@lib/state/Logger'
 import { replaceMacros } from '@lib/state/Macros'
 import { mmkv } from '@lib/storage/MMKV'
 import { Macro } from '@lib/utils/Macros'
-import { readAsStringAsync } from 'expo-file-system'
 
 import { APIConfiguration, APIValues } from './APIBuilder.types'
 

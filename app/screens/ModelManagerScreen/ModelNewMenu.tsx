@@ -1,6 +1,7 @@
+import { View } from 'react-native'
+
 import ContextMenu from '@components/views/ContextMenu'
 import { Model } from '@lib/engine/Local/Model'
-import { View } from 'react-native'
 
 type ModelNewMenuProps = {
     modelImporting: boolean

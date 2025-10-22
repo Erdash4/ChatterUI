@@ -1,17 +1,18 @@
+import { AntDesign } from '@expo/vector-icons'
+import * as DocumentPicker from 'expo-document-picker'
+import React, { useEffect, useState } from 'react'
+import { StyleSheet, Text, View } from 'react-native'
+import { useShallow } from 'zustand/react/shallow'
+
 import ThemedButton from '@components/buttons/ThemedButton'
 import ThemedTextInput from '@components/input/ThemedTextInput'
 import Alert from '@components/views/Alert'
 import Avatar from '@components/views/Avatar'
 import AvatarViewer from '@components/views/AvatarViewer'
 import ContextMenu from '@components/views/ContextMenu'
-import { AntDesign } from '@expo/vector-icons'
 import { CharacterCardData, Characters } from '@lib/state/Characters'
 import { useAvatarViewerStore } from '@lib/state/components/AvatarViewer'
 import { Theme } from '@lib/theme/ThemeManager'
-import * as DocumentPicker from 'expo-document-picker'
-import React, { useEffect, useState } from 'react'
-import { StyleSheet, Text, View } from 'react-native'
-import { useShallow } from 'zustand/react/shallow'
 
 const UserCardEditor = () => {
     const styles = useStyles()
@@ -33,7 +34,7 @@ const UserCardEditor = () => {
 
     useEffect(() => {
         setCurrentCard(userCard)
-    }, [id])
+    }, [userCard])
 
     const saveCard = async () => {
         if (currentCard && id) {

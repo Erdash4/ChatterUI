@@ -1,10 +1,3 @@
-import ThemedButton from '@components/buttons/ThemedButton'
-import Alert from '@components/views/Alert'
-import { AppSettings } from '@lib/constants/GlobalValues'
-import { Chats, useInference } from '@lib/state/Chat'
-import { Logger } from '@lib/state/Logger'
-import { useTTS } from '@lib/state/TTS'
-import { Theme } from '@lib/theme/ThemeManager'
 import { setStringAsync } from 'expo-clipboard'
 import { useFocusEffect } from 'expo-router'
 import React, { useCallback } from 'react'
@@ -13,6 +6,14 @@ import { useMMKVBoolean } from 'react-native-mmkv'
 import Animated, { StretchInY, StretchOutY, ZoomIn, ZoomOut } from 'react-native-reanimated'
 import { create } from 'zustand'
 import { useShallow } from 'zustand/react/shallow'
+
+import ThemedButton from '@components/buttons/ThemedButton'
+import Alert from '@components/views/Alert'
+import { AppSettings } from '@lib/constants/GlobalValues'
+import { Chats, useInference } from '@lib/state/Chat'
+import { Logger } from '@lib/state/Logger'
+import { useTTS } from '@lib/state/TTS'
+import { Theme } from '@lib/theme/ThemeManager'
 
 import { useChatEditorStore } from './ChatEditor'
 import ChatTTS from './ChatTTS'
@@ -92,7 +93,7 @@ const ChatQuickActions: React.FC<ChatActionProps> = ({ index, nowGenerating, isL
             }
             const handler = BackHandler.addEventListener('hardwareBackPress', backAction)
             return () => handler.remove()
-        }, [showOptions])
+        }, [showOptions, setShowOptions, swipe])
     )
     if (!swipe) return
 

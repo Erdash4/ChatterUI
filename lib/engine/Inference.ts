@@ -1,3 +1,5 @@
+import BackgroundService from 'react-native-background-actions'
+
 import { AppSettings } from '@lib/constants/GlobalValues'
 import { useAppModeStore } from '@lib/state/AppMode'
 import { Chats, useInference } from '@lib/state/Chat'
@@ -5,8 +7,6 @@ import { Instructs } from '@lib/state/Instructs'
 import { SamplersManager } from '@lib/state/SamplerState'
 import { useTTSStore } from '@lib/state/TTS'
 import { mmkv } from '@lib/storage/MMKV'
-import { useCallback } from 'react'
-import BackgroundService from 'react-native-background-actions'
 
 import { Characters } from '../state/Characters'
 import { Logger } from '../state/Logger'
@@ -81,6 +81,7 @@ export async function generateResponse(swipeId: number) {
     }
 }
 // TODO: Use this
+/*
 const useGenerateResponse = () => {
     const startGenerating = Chats.useChatState((state) => state.startGenerating)
     const nowGenerating = useInference((state) => state.nowGenerating)
@@ -97,11 +98,11 @@ const useGenerateResponse = () => {
             const process = appMode === 'local' ? localInference : chatInferenceStream
             await BackgroundService.start(process, completionTaskOptions)
         },
-        [nowGenerating, appMode]
+        [nowGenerating, appMode, startGenerating]
     )
 
     return generateResponse
-}
+}*/
 
 async function chatInferenceStream() {
     const fields = await obtainFields()
@@ -130,7 +131,7 @@ async function chatInferenceStream() {
     const abort = await buildAndSendRequest(fields)
     useInference.getState().setAbort(() => {
         Logger.debug('Running Abort')
-        if (abort) abort()
+        abort?.()
     })
 }
 

@@ -1,9 +1,9 @@
 import { AntDesign } from '@expo/vector-icons'
-import { CharacterSorter, SearchType } from '@lib/state/CharacterSorter'
-import { CharInfo } from '@lib/state/Characters'
-import { Theme } from '@lib/theme/ThemeManager'
 import React from 'react'
-import { Text, StyleSheet, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, TouchableOpacity } from 'react-native'
+
+import { CharacterSorter, SearchType } from '@lib/state/CharacterSorter'
+import { Theme } from '@lib/theme/ThemeManager'
 
 type SortButtonProps = {
     type: SearchType
@@ -41,7 +41,7 @@ const SortButton: React.FC<SortButtonProps> = ({ type, label }) => {
 export default SortButton
 
 const useStyles = () => {
-    const { color, spacing, borderWidth, borderRadius } = Theme.useTheme()
+    const { color, spacing, borderRadius } = Theme.useTheme()
 
     return StyleSheet.create({
         sortButton: {

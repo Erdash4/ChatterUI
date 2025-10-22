@@ -1,13 +1,14 @@
-import ThemedButton from '@components/buttons/ThemedButton'
-import HeaderButton from '@components/views/HeaderButton'
-import HeaderTitle from '@components/views/HeaderTitle'
 import { AntDesign, Ionicons } from '@expo/vector-icons'
-import { APIManager } from '@lib/engine/API/APIManagerState'
-import { Theme } from '@lib/theme/ThemeManager'
 import { useRouter } from 'expo-router'
 import { FlatList, Pressable, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useShallow } from 'zustand/react/shallow'
+
+import ThemedButton from '@components/buttons/ThemedButton'
+import HeaderButton from '@components/views/HeaderButton'
+import HeaderTitle from '@components/views/HeaderTitle'
+import { APIManager } from '@lib/engine/API/APIManagerState'
+import { Theme } from '@lib/theme/ThemeManager'
 
 import ConnectionItem from './ConnectionItem'
 

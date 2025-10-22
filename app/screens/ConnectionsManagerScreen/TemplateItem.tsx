@@ -1,3 +1,5 @@
+import { Text, View } from 'react-native'
+
 import ThemedButton from '@components/buttons/ThemedButton'
 import Alert from '@components/views/Alert'
 import { APIConfiguration } from '@lib/engine/API/APIBuilder.types'
@@ -5,7 +7,6 @@ import { APIManager } from '@lib/engine/API/APIManagerState'
 import { Logger } from '@lib/state/Logger'
 import { Theme } from '@lib/theme/ThemeManager'
 import { saveStringToDownload } from '@lib/utils/File'
-import { Text, View } from 'react-native'
 
 type TemplateItemProps = {
     item: APIConfiguration

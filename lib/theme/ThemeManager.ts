@@ -1,11 +1,12 @@
-import { Storage } from '@lib/enums/Storage'
-import { Logger } from '@lib/state/Logger'
-import { createMMKVStorage } from '@lib/storage/MMKV'
 import { useMemo } from 'react'
 import { useColorScheme } from 'react-native'
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 import { useShallow } from 'zustand/react/shallow'
+
+import { Storage } from '@lib/enums/Storage'
+import { Logger } from '@lib/state/Logger'
+import { createMMKVStorage } from '@lib/storage/MMKV'
 
 import { DefaultColorSchemes, ThemeColor, themeColorSchemaV1 } from './ThemeColor'
 
@@ -25,7 +26,7 @@ interface ColorStateProps {
 
 export const useGlobalStyles = () => {
     // todo: find common items to add here
-    const { color, spacing, borderWidth, borderRadius } = Theme.useTheme()
+    // const { color, spacing, borderWidth, borderRadius } = Theme.useTheme()
 }
 
 export namespace Theme {
@@ -171,7 +172,7 @@ export namespace Theme {
 
         return useMemo(
             () => ({ color, spacing, font, borderWidth, fontSize, borderRadius }),
-            [color, systemTheme]
+            [color]
         )
     }
 }

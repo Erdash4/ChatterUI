@@ -1,21 +1,5 @@
-import ThemedButton from '@components/buttons/ThemedButton'
-import StringArrayEditor from '@components/input/StringArrayEditor'
-import ThemedTextInput from '@components/input/ThemedTextInput'
-import Alert from '@components/views/Alert'
-import Avatar from '@components/views/Avatar'
-import AvatarViewer from '@components/views/AvatarViewer'
-import ContextMenu from '@components/views/ContextMenu'
-import HeaderTitle from '@components/views/HeaderTitle'
-import { db } from '@db'
 import { AntDesign } from '@expo/vector-icons'
-import { Tokenizer } from '@lib/engine/Tokenizer'
-import { CharacterCardData, Characters } from '@lib/state/Characters'
-import { Chats } from '@lib/state/Chat'
-import { Logger } from '@lib/state/Logger'
-import { useAvatarViewerStore } from '@lib/state/components/AvatarViewer'
-import { Theme } from '@lib/theme/ThemeManager'
 import { usePreventRemove } from '@react-navigation/core'
-import { characterTags, tags } from 'db/schema'
 import { count, eq } from 'drizzle-orm'
 import { useLiveQuery } from 'drizzle-orm/expo-sqlite'
 import * as DocumentPicker from 'expo-document-picker'
@@ -26,6 +10,23 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-controller'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useShallow } from 'zustand/react/shallow'
+
+import ThemedButton from '@components/buttons/ThemedButton'
+import StringArrayEditor from '@components/input/StringArrayEditor'
+import ThemedTextInput from '@components/input/ThemedTextInput'
+import Alert from '@components/views/Alert'
+import Avatar from '@components/views/Avatar'
+import AvatarViewer from '@components/views/AvatarViewer'
+import ContextMenu from '@components/views/ContextMenu'
+import HeaderTitle from '@components/views/HeaderTitle'
+import { db } from '@db'
+import { Tokenizer } from '@lib/engine/Tokenizer'
+import { CharacterCardData, Characters } from '@lib/state/Characters'
+import { Chats } from '@lib/state/Chat'
+import { useAvatarViewerStore } from '@lib/state/components/AvatarViewer'
+import { Logger } from '@lib/state/Logger'
+import { Theme } from '@lib/theme/ThemeManager'
+import { characterTags, tags } from 'db/schema'
 
 const ChracterEditorScreen = () => {
     const styles = useStyles()
@@ -143,7 +144,7 @@ const ChracterEditorScreen = () => {
         return () => {
             if (!chat) unloadCharacter()
         }
-    }, [])
+    }, [chat, unloadCharacter])
 
     const handleDeleteImage = () => {
         Alert.alert({

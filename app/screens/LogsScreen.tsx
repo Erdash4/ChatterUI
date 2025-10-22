@@ -1,3 +1,8 @@
+import { FlashList } from '@shopify/flash-list'
+import { Text, View } from 'react-native'
+import { SafeAreaView } from 'react-native-safe-area-context'
+import { useShallow } from 'zustand/react/shallow'
+
 import Alert from '@components/views/Alert'
 import ContextMenu from '@components/views/ContextMenu'
 import HeaderButton from '@components/views/HeaderButton'
@@ -5,10 +10,6 @@ import HeaderTitle from '@components/views/HeaderTitle'
 import { Logger, LogLevel } from '@lib/state/Logger'
 import { Theme } from '@lib/theme/ThemeManager'
 import { saveStringToDownload } from '@lib/utils/File'
-import { FlashList } from '@shopify/flash-list'
-import { Text, View } from 'react-native'
-import { SafeAreaView } from 'react-native-safe-area-context'
-import { useShallow } from 'zustand/react/shallow'
 
 const LogsScreen = () => {
     const { color } = Theme.useTheme()

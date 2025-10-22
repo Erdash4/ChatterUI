@@ -1,3 +1,13 @@
+import { and, asc, desc, eq, gte, inArray, like, notExists, notInArray, sql } from 'drizzle-orm'
+import { useLiveQuery } from 'drizzle-orm/expo-sqlite'
+import { Asset } from 'expo-asset'
+import * as DocumentPicker from 'expo-document-picker'
+import * as FS from 'expo-file-system'
+import { useEffect } from 'react'
+import { z } from 'zod'
+import { create } from 'zustand'
+import { persist } from 'zustand/middleware'
+
 import { db as database } from '@db'
 import { Tokenizer } from '@lib/engine/Tokenizer'
 import { Storage } from '@lib/enums/Storage'
@@ -12,16 +22,6 @@ import {
     chats,
     tags,
 } from 'db/schema'
-import { and, asc, desc, eq, gte, inArray, like, notExists, notInArray, sql } from 'drizzle-orm'
-import { useLiveQuery } from 'drizzle-orm/expo-sqlite'
-import { Asset } from 'expo-asset'
-import { randomUUID } from 'expo-crypto'
-import * as DocumentPicker from 'expo-document-picker'
-import * as FS from 'expo-file-system'
-import { useEffect } from 'react'
-import { z } from 'zod'
-import { create } from 'zustand'
-import { persist } from 'zustand/middleware'
 
 import { Logger } from './Logger'
 import { createMMKVStorage } from '../storage/MMKV'
@@ -754,6 +754,7 @@ export namespace Characters {
             await db.mutate.updateBackground(charId, imageId)
         } catch (e) {
             Logger.error(`Failed to import background`)
+            Logger.error(`Error: ` + e)
         }
     }
 
@@ -911,7 +912,7 @@ export namespace Characters {
             if (id && id === data?.id) {
                 if (data) updateCard(data)
             }
-        }, [data])
+        }, [data, id, updateCard])
     }
 }
 
@@ -947,9 +948,9 @@ const characterCardV2Schema = z.object({
     data: characterCardV2DataSchema,
 })
 
-type CharaterCardV1 = z.infer<typeof characterCardV1Schema>
-
-type CharacterCardV2Data = z.infer<typeof characterCardV2DataSchema>
+// placeholder types
+// type CharaterCardV1 = z.infer<typeof characterCardV1Schema>
+// type CharacterCardV2Data = z.infer<typeof characterCardV2DataSchema>
 
 type CharacterCardV2 = z.infer<typeof characterCardV2Schema>
 
@@ -1002,6 +1003,6 @@ export const replaceMacros = (text: string) => {
         { macro: '{{user}}', value: userName },
         { macro: '{{char}}', value: charName },
     ]
-    for (const rule of rules) newText = replaceMacroBase(newText, { extraMacros: rules })
+    newText = replaceMacroBase(newText, { extraMacros: rules })
     return newText
 }

@@ -31,6 +31,7 @@ module.exports = defineConfig([
                 },
             ],
             radix: 'off',
+            '@typescript-eslint/no-require-imports': 'off',
             'object-shorthand': ['warn', 'consistent'],
             'import/order': [
                 'warn',

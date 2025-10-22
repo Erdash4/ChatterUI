@@ -1,3 +1,9 @@
+import { useState } from 'react'
+import { StyleSheet, Text, View } from 'react-native'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-controller'
+import { SafeAreaView } from 'react-native-safe-area-context'
+import { useShallow } from 'zustand/react/shallow'
+
 import DropdownSheet from '@components/input/DropdownSheet'
 import HorizontalSelector from '@components/input/HorizontalSelector'
 import ThemedCheckbox from '@components/input/ThemedCheckbox'
@@ -17,11 +23,6 @@ import { Logger } from '@lib/state/Logger'
 import { SamplersManager } from '@lib/state/SamplerState'
 import { Theme } from '@lib/theme/ThemeManager'
 import { saveStringToDownload } from '@lib/utils/File'
-import { useState } from 'react'
-import { StyleSheet, Text, View } from 'react-native'
-import { KeyboardAwareScrollView } from 'react-native-keyboard-controller'
-import { SafeAreaView } from 'react-native-safe-area-context'
-import { useShallow } from 'zustand/react/shallow'
 
 import ContextLimitPreview from './ContextLimitPreview'
 
@@ -69,11 +70,6 @@ const SamplerManagerScreen = () => {
         ).then(() => {
             Logger.infoToast('Downloaded Sampler Configuration!')
         })
-    }
-
-    const handleImportSampler = () => {
-        //TODO : Implement
-        Logger.errorToast('Importing Not Implemented')
     }
 
     const handleDeleteSampler = () => {
@@ -185,11 +181,11 @@ const SamplerManagerScreen = () => {
                             generatedLength={currentConfig.data[SamplerID.GENERATED_LENGTH]}
                         />
                     )}
-                    {samplerList.map((item, index) => {
+                    {samplerList.map((item) => {
                         const samplerItem = Samplers?.[item.samplerID]
                         if (!samplerItem)
                             return (
-                                <Text style={styles.unsupported}>
+                                <Text key={item.samplerID} style={styles.unsupported}>
                                     Sampler ID {`[${item.samplerID}]`} Not Supported
                                 </Text>
                             )
@@ -295,7 +291,7 @@ const SamplerManagerScreen = () => {
                     <Text style={styles.noSamplersText}>No Samplers to Configure</Text>
                     {appMode === 'remote' && (
                         <Text style={styles.noSamplersText}>
-                            You probably haven't added an API connection yet
+                            {`You probably haven't added an API connection yet`}
                         </Text>
                     )}
                 </View>

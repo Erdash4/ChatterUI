@@ -1,6 +1,7 @@
-import { Theme } from '@lib/theme/ThemeManager'
 import React, { useMemo } from 'react'
 import { StyleSheet, Text, TextProps } from 'react-native'
+
+import { Theme } from '@lib/theme/ThemeManager'
 
 type FontColor = '100' | '200' | '300' | '400' | '500' | '600' | '700' | '800' | '900'
 
@@ -14,12 +15,12 @@ const styles = StyleSheet.create({
 })
 
 const TText: React.FC<TTextProps> = ({ color = '100', children, style, ...props }) => {
-    const theme = Theme.useTheme()
+    const { color: themeColor } = Theme.useTheme()
     const colorOverride = useMemo(
         () => ({
-            color: theme.color.text[`_${color}`],
+            color: themeColor.text[`_${color}`],
         }),
-        [color]
+        [color, themeColor]
     )
     return (
         <Text style={[colorOverride, styles.text, style]} {...props}>

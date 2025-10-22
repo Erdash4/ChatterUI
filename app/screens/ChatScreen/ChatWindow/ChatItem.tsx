@@ -1,5 +1,6 @@
-import { useInference } from '@lib/state/Chat'
 import { StyleSheet, View } from 'react-native'
+
+import { useInference } from '@lib/state/Chat'
 
 import ChatBubble from './ChatBubble'
 import ChatFrame from './ChatFrame'

@@ -1,6 +1,7 @@
+import { Dimensions, View } from 'react-native'
+
 import ScaledImage from '@components/views/ScaledImage'
 import { Chats } from '@lib/state/Chat'
-import { Dimensions, View } from 'react-native'
 
 type ChatAttachmentsProps = {
     index: number
@@ -11,8 +12,8 @@ const ChatAttachments: React.FC<ChatAttachmentsProps> = ({ index }) => {
 
     if (message.attachments.length < 1) return
     const images = message.attachments.filter((item) => item.type === 'image')
-    const audio = message.attachments.filter((item) => item.type === 'audio')
-    const documents = message.attachments.filter((item) => item.type === 'document')
+    // const audio = message.attachments.filter((item) => item.type === 'audio')
+    // const documents = message.attachments.filter((item) => item.type === 'document')
     return (
         <View style={{ rowGap: 8 }}>
             {images.length > 0 && (

@@ -1,11 +1,12 @@
+import { StyleSheet, Text, View } from 'react-native'
+import { useMMKVBoolean } from 'react-native-mmkv'
+
 import Avatar from '@components/views/Avatar'
 import { AppSettings } from '@lib/constants/GlobalValues'
-import { CharacterSorter } from '@lib/state/CharacterSorter'
 import { Characters, CharInfo } from '@lib/state/Characters'
+import { CharacterSorter } from '@lib/state/CharacterSorter'
 import { Theme } from '@lib/theme/ThemeManager'
 import { getFriendlyTimeStamp } from '@lib/utils/Time'
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import { useMMKVBoolean } from 'react-native-mmkv'
 
 import CharacterEditPopup from './CharacterEditPopup'
 import CharacterListingTags from './CharacterListingTags'

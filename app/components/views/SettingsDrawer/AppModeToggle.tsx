@@ -1,7 +1,8 @@
 import { AntDesign } from '@expo/vector-icons'
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+
 import { useAppMode } from '@lib/state/AppMode'
 import { Theme } from '@lib/theme/ThemeManager'
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
 const AppModeToggle = () => {
     const styles = useStyles()
@@ -42,7 +43,7 @@ const AppModeToggle = () => {
 }
 
 const useStyles = () => {
-    const { color, spacing, borderWidth, borderRadius, fontSize } = Theme.useTheme()
+    const { color, spacing, borderWidth, fontSize } = Theme.useTheme()
     return StyleSheet.create({
         largeButtonText: {
             fontSize: fontSize.l,

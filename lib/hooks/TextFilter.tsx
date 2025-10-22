@@ -1,8 +1,9 @@
+import { create } from 'zustand'
+import { persist } from 'zustand/middleware'
+
 import { Storage } from '@lib/enums/Storage'
 import { Logger } from '@lib/state/Logger'
 import { createMMKVStorage } from '@lib/storage/MMKV'
-import { create } from 'zustand'
-import { persist } from 'zustand/middleware'
 
 type TextFilterStateProps = {
     filter: string[]

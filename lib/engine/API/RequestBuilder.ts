@@ -1,7 +1,8 @@
+import merge from 'lodash.merge'
+
 import { SamplerConfigData, SamplerID, Samplers } from '@lib/constants/SamplerData'
 import { InstructType } from '@lib/state/Instructs'
 import { SamplersManager } from '@lib/state/SamplerState'
-import merge from 'lodash.merge'
 
 import { APIConfiguration, APISampler, APIValues } from './APIBuilder.types'
 import { Message } from './ContextBuilder'
@@ -169,9 +170,12 @@ const customRequest = async (
     if (config.model.useModelContextLength) {
         length = getModelContextLength(config, values) ?? 0
     } else {
+        length = sampler[SamplerID.CONTEXT_LENGTH]
     }
 
     const responseBody = config.payload.customPayload
+
+    responseBody.replaceAll('{{generated_length}}', `${length}`)
 
     config.request.samplerFields.map((item) => {
         responseBody.replaceAll(

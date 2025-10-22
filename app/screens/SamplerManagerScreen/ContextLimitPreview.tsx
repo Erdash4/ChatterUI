@@ -1,9 +1,10 @@
-import { AntDesign, FontAwesome } from '@expo/vector-icons'
+import { FontAwesome } from '@expo/vector-icons'
+import React from 'react'
+import { Text, View } from 'react-native'
+import * as Progress from 'react-native-progress'
+
 import { useContextLimit } from '@lib/hooks/ContextLimit'
 import { Theme } from '@lib/theme/ThemeManager'
-import React from 'react'
-import { View, Text } from 'react-native'
-import * as Progress from 'react-native-progress'
 
 interface ContextLimitPreviewProps {
     generatedLength: number

@@ -1,12 +1,13 @@
+import React, { useEffect, useState } from 'react'
+import { StyleSheet, Text, View } from 'react-native'
+import { create } from 'zustand'
+import { useShallow } from 'zustand/react/shallow'
+
 import ThemedButton from '@components/buttons/ThemedButton'
 import ThemedTextInput from '@components/input/ThemedTextInput'
 import BottomSheet from '@components/views/BottomSheet'
 import { Chats } from '@lib/state/Chat'
 import { Theme } from '@lib/theme/ThemeManager'
-import React, { useEffect, useState } from 'react'
-import { StyleSheet, Text, View } from 'react-native'
-import { create } from 'zustand'
-import { useShallow } from 'zustand/react/shallow'
 
 type ChatEditorStateProps = {
     index: number
@@ -115,7 +116,7 @@ const ChatEditor = () => {
 export default ChatEditor
 
 const useStyles = () => {
-    const { color, spacing, borderRadius, fontSize } = Theme.useTheme()
+    const { color, spacing, fontSize } = Theme.useTheme()
     return StyleSheet.create({
         topText: {
             flexDirection: 'row',

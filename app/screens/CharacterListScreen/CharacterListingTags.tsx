@@ -1,8 +1,7 @@
-import ThemedButton from '@components/buttons/ThemedButton'
-import { AntDesign } from '@expo/vector-icons'
-import { Theme } from '@lib/theme/ThemeManager'
 import React from 'react'
-import { View, Text, TouchableOpacity, Pressable } from 'react-native'
+import { Text, TouchableOpacity, View } from 'react-native'
+
+import { Theme } from '@lib/theme/ThemeManager'
 
 type CharacterListingTagsProps = {
     tags: string[]
@@ -19,7 +18,7 @@ const CharacterListingTags: React.FC<CharacterListingTagsProps> = ({ tags, onPre
         <View
             style={{
                 flexDirection: 'row',
-                // eslint-disable-next-line internal/enforce-spacing-values
+
                 paddingLeft: 72,
                 paddingRight: 16,
                 alignItems: 'center',

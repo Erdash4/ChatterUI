@@ -1,5 +1,6 @@
-import { Theme } from '@lib/theme/ThemeManager'
 import { LinearGradient } from 'expo-linear-gradient'
+
+import { Theme } from '@lib/theme/ThemeManager'
 
 const ChatHeaderGradient = () => {
     const { color } = Theme.useTheme()

@@ -1,3 +1,8 @@
+import * as Speech from 'expo-speech'
+import { useEffect, useState } from 'react'
+import { View } from 'react-native'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-controller'
+
 import ThemedButton from '@components/buttons/ThemedButton'
 import DropdownSheet from '@components/input/DropdownSheet'
 import ThemedSlider from '@components/input/ThemedSlider'
@@ -9,11 +14,6 @@ import { Logger } from '@lib/state/Logger'
 import { useTTS } from '@lib/state/TTS'
 import { Theme } from '@lib/theme/ThemeManager'
 import { groupBy } from '@lib/utils/Array'
-import * as Speech from 'expo-speech'
-import { useEffect, useState } from 'react'
-import { View } from 'react-native'
-import { KeyboardAwareScrollView } from 'react-native-keyboard-controller'
-import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 type LanguageListItem = {
     [key: string]: Speech.Voice[]
@@ -41,7 +41,7 @@ const TTSManagerScreen = () => {
     const getVoices = (value = false) => {
         Speech.getAvailableVoicesAsync().then((list) => setModelList(list))
     }
-    const insets = useSafeAreaInsets()
+
     return (
         <KeyboardAwareScrollView
             style={{

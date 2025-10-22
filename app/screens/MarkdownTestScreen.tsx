@@ -1,10 +1,10 @@
-import HeaderTitle from '@components/views/HeaderTitle'
-import { MarkdownStyle } from '@lib/markdown/Markdown'
-import { Theme } from '@lib/theme/ThemeManager'
 import React from 'react'
-import { StyleSheet, Platform, ScrollView } from 'react-native'
+import { ScrollView } from 'react-native'
 import Markdown from 'react-native-markdown-display'
 import { SafeAreaView } from 'react-native-safe-area-context'
+
+import HeaderTitle from '@components/views/HeaderTitle'
+import { MarkdownStyle } from '@lib/markdown/Markdown'
 
 const markdownData = `
 # Heading 1

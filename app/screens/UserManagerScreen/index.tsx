@@ -1,6 +1,7 @@
-import Drawer from '@components/views/Drawer'
 import { Stack } from 'expo-router'
 import { SafeAreaView } from 'react-native-safe-area-context'
+
+import Drawer from '@components/views/Drawer'
 
 import UserCardEditor from './UserCardEditor'
 import UserDrawer from './UserDrawer'

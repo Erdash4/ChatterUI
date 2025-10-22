@@ -1,8 +1,9 @@
-import BottomSheet from '@components/views/BottomSheet'
 import { Entypo } from '@expo/vector-icons'
-import { Theme } from '@lib/theme/ThemeManager'
 import { useState } from 'react'
 import { FlatList, Pressable, Text, TextInput, View, ViewStyle } from 'react-native'
+
+import BottomSheet from '@components/views/BottomSheet'
+import { Theme } from '@lib/theme/ThemeManager'
 
 import { useDropdownStyles } from './MultiDropdownSheet'
 

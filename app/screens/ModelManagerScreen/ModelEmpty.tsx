@@ -1,6 +1,7 @@
 import { AntDesign } from '@expo/vector-icons'
-import { Theme } from '@lib/theme/ThemeManager'
 import { Text, View } from 'react-native'
+
+import { Theme } from '@lib/theme/ThemeManager'
 
 const ModelEmpty = () => {
     const { color, spacing, fontSize } = Theme.useTheme()

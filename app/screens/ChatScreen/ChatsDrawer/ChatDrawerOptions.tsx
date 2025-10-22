@@ -1,3 +1,6 @@
+import React, { ReactNode, useState } from 'react'
+import { useShallow } from 'zustand/react/shallow'
+
 import Alert from '@components/views/Alert'
 import ContextMenu from '@components/views/ContextMenu'
 import InputSheet from '@components/views/InputSheet'
@@ -5,9 +8,6 @@ import { Characters } from '@lib/state/Characters'
 import { Chats } from '@lib/state/Chat'
 import { Logger } from '@lib/state/Logger'
 import { saveStringToDownload } from '@lib/utils/File'
-import React, { ReactNode, useState } from 'react'
-import { View } from 'react-native'
-import { useShallow } from 'zustand/react/shallow'
 
 type ChatEditPopupProps = {
     item: Awaited<ReturnType<typeof Chats.db.query.chatListQuery>>[0]

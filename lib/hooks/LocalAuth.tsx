@@ -1,7 +1,8 @@
-import { AppSettings } from '@lib/constants/GlobalValues'
 import { authenticateAsync, getEnrolledLevelAsync, SecurityLevel } from 'expo-local-authentication'
 import { useCallback, useEffect, useState } from 'react'
 import { useMMKVBoolean } from 'react-native-mmkv'
+
+import { AppSettings } from '@lib/constants/GlobalValues'
 
 const useLocalAuth = () => {
     const [success, setSuccess] = useState(false)
@@ -12,7 +13,7 @@ const useLocalAuth = () => {
 
     const retry = useCallback(() => {
         setRetryCount((item) => item + 1)
-    }, [retryCount])
+    }, [])
 
     useEffect(() => {
         if (enabled && !success)
@@ -21,7 +22,7 @@ const useLocalAuth = () => {
             }).then((result) => {
                 setSuccess(result.success)
             })
-    }, [retryCount])
+    }, [retryCount, enabled, success])
 
     useEffect(() => {
         getEnrolledLevelAsync().then((result) => sethasAuth(result !== SecurityLevel.NONE))

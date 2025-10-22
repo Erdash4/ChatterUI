@@ -1,3 +1,10 @@
+import { useFocusEffect } from 'expo-router'
+import React, { useEffect, useState } from 'react'
+import { BackHandler, Platform, View } from 'react-native'
+import { useMMKVBoolean, useMMKVNumber, useMMKVObject } from 'react-native-mmkv'
+import Animated, { Easing, SlideInRight, SlideOutRight } from 'react-native-reanimated'
+import { useShallow } from 'zustand/react/shallow'
+
 import ThemedButton from '@components/buttons/ThemedButton'
 import ThemedSlider from '@components/input/ThemedSlider'
 import ThemedSwitch from '@components/input/ThemedSwitch'
@@ -8,12 +15,6 @@ import { Llama } from '@lib/engine/Local/LlamaLocal'
 import { KV } from '@lib/engine/Local/Model'
 import { Logger } from '@lib/state/Logger'
 import { readableFileSize } from '@lib/utils/File'
-import { useFocusEffect } from 'expo-router'
-import React, { useEffect, useState } from 'react'
-import { BackHandler, Platform, View } from 'react-native'
-import { useMMKVBoolean, useMMKVNumber, useMMKVObject } from 'react-native-mmkv'
-import Animated, { Easing, SlideInRight, SlideOutRight } from 'react-native-reanimated'
-import { useShallow } from 'zustand/react/shallow'
 
 type ModelSettingsProp = {
     modelImporting: boolean

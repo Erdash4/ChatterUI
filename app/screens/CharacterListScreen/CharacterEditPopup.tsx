@@ -1,11 +1,12 @@
+import { usePathname, useRouter } from 'expo-router'
+import { ReactNode } from 'react'
+import { View } from 'react-native'
+
 import Alert from '@components/views/Alert'
 import ContextMenu from '@components/views/ContextMenu'
 import { CharInfo, Characters } from '@lib/state/Characters'
 import { Chats } from '@lib/state/Chat'
 import { Logger } from '@lib/state/Logger'
-import { usePathname, useRouter } from 'expo-router'
-import { ReactNode } from 'react'
-import { View } from 'react-native'
 
 type CharacterEditPopupProps = {
     character: CharInfo

@@ -1,4 +1,3 @@
-import { Theme } from '@lib/theme/ThemeManager'
 import { useEffect, useRef } from 'react'
 import { View, Text, ViewStyle, Pressable } from 'react-native'
 import Animated, {
@@ -7,6 +6,8 @@ import Animated, {
     useSharedValue,
     withTiming,
 } from 'react-native-reanimated'
+
+import { Theme } from '@lib/theme/ThemeManager'
 
 type HorizontalSelectorProps<T> = {
     values: {
@@ -56,7 +57,7 @@ const HorizontalSelector = <T,>({
             )
         })
         initialRender.current = false
-    }, [selected])
+    }, [animatedValues, selected])
 
     return (
         <View style={[{ flex: 1 }, style]}>

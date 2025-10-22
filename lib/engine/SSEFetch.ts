@@ -1,5 +1,6 @@
-import { Logger } from '@lib/state/Logger'
 import { fetch } from 'expo/fetch'
+
+import { Logger } from '@lib/state/Logger'
 
 type SSEValues = {
     endpoint: string
@@ -77,7 +78,7 @@ function parseSSE(message: string) {
             try {
                 JSON.parse(line)
                 output.push(line)
-            } catch (e) {
+            } catch {
                 continue
             }
         }

@@ -1,6 +1,7 @@
-import { Theme } from '@lib/theme/ThemeManager'
 import React from 'react'
 import { Switch, Text, View } from 'react-native'
+
+import { Theme } from '@lib/theme/ThemeManager'
 
 interface ThemedSwitchProps {
     description?: string

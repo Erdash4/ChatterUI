@@ -1,3 +1,11 @@
+import { and, count, desc, eq, getTableColumns, like, sql } from 'drizzle-orm'
+import { randomUUID } from 'expo-crypto'
+import { copyAsync, deleteAsync, getInfoAsync } from 'expo-file-system'
+import * as Notifications from 'expo-notifications'
+import mime from 'mime/lite'
+import { create } from 'zustand'
+import { useShallow } from 'zustand/react/shallow'
+
 import { db as database } from '@db'
 import { Tokenizer } from '@lib/engine/Tokenizer'
 import { replaceMacros } from '@lib/state/Macros'
@@ -14,13 +22,6 @@ import {
     ChatType,
     CompletionTimings,
 } from 'db/schema'
-import { and, count, desc, eq, getTableColumns, like, sql } from 'drizzle-orm'
-import { randomUUID } from 'expo-crypto'
-import { copyAsync, deleteAsync, getInfoAsync } from 'expo-file-system'
-import * as Notifications from 'expo-notifications'
-import mime from 'mime/lite'
-import { create } from 'zustand'
-import { useShallow } from 'zustand/react/shallow'
 
 import { Characters } from './Characters'
 import { Logger } from './Logger'
@@ -274,7 +275,8 @@ export namespace Chats {
                 attachments
             )
             if (attachments.length > 0 && entry) {
-                const entryId = entry.id
+                // TODO: Recall what this was even for
+                // const entryId = entry.id
             }
             if (entry) messages.push(entry)
             set((state) => ({

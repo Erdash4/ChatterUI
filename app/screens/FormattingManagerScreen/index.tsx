@@ -1,3 +1,12 @@
+import { useLiveQuery } from 'drizzle-orm/expo-sqlite'
+import { useState } from 'react'
+import { Text, View } from 'react-native'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-controller'
+import Markdown from 'react-native-markdown-display'
+import { useMMKVBoolean } from 'react-native-mmkv'
+import { SafeAreaView } from 'react-native-safe-area-context'
+import { useShallow } from 'zustand/react/shallow'
+
 import ThemedButton from '@components/buttons/ThemedButton'
 import DropdownSheet from '@components/input/DropdownSheet'
 import StringArrayEditor from '@components/input/StringArrayEditor'
@@ -18,14 +27,6 @@ import { Instructs } from '@lib/state/Instructs'
 import { Logger } from '@lib/state/Logger'
 import { Theme } from '@lib/theme/ThemeManager'
 import { saveStringToDownload } from '@lib/utils/File'
-import { useLiveQuery } from 'drizzle-orm/expo-sqlite'
-import { useState } from 'react'
-import { Text, View } from 'react-native'
-import { KeyboardAwareScrollView } from 'react-native-keyboard-controller'
-import Markdown from 'react-native-markdown-display'
-import { useMMKVBoolean } from 'react-native-mmkv'
-import { SafeAreaView } from 'react-native-safe-area-context'
-import { useShallow } from 'zustand/react/shallow'
 
 const autoformatterData = [
     { label: 'Disabled', example: '*<No Formatting>*' },

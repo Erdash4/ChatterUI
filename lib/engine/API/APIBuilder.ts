@@ -1,8 +1,9 @@
+import { nativeApplicationVersion } from 'expo-application'
+
 import { AppSettings, CLAUDE_VERSION } from '@lib/constants/GlobalValues'
 import { SSEFetch } from '@lib/engine/SSEFetch'
 import { Logger } from '@lib/state/Logger'
 import { mmkv } from '@lib/storage/MMKV'
-import { nativeApplicationVersion } from 'expo-application'
 
 import { APIConfiguration } from './APIBuilder.types'
 import { buildContext, ContextBuilderParams } from './ContextBuilder'
@@ -308,7 +309,7 @@ const getNestedValue = (obj: any, path: string) => {
 
 const responses: Record<
     APIConfiguration['request']['requestType'],
-    (params: SenderParams) => void
+    (params: SenderParams) => Promise<() => void> | (() => void)
 > = {
     horde: hordeResponse,
     stream: readableStreamResponse,

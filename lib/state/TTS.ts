@@ -1,10 +1,11 @@
-import { Storage } from '@lib/enums/Storage'
-import { Logger } from '@lib/state/Logger'
-import { createMMKVStorage } from '@lib/storage/MMKV'
 import * as Speech from 'expo-speech'
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 import { useShallow } from 'zustand/react/shallow'
+
+import { Storage } from '@lib/enums/Storage'
+import { Logger } from '@lib/state/Logger'
+import { createMMKVStorage } from '@lib/storage/MMKV'
 
 import { Chats, useInference } from './Chat'
 
@@ -236,9 +237,8 @@ export const useTTSStore = create<TTSState>()(
                 const newBuffer = get().buffer + text
 
                 let lastMatchIndex = -1
-                let match
 
-                while ((match = sentenceEndRegex.exec(newBuffer)) !== null) {
+                while (sentenceEndRegex.exec(newBuffer) !== null) {
                     lastMatchIndex = sentenceEndRegex.lastIndex
                 }
 

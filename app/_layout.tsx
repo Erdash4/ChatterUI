@@ -1,13 +1,14 @@
-import { AlertBox } from '@components/views/Alert'
-import { PortalHost } from '@components/views/Portal'
-import { rawdb } from '@db'
-import { Theme } from '@lib/theme/ThemeManager'
 import { useDrizzleStudio } from 'expo-drizzle-studio-plugin'
 import { SplashScreen, Stack } from 'expo-router'
 import { setOptions } from 'expo-splash-screen'
 import { SystemBars } from 'react-native-edge-to-edge'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { KeyboardProvider } from 'react-native-keyboard-controller'
+
+import { AlertBox } from '@components/views/Alert'
+import { PortalHost } from '@components/views/Portal'
+import { rawdb } from '@db'
+import { Theme } from '@lib/theme/ThemeManager'
 
 SplashScreen.preventAutoHideAsync()
 setOptions({

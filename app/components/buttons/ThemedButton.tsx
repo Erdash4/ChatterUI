@@ -1,6 +1,4 @@
-import TText from '@components/text/TText'
 import { AntDesign } from '@expo/vector-icons'
-import { Theme } from '@lib/theme/ThemeManager'
 import { ReactNode } from 'react'
 import {
     PressableProps,
@@ -11,6 +9,9 @@ import {
     Animated,
     useAnimatedValue,
 } from 'react-native'
+
+import TText from '@components/text/TText'
+import { Theme } from '@lib/theme/ThemeManager'
 
 type ButtonVariant = 'primary' | 'secondary' | 'tertiary' | 'critical' | 'disabled'
 

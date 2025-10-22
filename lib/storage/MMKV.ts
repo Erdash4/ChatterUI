@@ -1,4 +1,4 @@
-import { createMMKV, MMKV } from 'react-native-mmkv'
+import { createMMKV } from 'react-native-mmkv'
 import { createJSONStorage, StateStorage } from 'zustand/middleware'
 
 export const mmkv = createMMKV()

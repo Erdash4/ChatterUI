@@ -1,8 +1,9 @@
-import HeaderTitle from '@components/views/HeaderTitle'
-import { Theme } from '@lib/theme/ThemeManager'
 import React from 'react'
 import { View } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-controller'
+
+import HeaderTitle from '@components/views/HeaderTitle'
+import { Theme } from '@lib/theme/ThemeManager'
 
 import CharacterSettings from './CharacterSettings'
 import ChatSettings from './ChatSettings'

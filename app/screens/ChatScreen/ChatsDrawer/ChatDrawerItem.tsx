@@ -1,7 +1,8 @@
 import { Ionicons } from '@expo/vector-icons'
+import { StyleSheet, Text, View } from 'react-native'
+
 import { Chats } from '@lib/state/Chat'
 import { Theme } from '@lib/theme/ThemeManager'
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
 import ChatEditPopup from './ChatDrawerOptions'
 
