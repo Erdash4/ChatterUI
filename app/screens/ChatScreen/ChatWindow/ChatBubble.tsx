@@ -32,10 +32,9 @@ const ChatBubble: React.FC<ChatTextProps> = ({
     const [showTPS] = useMMKVBoolean(AppSettings.ShowTokenPerSecond)
     const { color, spacing, borderRadius, fontSize } = Theme.useTheme()
 
-    const { activeIndex, setShowOptions } = useChatActionsState(
+    const { setShowOptions } = useChatActionsState(
         useShallow((state) => ({
             setShowOptions: state.setActiveIndex,
-            activeIndex: state.activeIndex,
         }))
     )
 
@@ -52,7 +51,7 @@ const ChatBubble: React.FC<ChatTextProps> = ({
         <View>
             <Pressable
                 onPress={() => {
-                    setShowOptions(activeIndex === index || nowGenerating ? undefined : index)
+                    setShowOptions(nowGenerating ? undefined : index)
                 }}
                 style={{
                     backgroundColor: color.neutral._200,

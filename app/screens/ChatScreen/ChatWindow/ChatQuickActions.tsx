@@ -28,8 +28,8 @@ useInference.subscribe(({ nowGenerating }) => {
         useChatActionsState.getState().setActiveIndex(undefined)
     }
 })
-export const useChatActionsState = create<OptionsStateProps>()((set) => ({
-    setActiveIndex: (n) => set({ activeIndex: n }),
+export const useChatActionsState = create<OptionsStateProps>()((set, get) => ({
+    setActiveIndex: (n) => set({ activeIndex: get().activeIndex === n ? undefined : n }),
 }))
 
 interface ChatActionProps {
