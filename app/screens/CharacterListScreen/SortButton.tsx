@@ -1,6 +1,7 @@
 import { AntDesign } from '@expo/vector-icons'
 import React from 'react'
 import { StyleSheet, Text, TouchableOpacity } from 'react-native'
+import { useShallow } from 'zustand/react/shallow'
 
 import { CharacterSorter, SearchType } from '@lib/state/CharacterSorter'
 import { Theme } from '@lib/theme/ThemeManager'
@@ -13,7 +14,15 @@ type SortButtonProps = {
 const SortButton: React.FC<SortButtonProps> = ({ type, label }) => {
     const styles = useStyles()
     const { color } = Theme.useTheme()
-    const { searchType, setSearchType, searchOrder, setSearchOrder } = CharacterSorter.useSorter()
+    const { searchType, setSearchType, searchOrder, setSearchOrder } =
+        CharacterSorter.useSorterStore(
+            useShallow((state) => ({
+                searchType: state.searchType,
+                setSearchType: state.setType,
+                searchOrder: state.searchOrder,
+                setSearchOrder: state.setOrder,
+            }))
+        )
 
     const isCurrent = type === searchType
 

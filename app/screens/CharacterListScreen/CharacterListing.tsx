@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View } from 'react-native'
 import { useMMKVBoolean } from 'react-native-mmkv'
+import { useShallow } from 'zustand/react/shallow'
 
 import Avatar from '@components/views/Avatar'
 import { AppSettings } from '@lib/constants/GlobalValues'
@@ -23,7 +24,13 @@ const CharacterListing: React.FC<CharacterListingProps> = ({
     setNowLoading,
 }) => {
     const [showTags] = useMMKVBoolean(AppSettings.ShowTags)
-    const { setShowSearch, setTagFilter, tagFilter } = CharacterSorter.useSorter()
+    const { setShowSearch, setTagFilter, tagFilter } = CharacterSorter.useSorterStore(
+        useShallow((state) => ({
+            setShowSearch: state.setShowSearch,
+            setTagFilter: state.setTagFilter,
+            tagFilter: state.tagFilter,
+        }))
+    )
     const styles = useStyles()
 
     const getPreviewText = () => {

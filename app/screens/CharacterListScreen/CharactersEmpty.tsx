@@ -1,5 +1,5 @@
-import { Ionicons } from '@expo/vector-icons'
-import { View, Text } from 'react-native'
+import { MaterialIcons } from '@expo/vector-icons'
+import { Text, View } from 'react-native'
 
 import { Theme } from '@lib/theme/ThemeManager'
 
@@ -14,10 +14,10 @@ const CharactersEmpty = () => {
                 alignItems: 'center',
                 marginTop: spacing.xl3,
             }}>
-            <Ionicons name="person-outline" color={color.text._400} size={60} />
+            <MaterialIcons name="person-search" color={color.text._700} size={60} />
             <Text
                 style={{
-                    color: color.text._400,
+                    color: color.text._700,
                     marginTop: spacing.xl,
                     fontStyle: 'italic',
                     fontSize: fontSize.l,

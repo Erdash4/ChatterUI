@@ -1,8 +1,9 @@
 import { useLiveQuery } from 'drizzle-orm/expo-sqlite'
 import { usePathname } from 'expo-router'
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { View } from 'react-native'
 import Animated, { LinearTransition } from 'react-native-reanimated'
+import { useShallow } from 'zustand/react/shallow'
 
 import Drawer from '@components/views/Drawer'
 import HeaderButton from '@components/views/HeaderButton'
@@ -21,8 +22,14 @@ const PAGE_SIZE = 30
 
 const CharacterList: React.FC = () => {
     const [nowLoading, setNowLoading] = useState(false)
-    const { showSearch, searchType, searchOrder, tagFilter, textFilter } =
-        CharacterSorter.useSorter()
+    const { searchType, searchOrder, tagFilter, textFilter } = CharacterSorter.useSorterStore(
+        useShallow((state) => ({
+            searchType: state.searchType,
+            searchOrder: state.searchOrder,
+            tagFilter: state.tagFilter,
+            textFilter: state.textFilter,
+        }))
+    )
     const hiddenTags = TagHider.useHiddenTags()
     const [pages, setPages] = useState(3)
     const [previousLength, setPreviousLength] = useState(0)
@@ -39,17 +46,22 @@ const CharacterList: React.FC = () => {
         ),
         [searchType, searchOrder, textFilter, tagFilter, hiddenTags, pages]
     )
-    const characterList: CharInfo[] = data.map((item) => ({
-        ...item,
-        latestChat: item.chats[0]?.id,
-        latestSwipe: item.chats[0]?.messages[0]?.swipes[0]?.swipe,
-        latestName: item.chats[0]?.messages[0]?.name,
-        last_modified: item.last_modified ?? 0,
-        tags: item.tags.map((item) => item.tag.tag),
-    }))
+
+    console.log('rerendedr')
+    const characterList: CharInfo[] = useMemo(() => {
+        return data.map((item) => ({
+            ...item,
+            latestChat: item.chats[0]?.id,
+            latestSwipe: item.chats[0]?.messages[0]?.swipes[0]?.swipe,
+            latestName: item.chats[0]?.messages[0]?.name,
+            last_modified: item.last_modified ?? 0,
+            tags: item.tags.map((item) => item.tag.tag),
+        }))
+    }, [data])
 
     // do not render when not shown, optimizes some rerenders
     const path = usePathname()
+
     if (path !== '/') return
 
     return (
@@ -62,11 +74,8 @@ const CharacterList: React.FC = () => {
                 )}
             />
 
+            <CharacterListHeader resultLength={characterList.length} />
             <View style={{ flex: 1 }}>
-                {(characterList.length > 0 || showSearch) && (
-                    <CharacterListHeader resultLength={characterList.length} />
-                )}
-
                 <Animated.FlatList
                     layout={LinearTransition}
                     itemLayoutAnimation={LinearTransition}
@@ -94,9 +103,7 @@ const CharacterList: React.FC = () => {
                     onStartReached={() => {
                         setPages(3)
                     }}
-                    ListEmptyComponent={() =>
-                        data.length === 0 && !showSearch && updatedAt && <CharactersEmpty />
-                    }
+                    ListEmptyComponent={() => data.length === 0 && updatedAt && <CharactersEmpty />}
                 />
             </View>
 

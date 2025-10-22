@@ -5,6 +5,7 @@ import { useCallback } from 'react'
 import { BackHandler, Text, View } from 'react-native'
 import { useMMKVBoolean } from 'react-native-mmkv'
 import Animated, { FadeIn, FadeOut, LinearTransition } from 'react-native-reanimated'
+import { useShallow } from 'zustand/react/shallow'
 
 import ThemedButton from '@components/buttons/ThemedButton'
 import StringArrayEditor from '@components/input/StringArrayEditor'
@@ -26,7 +27,16 @@ type CharacterListHeaderProps = {
 const CharacterListHeader: React.FC<CharacterListHeaderProps> = ({ resultLength }) => {
     const [useTagHider, setUseTagHider] = useMMKVBoolean(AppSettings.UseTagHider)
     const { showSearch, setShowSearch, textFilter, setTextFilter, tagFilter, setTagFilter } =
-        CharacterSorter.useSorter()
+        CharacterSorter.useSorterStore(
+            useShallow((state) => ({
+                showSearch: state.showSearch,
+                setShowSearch: state.setShowSearch,
+                textFilter: state.textFilter,
+                setTextFilter: state.setTextFilter,
+                tagFilter: state.tagFilter,
+                setTagFilter: state.setTagFilter,
+            }))
+        )
 
     const { color } = Theme.useTheme()
     const [showTags, setShowTags] = useMMKVBoolean(AppSettings.ShowTags)
@@ -56,6 +66,8 @@ const CharacterListHeader: React.FC<CharacterListHeaderProps> = ({ resultLength 
             return () => handler.remove()
         }, [setShowSearch, setTextFilter, showSearch])
     )
+
+    if (resultLength === 0 && !showSearch) return
 
     return (
         <>
@@ -93,7 +105,7 @@ const CharacterListHeader: React.FC<CharacterListHeaderProps> = ({ resultLength 
                         variant="tertiary"
                         onPress={() => {
                             setShowTags(!showTags)
-                            if (showTags) {
+                            if (showTags && tagFilter.length > 0) {
                                 setTagFilter([])
                             }
                         }}

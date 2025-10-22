@@ -1,6 +1,5 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
-import { useShallow } from 'zustand/react/shallow'
 
 import { Storage } from '@lib/enums/Storage'
 import { createMMKVStorage } from '@lib/storage/MMKV'
@@ -24,7 +23,7 @@ type CharacterListSorterProps = {
 export namespace CharacterSorter {
     export const useSorterStore = create<CharacterListSorterProps>()(
         persist(
-            (set) => ({
+            (set, get) => ({
                 showSearch: false,
                 searchType: 'modified',
                 searchOrder: 'desc',
@@ -32,12 +31,9 @@ export namespace CharacterSorter {
                 tagFilter: [],
                 setShowSearch: (b) => {
                     if (b) set({ showSearch: b })
-                    else
-                        set({
-                            showSearch: b,
-                            textFilter: '',
-                            tagFilter: [],
-                        })
+                    else set({ showSearch: b })
+                    if (get().tagFilter.length > 0) set({ tagFilter: [] })
+                    if (get().textFilter) set({ textFilter: '' })
                 },
 
                 setTextFilter: (textFilter: string) => {
@@ -64,45 +60,4 @@ export namespace CharacterSorter {
             }
         )
     )
-
-    export const useSorter = () => {
-        const {
-            showSearch,
-            setShowSearch,
-            searchType,
-            setSearchType,
-            searchOrder,
-            setSearchOrder,
-            textFilter,
-            setTextFilter,
-            tagFilter,
-            setTagFilter,
-        } = useSorterStore(
-            useShallow((state) => ({
-                showSearch: state.showSearch,
-                setShowSearch: state.setShowSearch,
-                searchType: state.searchType,
-                setSearchType: state.setType,
-                searchOrder: state.searchOrder,
-                setSearchOrder: state.setOrder,
-                textFilter: state.textFilter,
-                setTextFilter: state.setTextFilter,
-                tagFilter: state.tagFilter,
-                setTagFilter: state.setTagFilter,
-            }))
-        )
-
-        return {
-            showSearch,
-            setShowSearch,
-            searchType,
-            setSearchType,
-            searchOrder,
-            setSearchOrder,
-            textFilter,
-            setTextFilter,
-            tagFilter,
-            setTagFilter,
-        }
-    }
 }
