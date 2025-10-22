@@ -2,10 +2,10 @@ import { Model } from '@lib/engine/Local/Model'
 import { Tokenizer } from '@lib/engine/Tokenizer'
 import { setupNotifications } from '@lib/notifications/Notifications'
 import { useAppModeStore } from '@lib/state/AppMode'
+import { useChatInputTextStore } from '@lib/state/components/ChatInput'
 import { Instructs } from '@lib/state/Instructs'
 import { SamplersManager } from '@lib/state/SamplerState'
 import { useTTSStore } from '@lib/state/TTS'
-import { useChatInputTextStore } from '@screens/ChatScreen/ChatInput'
 import { getThreads } from '@vali98/react-native-cpu-info'
 import { setTextIntentEnabled, useTextIntentOnForeground } from '@vali98/react-native-process-text'
 import { getCpuFeatures } from 'cui-llama.rn'
@@ -89,7 +89,8 @@ const migrateModelData_0_7_10_to_0_8_0 = () => {
         const model = mmkv.getString(oldDef)
         if (model) JSON.parse(model)
     } catch (e) {
-        Logger.warn('Model could not be parsed, resetting')
+        Logger.error('migrateModelData_0_7_10_to_0_8_0 Failed')
+        Logger.error(`${e}`)
         mmkv.remove(oldDef)
     }
 }
@@ -104,7 +105,10 @@ const migrateModelData_0_8_4_to_0_8_5 = () => {
         if (!data) return
         mmkv.remove(oldDef)
         Llama.useLlamaPreferencesStore.getState().setLastModelLoaded(data)
-    } catch (e) {}
+    } catch (e) {
+        Logger.error('migrateModelData_0_8_4_to_0_8_5 Failed')
+        Logger.error(`${e}`)
+    }
 }
 
 const migrateTTSData_0_8_5_to_0_8_6 = () => {
@@ -137,7 +141,8 @@ const migrateTTSData_0_8_5_to_0_8_6 = () => {
                 useTTSStore.getState().setVoice(voiceData)
             } else throw new Error('Schema validation failed')
         } catch (e) {
-            Logger.error('Failed to migrate voice from 0.8.5 to 0.8.6')
+            Logger.error('migrateTTSData_0_8_5_to_0_8_6 Failed')
+            Logger.error(`${e}`)
         }
     }
 }

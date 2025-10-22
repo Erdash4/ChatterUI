@@ -91,6 +91,12 @@ module.exports = {
                 },
             ],
             ['@vali98/react-native-process-text', { label: 'Ask In ChatterUi' }],
+            [
+                'expo-camera',
+                {
+                    cameraPermission: 'Allow ChatterUI to access your camera',
+                },
+            ],
             'expo-localization',
             'expo-router',
             'expo-sqlite',

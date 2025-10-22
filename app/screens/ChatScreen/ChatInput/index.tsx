@@ -1,4 +1,5 @@
 import ThemedButton from '@components/buttons/ThemedButton'
+import CameraSheet from '@components/views/CameraSheet'
 import ContextMenu from '@components/views/ContextMenu'
 import { MaterialIcons } from '@expo/vector-icons'
 import { XAxisOnlyTransition } from '@lib/animations/transitions'
@@ -7,8 +8,10 @@ import { generateResponse } from '@lib/engine/Inference'
 import { useUnfocusTextInput } from '@lib/hooks/UnfocusTextInput'
 import { Characters } from '@lib/state/Characters'
 import { Chats, useInference } from '@lib/state/Chat'
+import { useChatInputTextStore } from '@lib/state/components/ChatInput'
 import { Logger } from '@lib/state/Logger'
 import { Theme } from '@lib/theme/ThemeManager'
+import { randomUUID } from 'expo-crypto'
 import { getDocumentAsync } from 'expo-document-picker'
 import { Image } from 'expo-image'
 import React, { useState } from 'react'
@@ -21,7 +24,6 @@ import Animated, {
     LinearTransition,
     ZoomOut,
 } from 'react-native-reanimated'
-import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { create } from 'zustand'
 import { useShallow } from 'zustand/react/shallow'
 
@@ -45,24 +47,14 @@ export const useInputHeightStore = create<ChatInputHeightStoreProps>()((set) => 
     setHeight: (n) => set({ height: Math.ceil(n) }),
 }))
 
-type ChatInputTextStoreProps = {
-    text: string
-    setText: (text: string) => void
-}
-
-export const useChatInputTextStore = create<ChatInputTextStoreProps>()((set) => ({
-    text: '',
-    setText: (text) => set({ text }),
-}))
-
 const ChatInput = () => {
-    const insets = useSafeAreaInsets()
     const inputRef = useUnfocusTextInput()
 
     const { color, borderRadius, spacing } = Theme.useTheme()
     const [sendOnEnter] = useMMKVBoolean(AppSettings.SendOnEnter)
     const [attachments, setAttachments] = useState<Attachment[]>([])
     const [hideOptions, setHideOptions] = useState(false)
+    const [showCamera, setShowCamera] = useState(false)
     const { addEntry } = Chats.useEntry()
     const { nowGenerating, abortFunction } = useInference(
         useShallow((state) => ({
@@ -106,6 +98,24 @@ const ChatInput = () => {
         setNewMessage('')
         setAttachments([])
         if (swipeId) generateResponse(swipeId)
+    }
+
+    const handlePickImage = async () => {
+        const result = await getDocumentAsync({
+            type: 'image/*',
+            multiple: true,
+            copyToCacheDirectory: true,
+        })
+        if (result.canceled || result.assets.length < 1) return
+
+        const newAttachments = result.assets
+            .map((item) => ({
+                uri: item.uri,
+                type: 'image',
+                name: item.name,
+            }))
+            .filter((item) => !attachments.some((a) => a.name === item.name)) as Attachment[]
+        setAttachments([...attachments, ...newAttachments])
     }
 
     return (
@@ -152,11 +162,11 @@ const ChatInput = () => {
                         <Animated.View
                             entering={BounceIn}
                             exiting={ZoomOut.duration(100)}
-                            style={{ alignItems: 'center', maxWidth: 80, rowGap: 8 }}>
+                            style={{ alignItems: 'center', rowGap: 8 }}>
                             <Image
                                 source={{ uri: item.uri }}
                                 style={{
-                                    width: 64,
+                                    width: 128,
                                     height: undefined,
                                     aspectRatio: 1,
                                     borderRadius: borderRadius.m,
@@ -171,9 +181,11 @@ const ChatInput = () => {
                                 buttonStyle={{
                                     borderWidth: 0,
                                     paddingHorizontal: 2,
+                                    paddingVertical: 2,
                                     position: 'absolute',
                                     alignSelf: 'flex-end',
-                                    margin: -4,
+                                    margin: -8,
+                                    backgroundColor: color.neutral._500,
                                 }}
                                 onPress={() => {
                                     setAttachments(attachments.filter((a) => a.uri !== item.uri))
@@ -182,6 +194,20 @@ const ChatInput = () => {
                         </Animated.View>
                     )
                 }}
+            />
+            <CameraSheet
+                onTakePicture={(picture) => {
+                    setAttachments((attachments) => [
+                        ...attachments,
+                        {
+                            name: randomUUID().toString(),
+                            uri: picture.uri,
+                            type: 'image',
+                        },
+                    ])
+                }}
+                visible={showCamera}
+                setVisible={setShowCamera}
             />
             <View
                 style={{
@@ -205,30 +231,19 @@ const ChatInput = () => {
                                 triggerIconSize={20}
                                 buttons={[
                                     {
+                                        label: 'Take Picture',
+                                        icon: 'camerao',
+                                        onPress: (close) => {
+                                            setShowCamera(true)
+                                            close()
+                                        },
+                                    },
+                                    {
                                         label: 'Add Image',
                                         icon: 'picture',
                                         onPress: async (close) => {
                                             close()
-                                            const result = await getDocumentAsync({
-                                                type: 'image/*',
-                                                multiple: true,
-                                                copyToCacheDirectory: true,
-                                            })
-                                            if (result.canceled || result.assets.length < 1) return
-
-                                            const newAttachments = result.assets
-                                                .map((item) => ({
-                                                    uri: item.uri,
-                                                    type: 'image',
-                                                    name: item.name,
-                                                }))
-                                                .filter(
-                                                    (item) =>
-                                                        !attachments.some(
-                                                            (a) => a.name === item.name
-                                                        )
-                                                ) as Attachment[]
-                                            setAttachments([...attachments, ...newAttachments])
+                                            handlePickImage()
                                         },
                                     },
                                 ]}
