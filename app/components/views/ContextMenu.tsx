@@ -18,15 +18,26 @@ import {
 import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { scheduleOnRN } from 'react-native-worklets'
+import { useShallow } from 'zustand/react/shallow'
 
-import {
-    ContextMenuButtonProps,
-    Placement,
-    useContextMenuStore,
-} from '@lib/state/components/ContextMenu'
+import { useContextMenuStore } from '@lib/state/components/ContextMenu'
 import { Theme } from '@lib/theme/ThemeManager'
 
 import Portal from './Portal'
+
+export type Placement = 'top' | 'bottom' | 'left' | 'right' | 'auto' | 'center'
+
+export type ContextMenuButtonProps = {
+    key?: string
+    label: string
+    onPress?: (close: () => void) => void
+    submenu?: ContextMenuButtonProps[]
+    icon?: keyof typeof AntDesign.glyphMap
+    iconSize?: number
+    textColor?: string
+    variant?: 'normal' | 'warning'
+    disabled?: boolean
+}
 
 export interface ContextMenuProps extends ViewProps {
     triggerIcon?: keyof typeof AntDesign.glyphMap
@@ -80,15 +91,20 @@ const ContextMenu: React.FC<ContextMenuProps> = ({
     const triggerRef = useRef<View>(null)
     const viewRef = useRef<View>(null)
     const styles = useStyles()
-    const { openMenuId, anchor, openMenu, closeMenu } = useContextMenuStore()
+    const { isOpen, openMenu, closeMenu } = useContextMenuStore(
+        useShallow((state) => ({
+            isOpen: state.openMenuId === idRef,
+            openMenu: state.openMenu,
+            closeMenu: state.closeMenu,
+        }))
+    )
+    const [anchor, setAnchor] = useState<LayoutRectangle>({ x: 0, y: 0, width: 0, height: 0 })
     const [expandedSubmenus, setExpandedSubmenus] = useState<string[]>([])
     const runAnimation = useRef(true)
     const initialRender = useRef(true)
     const wasOvershot = useRef(true)
     const animatedMenuValues = useSharedValue(defaultAnimatedMenuValues)
     const getMenuPosition = useMenuPosition()
-
-    const isOpen = openMenuId === idRef
     const animatedMenuStyle = useAnimatedStyle(() => {
         return animatedMenuValues.value
     })
@@ -98,7 +114,7 @@ const ContextMenu: React.FC<ContextMenuProps> = ({
         animatedMenuValues.value = defaultAnimatedMenuValues
         runAnimation.current = true
         initialRender.current = true
-    }, [animatedMenuValues, isOpen, openMenuId])
+    }, [animatedMenuValues, isOpen])
 
     const handleOpen = (event: GestureResponderEvent) => {
         if (!triggerRef.current) return
@@ -111,7 +127,8 @@ const ContextMenu: React.FC<ContextMenuProps> = ({
                 width: width,
                 height: height,
             }
-            openMenu(idRef, anchor, buttons, placement)
+            setAnchor(anchor)
+            openMenu(idRef)
         })
     }
 
@@ -119,11 +136,6 @@ const ContextMenu: React.FC<ContextMenuProps> = ({
         setExpandedSubmenus([])
         closeMenu()
     }, [closeMenu])
-
-    const reposition = () => {
-        runAnimation.current = true
-        onLayout()
-    }
 
     useFocusEffect(
         useCallback(() => {
@@ -138,6 +150,11 @@ const ContextMenu: React.FC<ContextMenuProps> = ({
             return () => handler.remove()
         }, [handleCloseMenu, isOpen])
     )
+
+    const reposition = () => {
+        runAnimation.current = true
+        onLayout()
+    }
 
     const onLayout = () => {
         if (!runAnimation.current || !anchor || !viewRef.current) return
