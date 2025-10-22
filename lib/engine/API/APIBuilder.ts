@@ -4,6 +4,7 @@ import { Logger } from '@lib/state/Logger'
 import { mmkv } from '@lib/storage/MMKV'
 import { nativeApplicationVersion } from 'expo-application'
 
+import { APIConfiguration } from './APIBuilder.types'
 import { buildContext, ContextBuilderParams } from './ContextBuilder'
 import { buildRequest, RequestBuilderParams } from './RequestBuilder'
 
@@ -87,8 +88,7 @@ export const buildAndSendRequest = async ({
             }
         }
 
-        const sendFunc =
-            apiConfig.request.requestType === 'stream' ? readableStreamResponse : hordeResponse
+        const response = responses[apiConfig.request.requestType]
 
         const replaceStrings = constructReplaceStrings(stopSequence)
 
@@ -108,13 +108,15 @@ export const buildAndSendRequest = async ({
                 if (text && prefixThinkTag) onData('<think>')
                 if (text) onData(text)
                 return !!text?.trim()
-            } catch (e) {}
+            } catch (e) {
+                console.log(e)
+            }
             return false
         }
         let inReasoning = false
         const isChatCompletions = apiConfig.request.completionType.type === 'chatCompletions'
 
-        return sendFunc({
+        return response({
             endpoint: apiValues.endpoint,
             payload: payload,
             onEvent: (event) => {
@@ -259,7 +261,10 @@ const readableStreamResponse = async (senderParams: SenderParams) => {
                 Logger.errorToast('Error Logged')
                 Logger.error(data)
             }
-        } catch (e) {}
+        } catch (e) {
+            // wont be logged in prod
+            console.log(e)
+        }
         senderParams.onEvent(data)
     })
 
@@ -292,10 +297,19 @@ const constructReplaceStrings = (stopSequence: string[]) => {
         stopSequence.map((item) => item.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join(`|`),
         'g'
     )
+    return replace
 }
 
 const getNestedValue = (obj: any, path: string) => {
     const keys = path.split('.')
     const value = keys.reduce((acc, key) => acc?.[key], obj)
     return value ?? null
+}
+
+const responses: Record<
+    APIConfiguration['request']['requestType'],
+    (params: SenderParams) => void
+> = {
+    horde: hordeResponse,
+    stream: readableStreamResponse,
 }
