@@ -47,7 +47,6 @@ const CharacterList: React.FC = () => {
         [searchType, searchOrder, textFilter, tagFilter, hiddenTags, pages]
     )
 
-    console.log('rerendedr')
     const characterList: CharInfo[] = useMemo(() => {
         return data.map((item) => ({
             ...item,
@@ -61,7 +60,6 @@ const CharacterList: React.FC = () => {
 
     // do not render when not shown, optimizes some rerenders
     const path = usePathname()
-
     if (path !== '/') return
 
     return (
@@ -101,7 +99,7 @@ const CharacterList: React.FC = () => {
                     windowSize={3}
                     onStartReachedThreshold={0.1}
                     onStartReached={() => {
-                        setPages(3)
+                        if (pages !== 3) setPages(3)
                     }}
                     ListEmptyComponent={() => data.length === 0 && updatedAt && <CharactersEmpty />}
                 />
