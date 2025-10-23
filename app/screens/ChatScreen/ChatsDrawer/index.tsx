@@ -100,6 +100,7 @@ const ChatsDrawer = () => {
                         entering={FadeIn.duration(200)}
                         style={styles.listContainer}>
                         <FlashList
+                            keyboardShouldPersistTaps="always"
                             estimatedItemSize={82}
                             data={data}
                             keyExtractor={(item) => item.id.toString()}
