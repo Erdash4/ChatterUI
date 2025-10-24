@@ -103,8 +103,8 @@ export const buildAndSendRequest = async ({
                 const data = getNestedValue(
                     typeof event === 'string' ? JSON.parse(event) : event,
                     pattern
-                )
-                const text = data.replaceAll(replaceStrings, '')
+                ) as string | null
+                const text = data?.replaceAll(replaceStrings, '') ?? ''
                 if (text && prefixExitThink) onData('</think>')
                 if (text && prefixThinkTag) onData('<think>')
                 if (text) onData(text)
@@ -262,10 +262,7 @@ const readableStreamResponse = async (senderParams: SenderParams) => {
                 Logger.errorToast('Error Logged')
                 Logger.error(data)
             }
-        } catch (e) {
-            // wont be logged in prod
-            console.log(e)
-        }
+        } catch {}
         senderParams.onEvent(data)
     })
 
