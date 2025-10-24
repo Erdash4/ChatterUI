@@ -40,6 +40,7 @@ const ChatWindow = () => {
     const { data: { background_image: backgroundImage } = {} } = useLiveQuery(
         Characters.db.query.backgroundImageQuery(charId ?? -1)
     )
+    const { cause: scrollCause, index: scrollIndex } = chat?.autoScroll ?? {}
     const flatlistRef = useRef<FlatList | null>(null)
     const { showSettings, showChat } = Drawer.useDrawerStore(
         useShallow((state) => ({
@@ -54,22 +55,6 @@ const ChatWindow = () => {
         }
     }, 200)
 
-    useEffect(() => {
-        if (!chat?.autoScroll) return
-        const isSave = chat.autoScroll.cause === 'saveScroll'
-        if (!saveScroll && isSave) return
-        const offset = Math.min(
-            Math.max(0, chat.autoScroll.index + (isSave ? 1 : 0)),
-            chat.messages.length - 1
-        )
-
-        if (offset > 2)
-            flatlistRef.current?.scrollToIndex({
-                index: offset,
-                animated: chat.autoScroll.cause === 'search',
-                viewOffset: 32,
-            })
-    }, [chat, saveScroll])
     const image = useBackgroundStore((state) => state.image)
 
     const list: ListItem[] = (chat?.messages ?? [])
@@ -80,6 +65,21 @@ const ChatWindow = () => {
             isLastMessage: !!chat?.messages && index === chat?.messages.length - 1,
         }))
         .reverse()
+
+    useEffect(() => {
+        if (!scrollCause || !scrollIndex) return
+        const isSave = scrollCause === 'saveScroll'
+        console.log('fire')
+        if (!saveScroll && isSave) return
+        const offset = Math.min(Math.max(0, scrollIndex + (isSave ? 1 : 0)), list.length - 1)
+
+        if (offset > 2)
+            flatlistRef.current?.scrollToIndex({
+                index: offset,
+                animated: scrollCause === 'search',
+                viewOffset: 32,
+            })
+    }, [scrollCause, scrollIndex, list.length, saveScroll])
 
     const renderItems = ({ item }: { item: ListItem }) => {
         return (
