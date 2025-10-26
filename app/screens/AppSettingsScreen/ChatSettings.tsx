@@ -47,13 +47,6 @@ const ChatSettings = () => {
             />
 
             <ThemedSwitch
-                label="Show Processing Speed in Chat"
-                value={autoTitle}
-                onChangeValue={showProcSpeed}
-                description="Shows prompt processing and text generation speed in chat (local only)"
-            />
-
-            <ThemedSwitch
                 label="Ask In ChatterUI"
                 value={textIntent}
                 onChangeValue={setTextIntent}
